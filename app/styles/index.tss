@@ -1,0 +1,18 @@
+".container": {
+	layout: 'vertical',
+    backgroundColor: '#4f4f4f'
+},
+'#piLogo': {
+    left: '10dp',
+    top: '20dp',
+    width: '60dp'
+},
+"#congressTitle": {
+    top: '30dp',
+    width: '100%',
+    textAlign: 'center',
+    color: 'white',
+    font: {
+        size: '12dp'
+    }
+}

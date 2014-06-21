@@ -1,0 +1,7 @@
+<Alloy>
+	<Window class="container" id="index" title="">
+		<ImageView id="piLogo" image="/pi/logo.png" />
+		
+		<Label id="congressTitle">Eventos actuales</Label>
+	</Window>
+</Alloy>
