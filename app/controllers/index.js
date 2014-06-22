@@ -27,8 +27,6 @@ piApi.loadEvents(function (events) {
     
     var relativeHeight = Math.round(Ti.Platform.displayCaps.platformWidth * 200 / 800);
     
-    //$.eventsView.setHeight(events.length * relativeHeight);
-        
     var quantity = 0, top = 0, image = null;
     for (var i in events) {
         
@@ -46,4 +44,6 @@ piApi.loadEvents(function (events) {
         
         quantity++;
     }
+    
+    $.eventsView.setHeight((events.length * relativeHeight) + (events.length * 10));
 });

@@ -43,9 +43,9 @@ function Controller() {
     });
     $.__views.index.add($.__views.eventsScrollView);
     $.__views.eventsView = Ti.UI.createView({
-        height: 1e3,
+        height: "100%",
         width: "100%",
-        backgroundColor: "white",
+        top: 0,
         id: "eventsView"
     });
     $.__views.eventsScrollView.add($.__views.eventsView);
@@ -83,6 +83,7 @@ function Controller() {
             $.eventsView.add(image);
             quantity++;
         }
+        $.eventsView.setHeight(events.length * relativeHeight + 10 * events.length);
     });
     _.extend($, exports);
 }

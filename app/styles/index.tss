@@ -20,7 +20,7 @@
     top: '10dp'
 }
 '#eventsView': {
-    height: 1000,
+    height: '100%',
     width: '100%',
-    backgroundColor: 'white'
+    top: 0
 }
