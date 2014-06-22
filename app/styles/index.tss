@@ -7,12 +7,20 @@
     top: '20dp',
     width: '60dp'
 },
-"#congressTitle": {
+'#congressTitle': {
     top: '30dp',
     width: '100%',
-    textAlign: 'center',
+    textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
     color: 'white',
     font: {
-        size: '12dp'
+        fontSize: '12dp'
     }
+},
+'#eventsScrollView': {
+    top: '10dp'
+}
+'#eventsView': {
+    height: 1000,
+    width: '100%',
+    backgroundColor: 'white'
 }
