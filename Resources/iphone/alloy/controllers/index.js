@@ -70,17 +70,21 @@ function Controller() {
             return;
         }
         var relativeHeight = Math.round(200 * Ti.Platform.displayCaps.platformWidth / 800);
-        var quantity = 0, top = 0, image = null;
+        var quantity = 0, top = 0;
         for (var i in events) {
             top = quantity * relativeHeight + 10 * quantity;
-            image = Ti.UI.createButton({
+            button = Ti.UI.createButton({
                 image: events[i].image,
                 top: top,
                 width: "100%",
                 height: relativeHeight,
-                style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN
+                style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN,
+                idEvent: events[i].id
             });
-            $.eventsView.add(image);
+            button.addEventListener("click", function() {
+                alert("Loading " + this.idEvent);
+            });
+            $.eventsView.add(button);
             quantity++;
         }
         $.eventsView.setHeight(events.length * relativeHeight + 10 * events.length);
