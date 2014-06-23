@@ -27,7 +27,7 @@ piApi.loadEvents(function (events) {
     
     var relativeHeight = Math.round(Ti.Platform.displayCaps.platformWidth * 200 / 800);
     
-    var quantity = 0, top = 0, image = null;
+    var quantity = 0, top = 0, button = null;
     for (var i in events) {
         
         top = (quantity * relativeHeight) + (10 * quantity);
