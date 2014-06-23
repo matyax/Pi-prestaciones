@@ -70,7 +70,7 @@ function Controller() {
             return;
         }
         var relativeHeight = Math.round(200 * Ti.Platform.displayCaps.platformWidth / 800);
-        var quantity = 0, top = 0;
+        var quantity = 0, top = 0, button = null;
         for (var i in events) {
             top = quantity * relativeHeight + 10 * quantity;
             button = Ti.UI.createButton({

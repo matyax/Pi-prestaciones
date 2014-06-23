@@ -1,7 +1,7 @@
 <Alloy>
     <NavigationWindow platform="ios">
         <Window id="eventWindow">
-            
+            <View id="eventView"></View>
         </Window>
     </NavigationWindow>
 </Alloy>

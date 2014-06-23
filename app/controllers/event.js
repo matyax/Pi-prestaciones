@@ -9,5 +9,13 @@ piApi.getEventDetail(function (event) {
         return;
     }
     
-   $.eventWindow.setTitle(event.title); 
+   $.eventWindow.setTitle(event.title);
+   
+   var image = Ti.UI.createImageView({
+      image: event.logo,
+      width: '100%',
+      top: '0dp'
+    });
+    
+    $.eventView.add(image); 
 });

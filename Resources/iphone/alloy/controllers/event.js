@@ -9,6 +9,10 @@ function Controller() {
     $.__views.eventWindow = Ti.UI.createWindow({
         id: "eventWindow"
     });
+    $.__views.eventView = Ti.UI.createView({
+        id: "eventView"
+    });
+    $.__views.eventWindow.add($.__views.eventView);
     $.__views.event = Ti.UI.iOS.createNavigationWindow({
         window: $.__views.eventWindow,
         id: "event"
@@ -24,6 +28,12 @@ function Controller() {
             return;
         }
         $.eventWindow.setTitle(event.title);
+        var image = Ti.UI.createImageView({
+            image: event.logo,
+            width: "100%",
+            top: "0dp"
+        });
+        $.eventView.add(image);
     });
     _.extend($, exports);
 }
