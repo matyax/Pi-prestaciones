@@ -82,7 +82,9 @@ function Controller() {
                 idEvent: events[i].id
             });
             button.addEventListener("click", function() {
-                alert("Loading " + this.idEvent);
+                $.index.hide();
+                var win = Alloy.createController("event").getView();
+                win.open();
             });
             $.eventsView.add(button);
             quantity++;

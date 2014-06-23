@@ -5,7 +5,7 @@
 		<Label id="congressTitle">Eventos actuales</Label>
 		
 		<ScrollView id="eventsScrollView" showVerticalScrollIndicator="true" showHorizontalScrollIndicator="false" height="100%" width="100%">
-		    <View id ="eventsView"></View>    
+		    <View id ="eventsView"></View>
 		</ScrollView>
 	</Window>
 </Alloy>

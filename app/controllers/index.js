@@ -42,7 +42,11 @@ piApi.loadEvents(function (events) {
         });
         
         button.addEventListener('click', function (e) {
-            alert('Loading ' + this.idEvent);            
+            //this.idEvent
+            $.index.hide();
+            
+            var win = Alloy.createController('event').getView();
+            win.open();
         });
         
         $.eventsView.add(button);

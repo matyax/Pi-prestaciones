@@ -1,0 +1,7 @@
+<Alloy>
+    <NavigationWindow platform="ios">
+        <Window id="eventWindow">
+            
+        </Window>
+    </NavigationWindow>
+</Alloy>
