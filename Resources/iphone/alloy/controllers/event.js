@@ -3,10 +3,14 @@ function Controller() {
         var button = Titanium.UI.createButton({
             title: item.label,
             top: "0dp",
-            width: "100%"
+            width: "100%",
+            height: 40,
+            textAlign: "left",
+            borderWidth: 1,
+            borderColor: "black"
         });
         button.addEventListener("click", item.onClick);
-        $.eventButtonsView.add(button);
+        $.eventView.add(button);
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "event";
@@ -19,17 +23,12 @@ function Controller() {
         id: "eventWindow"
     });
     $.__views.eventView = Ti.UI.createView({
-        height: Ti.UI.SIZE,
+        height: Ti.UI.FILL,
+        layout: "vertical",
         top: "0dp",
         id: "eventView"
     });
     $.__views.eventWindow.add($.__views.eventView);
-    $.__views.eventButtonsView = Ti.UI.createView({
-        height: Ti.UI.SIZE,
-        top: "0dp",
-        id: "eventButtonsView"
-    });
-    $.__views.eventWindow.add($.__views.eventButtonsView);
     $.__views.event = Ti.UI.iOS.createNavigationWindow({
         window: $.__views.eventWindow,
         id: "event"
@@ -57,6 +56,15 @@ function Controller() {
         var label = "";
         if (event.information) {
             label = event.information_label || "Presentación";
+            addEventMenuItem({
+                label: label,
+                onClick: function() {
+                    alert("Clicked");
+                }
+            });
+        }
+        if (event.agenda) {
+            label = event.agenda_label || "Agenda";
             addEventMenuItem({
                 label: label,
                 onClick: function() {

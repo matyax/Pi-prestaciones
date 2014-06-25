@@ -3,10 +3,7 @@
   
 },
 '#eventView' : {
-    height: Ti.UI.SIZE,
-    top: '0dp'
-},
-'#eventButtonsView' : {
-    height: Ti.UI.SIZE,
+    height: Ti.UI.FILL,
+    layout: 'vertical',
     top: '0dp'
 }
