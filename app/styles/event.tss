@@ -1,4 +1,12 @@
 
 ".container" : {
   
+},
+'#eventView' : {
+    height: Ti.UI.SIZE,
+    top: '0dp'
+},
+'#eventButtonsView' : {
+    height: Ti.UI.SIZE,
+    top: '0dp'
 }

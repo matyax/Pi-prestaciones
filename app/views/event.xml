@@ -2,6 +2,7 @@
     <NavigationWindow platform="ios">
         <Window id="eventWindow">
             <View id="eventView"></View>
+            <View id="eventButtonsView"></View>    
         </Window>
     </NavigationWindow>
 </Alloy>
