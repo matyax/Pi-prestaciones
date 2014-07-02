@@ -38,6 +38,9 @@ piApi.getEventDetail(function (event) {
      */
     var label = '';
     
+    /*
+     * Information
+     */
     if (event.information) {
         label = event.information_label || 'Presentación';
         
@@ -77,6 +80,9 @@ piApi.getEventDetail(function (event) {
         });
     }
     
+    /*
+     * Agenda
+     */
     if (event.agenda) {
         label = event.agenda_label || 'Agenda';
         
@@ -84,6 +90,51 @@ piApi.getEventDetail(function (event) {
             backgroundColor: 'white',
             title: label
         });
+        
+        var agendaView = Titanium.UI.createView({
+           layout: 'vertical',
+           backgroundColor: 'white',
+           width: '100%',
+           height: Ti.UI.FILL
+        });
+        
+        agendaWindow.add(agendaView);
+        
+        var myTemplate = {
+            childTemplates: [
+                { 
+                    type: 'Ti.UI.Button', 
+                    bindId: 'button',
+                    properties: {
+                        color: 'black',
+                        width: '100%',
+                        textAlign: 'left',
+                        left: 10, top: 15,
+                    }
+                }
+            ]
+        };
+        
+        var listView = Ti.UI.createListView({
+            templates: { 'template': myTemplate },
+            defaultItemTemplate: 'template'
+        });
+        var sections = [];
+        
+        var agendaSection = Ti.UI.createListSection({ headerTitle: 'Lunes'});
+        var agendaDataSet = [];
+        
+        for (var date in event.agenda) {
+            agendaDataSet.push(
+                { button: { title: date } }
+            );
+        }
+        
+        agendaSection.setItems(agendaDataSet);
+        sections.push(agendaSection);
+        
+        listView.setSections(sections);
+        agendaView.add(listView);
         
         addEventMenuItem({
             label: label,
