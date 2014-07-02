@@ -29,11 +29,11 @@ function Controller() {
         id: "eventView"
     });
     $.__views.eventWindow.add($.__views.eventView);
-    $.__views.event = Ti.UI.iOS.createNavigationWindow({
+    $.__views.eventNavigationWindow = Ti.UI.iOS.createNavigationWindow({
         window: $.__views.eventWindow,
-        id: "event"
+        id: "eventNavigationWindow"
     });
-    $.__views.event && $.addTopLevelView($.__views.event);
+    $.__views.eventNavigationWindow && $.addTopLevelView($.__views.eventNavigationWindow);
     exports.destroy = function() {};
     _.extend($, $.__views);
     arguments[0] || {};
@@ -56,19 +56,53 @@ function Controller() {
         var label = "";
         if (event.information) {
             label = event.information_label || "Presentación";
+            var informationWindow = Titanium.UI.createWindow({
+                backgroundColor: "white",
+                layout: "vertical",
+                title: label
+            });
+            var informationScrollView = Ti.UI.createScrollView({
+                contentWidth: "auto",
+                contentHeight: "auto",
+                showVerticalScrollIndicator: true,
+                height: Ti.UI.FILL,
+                width: "100%"
+            });
+            var informationLabel = Ti.UI.createLabel({
+                color: "#900",
+                font: {
+                    fontSize: 12
+                },
+                text: event.information,
+                textAlign: "left",
+                top: 10,
+                left: 10,
+                width: Ti.UI.SIZE,
+                height: Ti.UI.SIZE
+            });
+            informationWindow.add(informationScrollView);
+            informationScrollView.add(informationLabel);
             addEventMenuItem({
                 label: label,
                 onClick: function() {
-                    alert("Clicked");
+                    $.eventNavigationWindow.openWindow(informationWindow, {
+                        animated: true
+                    });
                 }
             });
         }
         if (event.agenda) {
             label = event.agenda_label || "Agenda";
+            var agendaWindow = Titanium.UI.createWindow({
+                backgroundColor: "white",
+                title: label
+            });
             addEventMenuItem({
                 label: label,
                 onClick: function() {
-                    alert("Clicked");
+                    $.eventNavigationWindow.openWindow(agendaWindow, {
+                        animated: true
+                    });
                 }
             });
         }

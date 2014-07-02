@@ -1,5 +1,5 @@
 <Alloy>
-    <NavigationWindow platform="ios">
+    <NavigationWindow id="eventNavigationWindow" platform="ios">
         <Window id="eventWindow">
             <View id="eventView"></View>    
         </Window>
