@@ -12,6 +12,36 @@ function Controller() {
         button.addEventListener("click", item.onClick);
         $.eventView.add(button);
     }
+    function createAgendaDetailWindow(title, item) {
+        console.log(item);
+        var window = Titanium.UI.createWindow({
+            backgroundColor: "white",
+            layout: "vertical",
+            title: title
+        });
+        var scrollView = Ti.UI.createScrollView({
+            contentWidth: "auto",
+            contentHeight: "auto",
+            showVerticalScrollIndicator: true,
+            height: Ti.UI.FILL,
+            width: "100%"
+        });
+        var label = Ti.UI.createLabel({
+            color: "#900",
+            font: {
+                fontSize: 12
+            },
+            text: item[0].description,
+            textAlign: "left",
+            top: 10,
+            left: 10,
+            width: Ti.UI.SIZE,
+            height: Ti.UI.SIZE
+        });
+        scrollView.add(label);
+        window.add(scrollView);
+        return window;
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "event";
     arguments[0] ? arguments[0]["__parentSymbol"] : null;
@@ -104,39 +134,31 @@ function Controller() {
                 height: Ti.UI.FILL
             });
             agendaWindow.add(agendaView);
-            var myTemplate = {
-                childTemplates: [ {
-                    type: "Ti.UI.Button",
-                    bindId: "button",
-                    properties: {
-                        color: "black",
-                        width: "100%",
-                        textAlign: "left",
-                        left: 10,
-                        top: 15
-                    }
-                } ]
-            };
-            var listView = Ti.UI.createListView({
-                templates: {
-                    template: myTemplate
-                },
-                defaultItemTemplate: "template"
-            });
+            var listView = Ti.UI.createListView();
             var sections = [];
             var agendaSection = Ti.UI.createListSection({
                 headerTitle: "Lunes"
             });
             var agendaDataSet = [];
             for (var date in event.agenda) agendaDataSet.push({
-                button: {
-                    title: date
+                properties: {
+                    title: date,
+                    id: date
                 }
             });
             agendaSection.setItems(agendaDataSet);
             sections.push(agendaSection);
             listView.setSections(sections);
             agendaView.add(listView);
+            listView.addEventListener("itemclick", function(e) {
+                var item = agendaSection.getItemAt(e.itemIndex);
+                var id = item.properties.id;
+                var title = item.properties.title;
+                var detailWindow = createAgendaDetailWindow(title, event.agenda[id]);
+                $.eventNavigationWindow.openWindow(detailWindow, {
+                    animated: true
+                });
+            });
             addEventMenuItem({
                 label: label,
                 onClick: function() {
