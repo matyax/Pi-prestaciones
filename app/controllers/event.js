@@ -109,7 +109,7 @@ piApi.getEventDetail(function (event) {
                         color: 'black',
                         width: '100%',
                         textAlign: 'left',
-                        left: 10, top: 15,
+                        left: 0, top: 15,
                     }
                 }
             ]
@@ -143,6 +143,43 @@ piApi.getEventDetail(function (event) {
             }
         });
     }
+    
+    /*
+     * Form
+     */
+    if (event.form) {
+        label = event.form_label || 'Inscripción online';
+        
+        var formWindow = Titanium.UI.createWindow({
+            backgroundColor: 'white',
+            layout: 'vertical',
+            title: label
+        });
+        
+        var formWebView = Titanium.UI.createWebView({
+            url: event.form
+        });
+        
+        var informationLabel = Ti.UI.createLabel({
+            color: '#900',
+            font: { fontSize: 12 },
+            text: event.information,
+            textAlign: 'left',
+            top: 10,
+            left: 10,
+            width: Ti.UI.SIZE, height: Ti.UI.SIZE
+        });
+        
+        formWindow.add(formWebView);
+        
+        addEventMenuItem({
+            label: label,
+            onClick: function () {
+                $.eventNavigationWindow.openWindow(formWindow, { animated:true });
+            }            
+        });
+    }
+    
 });
 
 function addEventMenuItem(item) {
