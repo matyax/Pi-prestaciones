@@ -6,7 +6,6 @@ exports.get = function(url, options) {
         options.success(JSON.parse(response));
     };
     xhr.onerror = function() {
-        console.log(this.responseText);
         options.success(false);
     };
     xhr.send();

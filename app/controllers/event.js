@@ -87,7 +87,7 @@ piApi.getEventDetail(function (event) {
         label = event.agenda_label || 'Agenda';
         
         var agendaOnclick = function (id, title) {
-            var detailWindow = createAgendaDetailWindow(title, event.agenda[id]);
+            var detailWindow = createAgendaDetailWindow(searchItem(event.agenda, id));
             
             $.eventNavigationWindow.openWindow(detailWindow, { animated:true });
         };
@@ -158,12 +158,12 @@ function addEventMenuItem(item) {
     $.eventView.add(button);
 }
 
-function createAgendaDetailWindow(title, item) {
+function createAgendaDetailWindow(item) {
     
     var window = Titanium.UI.createWindow({
         backgroundColor: 'white',
         layout: 'vertical',
-        title: title
+        title: item.title
     });
     
     var scrollView =  Ti.UI.createScrollView({
@@ -177,7 +177,7 @@ function createAgendaDetailWindow(title, item) {
     var label = Ti.UI.createLabel({
         color: '#900',
         font: { fontSize: 12 },
-        text: item[0].description,
+        text: item.description,
         textAlign: 'left',
         top: 10,
         left: 10,
@@ -189,4 +189,26 @@ function createAgendaDetailWindow(title, item) {
     window.add(scrollView);
     
     return window; 
+}
+
+function searchItem(items, id) {
+    var item = null;
+    
+    for (var i in items) {
+        if (typeof items[i] != 'object') {
+            continue;
+        } else if (isNaN(parseInt(i))) {
+            item = searchItem(items[i], id);
+            
+            if (item) {
+                return item;
+            }
+        } else {
+            if ((items[i].id) && (items[i].id == id)) {
+                return items[i];
+            }            
+        }
+    }
+    
+    return null;
 }

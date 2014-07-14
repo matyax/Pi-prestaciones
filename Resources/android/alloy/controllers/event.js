@@ -46,7 +46,7 @@ function Controller() {
         for (var i in items) {
             if ("object" != typeof items[i]) continue;
             if (isNaN(parseInt(i))) {
-                item = searchItem(items[i], id);
+                item = searchItem(items[i]);
                 if (item) return item;
             } else if (items[i].id && items[i].id == id) return items[i];
         }
@@ -59,21 +59,6 @@ function Controller() {
     arguments[0] ? arguments[0]["__itemTemplate"] : null;
     var $ = this;
     var exports = {};
-    $.__views.eventWindow = Ti.UI.createWindow({
-        id: "eventWindow"
-    });
-    $.__views.eventView = Ti.UI.createView({
-        height: Ti.UI.FILL,
-        layout: "vertical",
-        top: "0dp",
-        id: "eventView"
-    });
-    $.__views.eventWindow.add($.__views.eventView);
-    $.__views.eventNavigationWindow = Ti.UI.iOS.createNavigationWindow({
-        window: $.__views.eventWindow,
-        id: "eventNavigationWindow"
-    });
-    $.__views.eventNavigationWindow && $.addTopLevelView($.__views.eventNavigationWindow);
     exports.destroy = function() {};
     _.extend($, $.__views);
     arguments[0] || {};
