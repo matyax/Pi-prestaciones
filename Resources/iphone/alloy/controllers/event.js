@@ -12,6 +12,35 @@ function Controller() {
         button.addEventListener("click", item.onClick);
         $.eventView.add(button);
     }
+    function createAgendaDetailWindow(title, item) {
+        var window = Titanium.UI.createWindow({
+            backgroundColor: "white",
+            layout: "vertical",
+            title: title
+        });
+        var scrollView = Ti.UI.createScrollView({
+            contentWidth: "auto",
+            contentHeight: "auto",
+            showVerticalScrollIndicator: true,
+            height: Ti.UI.FILL,
+            width: "100%"
+        });
+        var label = Ti.UI.createLabel({
+            color: "#900",
+            font: {
+                fontSize: 12
+            },
+            text: item[0].description,
+            textAlign: "left",
+            top: 10,
+            left: 10,
+            width: Ti.UI.SIZE,
+            height: Ti.UI.SIZE
+        });
+        scrollView.add(label);
+        window.add(scrollView);
+        return window;
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "event";
     arguments[0] ? arguments[0]["__parentSymbol"] : null;
@@ -93,11 +122,11 @@ function Controller() {
         }
         if (event.agenda) {
             label = event.agenda_label || "Agenda";
-            var agendaOnclick = function(e) {
-                var item = section.getItemAt(e.itemIndex);
-                var id = item.properties.id;
-                item.properties.title;
-                alert(id);
+            var agendaOnclick = function(id, title) {
+                var detailWindow = createAgendaDetailWindow(title, event.agenda[id]);
+                $.eventNavigationWindow.openWindow(detailWindow, {
+                    animated: true
+                });
             };
             var calendar = require("calendar");
             var agendaWindow = calendar.add(label, event.agenda, agendaOnclick, $.eventNavigationWindow);

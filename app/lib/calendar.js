@@ -3,46 +3,44 @@ exports.add = function (label, items, onClick, navigationWindow) {
 };
 
 function addCalendar(label, items, onClick, navigationWindow) {
-    var window = Titanium.UI.createWindow({
-        backgroundColor: 'white',
-        title: label
-    });
-    
-    var view = Titanium.UI.createView({
-       layout: 'vertical',
-       backgroundColor: 'white',
-       width: '100%',
-       height: Ti.UI.FILL
-    });
-    
-    window.add(view);
-    
-    view.add( createListView(items, onClick, navigationWindow) );
+    var window = createWindow(
+        label,
+        'white',
+        createListView(items, onClick, navigationWindow)
+    );
     
     return window;
 }
 
 function addCalendarTime(label, items, onClick, navigationWindow) {
+    items = addTimeLabels(items);
+    
+    return createWindow(
+        label,
+        'white',
+        createMultipleTitleListView(items, onClick, navigationWindow)
+    );
+}
+
+function createWindow(title, backgroundColor, viewChildren) {
     var window = Titanium.UI.createWindow({
-        backgroundColor: 'white',
-        title: label
+        backgroundColor: backgroundColor,
+        title: title
     });
     
     var view = Titanium.UI.createView({
        layout: 'vertical',
-       backgroundColor: 'white',
+       backgroundColor: backgroundColor,
        width: '100%',
        height: Ti.UI.FILL
     });
     
+    view.add(viewChildren);
+    
     window.add(view);
     
-    items = addTimeLabels(items);
-    
-    view.add( createListView(items, onClick, navigationWindow) );
-    
     return window;
-}
+} 
 
 function createListView(items, onClick, navigationWindow)
 {
@@ -114,16 +112,57 @@ function createListView(items, onClick, navigationWindow)
     return listView;
 }
 
-function addTimeLabels(items) {
-    var newItems = {}, item = null;
+function createMultipleTitleListView(items, onClick, navigationWindow)
+{
+    var listView = Ti.UI.createListView();
+    var sections = [];
     
-    for(var i in items) {
-        if (typeof newItems[items[i].date] == 'undefined') {
-            newItems[items[i].date] = [];
+    var section = null;
+    var dataSet = [];
+
+    for (var title in items) {
+        section = Ti.UI.createListSection({ headerTitle: title });
+        
+        for (var i in items[title]) {
+            
         }
         
-        newItems[items[i].date].push(items[i]);
+        dataSet.push(
+            { properties: { title: items[title][i].title, id: items[title][i].id } }
+        );
+        
+        section.setItems(dataSet);
+        sections.push(section);
     }
     
-    return newItems;
+    listView.setSections(sections);
+    
+    listView.addEventListener('itemclick', function (e) {
+        var item = section.getItemAt(e.itemIndex);
+        
+        var id      = item.properties.id;
+        var title   = item.properties.title;
+        
+        onClick(id, title);
+    });
+    
+    return listView;
+}
+
+function addTimeLabels(items) {
+    var timeItems = {},
+        timelabel = null,
+        item = null;
+    
+    for(var i in items) {
+        timeLabel = items[i].endTime ? items[i].startTime + ' - ' + items[i].endTime : items[i].startTime;  
+        
+        if (typeof timeItems[timeLabel] == 'undefined') {
+            timeItems[timeLabel] = [];
+        }
+        
+        timeItems[timeLabel].push(items[i]);
+    }
+    
+    return timeItems;
 }
