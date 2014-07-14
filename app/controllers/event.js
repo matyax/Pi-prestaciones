@@ -86,48 +86,15 @@ piApi.getEventDetail(function (event) {
     if (event.agenda) {
         label = event.agenda_label || 'Agenda';
         
-        var agendaWindow = Titanium.UI.createWindow({
-            backgroundColor: 'white',
-            title: label
-        });
-        
-        var agendaView = Titanium.UI.createView({
-           layout: 'vertical',
-           backgroundColor: 'white',
-           width: '100%',
-           height: Ti.UI.FILL
-        });
-        
-        agendaWindow.add(agendaView);
-        
-        var listView = Ti.UI.createListView();
-        var sections = [];
-        
-        var agendaSection = Ti.UI.createListSection({ headerTitle: 'Lunes'});
-        var agendaDataSet = [];
-        
-        for (var date in event.agenda) {
-            agendaDataSet.push(
-                { properties: { title: date, id: date } }
-            );
-        }
-        
-        agendaSection.setItems(agendaDataSet);
-        sections.push(agendaSection);
-        
-        listView.setSections(sections);
-        agendaView.add(listView);
-        
-        listView.addEventListener('itemclick', function (e) {
-            var item = agendaSection.getItemAt(e.itemIndex);
-            
-            var id      = item.properties.id;
-            var title   = item.properties.title; 
-            
+        var agendaOnclick = function (id, title) {
             var detailWindow = createAgendaDetailWindow(title, event.agenda[id]);
             
             $.eventNavigationWindow.openWindow(detailWindow, { animated:true });
-        });
+        };
+        
+        var calendar = require('calendar');
+        
+        var agendaWindow = calendar.add(label, event.agenda, agendaOnclick, $.eventNavigationWindow);
         
         addEventMenuItem({
             label: label,
@@ -192,7 +159,6 @@ function addEventMenuItem(item) {
 }
 
 function createAgendaDetailWindow(title, item) {
-    console.log(item);
     
     var window = Titanium.UI.createWindow({
         backgroundColor: 'white',
