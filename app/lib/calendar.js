@@ -124,12 +124,10 @@ function createMultipleTitleListView(items, onClick, navigationWindow)
         section = Ti.UI.createListSection({ headerTitle: title });
         
         for (var i in items[title]) {
-            
+            dataSet.push(
+                { properties: { title: items[title][i].title, id: items[title][i].id } }
+            );            
         }
-        
-        dataSet.push(
-            { properties: { title: items[title][i].title, id: items[title][i].id } }
-        );
         
         section.setItems(dataSet);
         sections.push(section);
