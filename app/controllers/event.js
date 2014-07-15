@@ -170,21 +170,43 @@ function createAgendaDetailWindow(item) {
         contentWidth: 'auto',
         contentHeight: 'auto',
         showVerticalScrollIndicator: true,
+        layout: 'vertical',
         height: Ti.UI.FILL,
-        width: '100%'
+        width: Ti.UI.FILL
     });
     
-    var label = Ti.UI.createLabel({
+    var titleLabel = Ti.UI.createLabel({
+        color: '#900',
+        font: { fontSize: 12 },
+        text: item.title,
+        textAlign: 'left',
+        top: 10,
+        left: 10,
+        width: '100%', height: Ti.UI.SIZE
+    });
+    
+    var timeText = item.endTime ? item.startTime + ' - ' + item.endTime : item.startTime;
+    
+    var timeLabel = Ti.UI.createLabel({
+        color: '#900',
+        font: { fontSize: 12 },
+        text: timeText,
+        left: 10,
+        width: Ti.UI.SIZE, height: Ti.UI.SIZE
+    });
+    
+    var descriptionLabel = Ti.UI.createLabel({
         color: '#900',
         font: { fontSize: 12 },
         text: item.description,
-        textAlign: 'left',
         top: 10,
         left: 10,
         width: Ti.UI.SIZE, height: Ti.UI.SIZE
     });
     
-    scrollView.add(label);
+    scrollView.add(titleLabel);
+    scrollView.add(timeLabel);
+    scrollView.add(descriptionLabel);
     
     window.add(scrollView);
     
