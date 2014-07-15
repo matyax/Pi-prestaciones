@@ -222,7 +222,7 @@ function Controller() {
                 longitude: event.map.lng,
                 pincolor: MapModule.ANNOTATION_PURPLE,
                 title: event.title,
-                subtitle: event.title,
+                subtitle: event.address,
                 leftButton: Ti.UI.iPhone.SystemButton.INFO_DARK
             });
             var map = MapModule.createView({
