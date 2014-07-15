@@ -24,7 +24,7 @@ function Controller() {
             showVerticalScrollIndicator: true,
             layout: "vertical",
             height: Ti.UI.FILL,
-            width: Ti.UI.FILL
+            width: Titanium.Platform.displayCaps.platformWidth
         });
         var titleLabel = Ti.UI.createLabel({
             color: "#900",
@@ -35,7 +35,7 @@ function Controller() {
             textAlign: "left",
             top: 10,
             left: 10,
-            width: "100%",
+            width: Titanium.Platform.displayCaps.platformWidth,
             height: Ti.UI.SIZE
         });
         var timeText = item.endTime ? item.startTime + " - " + item.endTime : item.startTime;
@@ -202,6 +202,49 @@ function Controller() {
                 label: label,
                 onClick: function() {
                     $.eventNavigationWindow.openWindow(formWindow, {
+                        animated: true
+                    });
+                }
+            });
+        }
+        if (event.map) {
+            label = event.map_label || "Ubicación";
+            var mapWindow = Titanium.UI.createWindow({
+                backgroundColor: "white",
+                layout: "vertical",
+                title: label
+            });
+            var MapModule = require("ti.map");
+            event.map.lat = parseFloat(event.map.lat);
+            event.map.lng = parseFloat(event.map.lng);
+            var marker = MapModule.createAnnotation({
+                latitude: event.map.lat,
+                longitude: event.map.lng,
+                pincolor: MapModule.ANNOTATION_PURPLE,
+                title: event.title,
+                subtitle: event.title,
+                leftButton: Ti.UI.iPhone.SystemButton.INFO_DARK
+            });
+            var map = MapModule.createView({
+                userLocation: true,
+                mapType: MapModule.NORMAL_TYPE,
+                animate: true,
+                region: {
+                    latitude: event.map.lat,
+                    longitude: event.map.lng,
+                    latitudeDelta: .05,
+                    longitudeDelta: .05
+                },
+                height: "100%",
+                top: 0,
+                width: Ti.UI.FILL,
+                annotations: [ marker ]
+            });
+            mapWindow.add(map);
+            addEventMenuItem({
+                label: label,
+                onClick: function() {
+                    $.eventNavigationWindow.openWindow(mapWindow, {
                         animated: true
                     });
                 }
