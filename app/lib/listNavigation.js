@@ -1,8 +1,5 @@
 exports.add = function (label, items, onClick, navigationWindow) {
-    return addCalendar(label, items, onClick, navigationWindow);
-};
-
-function addCalendar(label, items, onClick, navigationWindow) {
+    function addCalendar(label, items, onClick, navigationWindow) {
     var window = createWindow(
         label,
         'white',
@@ -44,10 +41,14 @@ function createWindow(title, backgroundColor, viewChildren) {
 
 function createListView(items, onClick, navigationWindow)
 {
+    var isFinalList = false;
+    
     var sectionParameters = {};
     
     if (items.headerTitle) {
         sectionParameters = { headerTitle: items.headerTitle};
+    } else {
+        isFinalList = true;
     }
     
     var listView = Ti.UI.createListView();
@@ -59,6 +60,8 @@ function createListView(items, onClick, navigationWindow)
     var title = '';
     
     var hasChildren = true;
+    
+    var itemId = null;
     
     for (var i in items) {
         if (i === 'headerTitle') {
@@ -75,8 +78,14 @@ function createListView(items, onClick, navigationWindow)
             hasChildren = false;
         }
         
+        if (typeof items[i].id != 'undefined') {
+            itemId = items[i].id;
+        } else {
+            itemId = i;
+        }
+        
         dataSet.push(
-            { properties: { title: title, id: i } }
+            { properties: { title: title, id: itemId } }
         );
     }
     
@@ -85,7 +94,17 @@ function createListView(items, onClick, navigationWindow)
     
     listView.setSections(sections);
     
-    if (hasChildren) {
+    if (isFinalList) {
+        listView.addEventListener('itemclick', function (e) {
+            var item = section.getItemAt(e.itemIndex);
+            
+            var id      = item.properties.id;
+            var title   = item.properties.title;
+            
+            onClick(id, title);
+        });
+    }
+    else if (hasChildren) {
         listView.addEventListener('itemclick', function (e) {
             var item = section.getItemAt(e.itemIndex);
             
@@ -164,3 +183,6 @@ function addTimeLabels(items) {
     
     return timeItems;
 }
+    
+    return addCalendar(label, items, onClick, navigationWindow);
+};
