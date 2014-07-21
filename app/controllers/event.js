@@ -120,22 +120,38 @@ piApi.getEventDetail(function (event) {
             url: event.form
         });
         
-        var informationLabel = Ti.UI.createLabel({
-            color: '#900',
-            font: { fontSize: 12 },
-            text: event.information,
-            textAlign: 'left',
-            top: 10,
-            left: 10,
-            width: Ti.UI.SIZE, height: Ti.UI.SIZE
-        });
-        
         formWindow.add(formWebView);
         
         addEventMenuItem({
             label: label,
             onClick: function () {
                 $.eventNavigationWindow.openWindow(formWindow, { animated:true });
+            }
+        });
+    }
+    
+    /*
+     * Form
+     */
+    if (event.certificate) {
+        label = event.certificate_label || 'Certificación web';
+        
+        var cwWindow = Titanium.UI.createWindow({
+            backgroundColor: 'white',
+            layout: 'vertical',
+            title: label
+        });
+        
+        var cwWebView = Titanium.UI.createWebView({
+            url: event.certificate
+        });
+        
+        cwWindow.add(cwWebView);
+        
+        addEventMenuItem({
+            label: label,
+            onClick: function () {
+                $.eventNavigationWindow.openWindow(cwWindow, { animated:true });
             }
         });
     }
