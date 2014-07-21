@@ -92,7 +92,7 @@ piApi.getEventDetail(function (event) {
             $.eventNavigationWindow.openWindow(detailWindow, { animated:true });
         };
         
-        var calendar = require('calendar');
+        var calendar = require('listNavigation');
         
         var agendaWindow = calendar.add(label, event.agenda, agendaOnclick, $.eventNavigationWindow);
         
@@ -187,6 +187,30 @@ piApi.getEventDetail(function (event) {
         });
     }
     
+    /*
+     * Accommodations
+     */
+    if (event.accommodations) {
+        label = event.accommodations_label || 'Agenda';
+        
+        var accommodationOnclick = function (id, title) {
+            var detailWindow = createAccommodationDetailWindow(searchItem(event.accommodations, id));
+            
+            $.eventNavigationWindow.openWindow(detailWindow, { animated:true });
+        };
+        
+        var accommodationNavigation = require('listNavigation');
+        
+        var accommodationWindow = accommodationNavigation.add(label, event.accommodations, accommodationOnclick, $.eventNavigationWindow);
+        
+        addEventMenuItem({
+            label: label,
+            onClick: function () {
+                $.eventNavigationWindow.openWindow(accommodationWindow, {animated:true});
+            }
+        });
+    }
+    
 });
 
 function addEventMenuItem(item) {
@@ -203,6 +227,50 @@ function addEventMenuItem(item) {
     button.addEventListener('click', item.onClick);
     
     $.eventView.add(button);
+}
+
+function createAccommodationDetailWindow(item) {
+    
+    var window = Titanium.UI.createWindow({
+        backgroundColor: 'white',
+        layout: 'vertical',
+        title: item.title
+    });
+    
+    var scrollView =  Ti.UI.createScrollView({
+        contentWidth: 'auto',
+        contentHeight: 'auto',
+        showVerticalScrollIndicator: true,
+        layout: 'vertical',
+        height: Ti.UI.FILL,
+        width: Titanium.Platform.displayCaps.platformWidth
+    });
+    
+    var titleLabel = Ti.UI.createLabel({
+        color: '#900',
+        font: { fontSize: 12 },
+        text: item.title,
+        textAlign: 'left',
+        top: 10,
+        left: 10,
+        width: Titanium.Platform.displayCaps.platformWidth, height: Ti.UI.SIZE
+    });
+    
+    var descriptionLabel = Ti.UI.createLabel({
+        color: '#900',
+        font: { fontSize: 12 },
+        text: item.description,
+        top: 10,
+        left: 10,
+        width: Ti.UI.SIZE, height: Ti.UI.SIZE
+    });
+    
+    scrollView.add(titleLabel);
+    scrollView.add(descriptionLabel);
+    
+    window.add(scrollView);
+    
+    return window; 
 }
 
 function createAgendaDetailWindow(item) {
