@@ -30,11 +30,9 @@ piApi.loadEvents(function (events) {
     var quantity = 0, top = 0, button = null;
     for (var i in events) {
         
-        top = (quantity * relativeHeight) + (10 * quantity);
-        
         button = Ti.UI.createButton({
             image: events[i].image,
-            'top': top,
+            'top': 2,
             width: '100%',
             height: relativeHeight,
             style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN,

@@ -46,6 +46,7 @@ function Controller() {
         height: "100%",
         width: "100%",
         top: 0,
+        layout: "vertical",
         id: "eventsView"
     });
     $.__views.eventsScrollView.add($.__views.eventsView);
@@ -70,12 +71,11 @@ function Controller() {
             return;
         }
         var relativeHeight = Math.round(200 * Ti.Platform.displayCaps.platformWidth / 800);
-        var quantity = 0, top = 0, button = null;
+        var quantity = 0, button = null;
         for (var i in events) {
-            top = quantity * relativeHeight + 10 * quantity;
             button = Ti.UI.createButton({
                 image: events[i].image,
-                top: top,
+                top: 2,
                 width: "100%",
                 height: relativeHeight,
                 style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN,
