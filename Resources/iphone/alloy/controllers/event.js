@@ -1,13 +1,23 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function addEventMenuItem(item) {
         var button = Titanium.UI.createButton({
             title: item.label,
-            top: "0dp",
+            top: 1,
             width: "100%",
             height: 40,
             textAlign: "left",
-            borderWidth: 1,
-            borderColor: "black"
+            borderWidth: 0,
+            backgroundColor: eventData.styles.button_background,
+            color: eventData.styles.button_foreground
         });
         button.addEventListener("click", item.onClick);
         $.eventView.add(button);
@@ -119,11 +129,20 @@ function Controller() {
         }
         return null;
     }
+    function createEventWindow(title, backgroundColor) {
+        return Titanium.UI.createWindow({
+            backgroundColor: backgroundColor,
+            layout: "vertical",
+            title: title
+        });
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "event";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        __processArg(arguments[0], "__parentSymbol");
+        __processArg(arguments[0], "$model");
+        __processArg(arguments[0], "__itemTemplate");
+    }
     var $ = this;
     var exports = {};
     $.__views.eventWindow = Ti.UI.createWindow({
@@ -153,7 +172,7 @@ function Controller() {
         }
         eventData = event;
         $.eventWindow.setTitle(event.title);
-        event.background_color && $.eventWindow.setBackgroundColor(event.background_color);
+        $.eventWindow.setBackgroundColor(event.styles.background);
         var image = Ti.UI.createImageView({
             image: event.logo,
             width: "100%",
@@ -163,11 +182,7 @@ function Controller() {
         var label = "";
         if (event.information) {
             label = event.information_label || "Presentación";
-            var informationWindow = Titanium.UI.createWindow({
-                backgroundColor: "white",
-                layout: "vertical",
-                title: label
-            });
+            var informationWindow = createEventWindow(label, event.styles.background);
             var informationScrollView = Ti.UI.createScrollView({
                 contentWidth: "auto",
                 contentHeight: "auto",
@@ -219,11 +234,7 @@ function Controller() {
         }
         if (event.form) {
             label = event.form_label || "Inscripción online";
-            var formWindow = Titanium.UI.createWindow({
-                backgroundColor: "white",
-                layout: "vertical",
-                title: label
-            });
+            var formWindow = createEventWindow(label, event.styles.background);
             var formWebView = Titanium.UI.createWebView({
                 url: event.form
             });
@@ -239,11 +250,7 @@ function Controller() {
         }
         if (event.certificate) {
             label = event.certificate_label || "Certificación web";
-            var cwWindow = Titanium.UI.createWindow({
-                backgroundColor: "white",
-                layout: "vertical",
-                title: label
-            });
+            var cwWindow = createEventWindow(label, event.styles.background);
             var cwWebView = Titanium.UI.createWebView({
                 url: event.certificate
             });
@@ -259,11 +266,7 @@ function Controller() {
         }
         if (event.map) {
             label = event.map_label || "Ubicación";
-            var mapWindow = Titanium.UI.createWindow({
-                backgroundColor: "white",
-                layout: "vertical",
-                title: label
-            });
+            var mapWindow = createEventWindow(label, event.styles.background);
             var MapModule = require("ti.map");
             event.map.lat = parseFloat(event.map.lat);
             event.map.lng = parseFloat(event.map.lng);

@@ -32,7 +32,7 @@ piApi.loadEvents(function (events) {
         
         button = Ti.UI.createButton({
             image: events[i].image,
-            'top': 2,
+            top: 10,
             width: '100%',
             height: relativeHeight,
             style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN,
