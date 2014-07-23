@@ -1,11 +1,11 @@
-exports.add = function(label, items, onClick, navigationWindow) {
+exports.add = function(label, items, onClick, navigationWindow, backgroundColor) {
     function addCalendar(label, items, onClick, navigationWindow) {
-        var window = createWindow(label, "white", createListView(items, onClick, navigationWindow));
+        var window = createWindow(label, backgroundColor, createListView(items, onClick, navigationWindow));
         return window;
     }
     function addCalendarTime(label, items, onClick, navigationWindow) {
         items = addTimeLabels(items);
-        return createWindow(label, "white", createMultipleTitleListView(items, onClick, navigationWindow));
+        return createWindow(label, backgroundColor, createMultipleTitleListView(items, onClick, navigationWindow));
     }
     function createWindow(title, backgroundColor, viewChildren) {
         var window = Titanium.UI.createWindow({

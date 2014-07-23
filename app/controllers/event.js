@@ -54,7 +54,7 @@ piApi.getEventDetail(function (event) {
         });
         
         var informationLabel = Ti.UI.createLabel({
-            color: '#900',
+            color: event.styles.forecolor,
             font: { fontSize: 12 },
             text: event.information,
             textAlign: 'left',
@@ -89,7 +89,13 @@ piApi.getEventDetail(function (event) {
         
         var calendar = require('listNavigation');
         
-        var agendaWindow = calendar.add(label, event.agenda, agendaOnclick, $.eventNavigationWindow);
+        var agendaWindow = calendar.add(
+            label,
+            event.agenda,
+            agendaOnclick,
+            $.eventNavigationWindow,
+            event.styles.background
+        );
         
         addEventMenuItem({
             label: label,
@@ -200,7 +206,13 @@ piApi.getEventDetail(function (event) {
         
         var accommodationNavigation = require('listNavigation');
         
-        var accommodationWindow = accommodationNavigation.add(label, event.accommodations, accommodationOnclick, $.eventNavigationWindow);
+        var accommodationWindow = accommodationNavigation.add(
+            label,
+            event.accommodations,
+            accommodationOnclick,
+            $.eventNavigationWindow, 
+            event.styles.background
+        );
         
         addEventMenuItem({
             label: label,
@@ -232,7 +244,7 @@ function addEventMenuItem(item) {
 function createAccommodationDetailWindow(item) {
     
     var window = Titanium.UI.createWindow({
-        backgroundColor: 'white',
+        backgroundColor: eventData.styles.background,
         layout: 'vertical',
         title: item.title
     });
@@ -247,7 +259,7 @@ function createAccommodationDetailWindow(item) {
     });
     
     var titleLabel = Ti.UI.createLabel({
-        color: '#900',
+        color: eventData.styles.forecolor,
         font: { fontSize: 12 },
         text: item.title,
         textAlign: 'left',
@@ -257,7 +269,7 @@ function createAccommodationDetailWindow(item) {
     });
     
     var descriptionLabel = Ti.UI.createLabel({
-        color: '#900',
+        color: eventData.styles.forecolor,
         font: { fontSize: 12 },
         text: item.description,
         top: 10,
@@ -276,7 +288,7 @@ function createAccommodationDetailWindow(item) {
 function createAgendaDetailWindow(item) {
     
     var window = Titanium.UI.createWindow({
-        backgroundColor: 'white',
+        backgroundColor: eventData.styles.background,
         layout: 'vertical',
         title: item.title
     });
@@ -291,7 +303,7 @@ function createAgendaDetailWindow(item) {
     });
     
     var titleLabel = Ti.UI.createLabel({
-        color: '#900',
+        color: eventData.styles.forecolor,
         font: { fontSize: 12 },
         text: item.title,
         textAlign: 'left',
@@ -303,7 +315,7 @@ function createAgendaDetailWindow(item) {
     var timeText = item.endTime ? item.startTime + ' - ' + item.endTime : item.startTime;
     
     var timeLabel = Ti.UI.createLabel({
-        color: '#900',
+        color: eventData.styles.forecolor,
         font: { fontSize: 12 },
         text: timeText,
         left: 10,
@@ -311,7 +323,7 @@ function createAgendaDetailWindow(item) {
     });
     
     var descriptionLabel = Ti.UI.createLabel({
-        color: '#900',
+        color: eventData.styles.forecolor,
         font: { fontSize: 12 },
         text: item.description,
         top: 10,
