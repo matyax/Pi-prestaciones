@@ -255,7 +255,7 @@ function createAccommodationDetailWindow(item) {
         showVerticalScrollIndicator: true,
         layout: 'vertical',
         height: Ti.UI.FILL,
-        width: Titanium.Platform.displayCaps.platformWidth
+        width: '100%'
     });
     
     var titleLabel = Ti.UI.createLabel({
@@ -293,13 +293,14 @@ function createAgendaDetailWindow(item) {
         title: item.title
     });
     
+    
     var scrollView =  Ti.UI.createScrollView({
         contentWidth: 'auto',
         contentHeight: 'auto',
-        showVerticalScrollIndicator: true,
         layout: 'vertical',
+        showVerticalScrollIndicator: true,
         height: Ti.UI.FILL,
-        width: Titanium.Platform.displayCaps.platformWidth
+        width: '90%'
     });
     
     var titleLabel = Ti.UI.createLabel({
