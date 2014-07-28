@@ -17,10 +17,11 @@
     }
 },
 '#eventsScrollView': {
-    top: '10dp'
+    top: '10dp',
+    height: Ti.UI.FILL
 }
 '#eventsView': {
-    height: '100%',
+    height: Ti.UI.SIZE,
     width: '100%',
     top: 0,
     layout: 'vertical'

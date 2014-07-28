@@ -1,8 +1,10 @@
-$.index.open();
-
 var piApi = require('pi');
 
-piApi.loadEvents(function (events) {
+piApi.loadEvents(function (events) { 
+    if (Titanium.Platform.osname == 'android') { //todo remove
+        events = JSON.parse('[{"id":1,"name":"AAOC","image":"http:\/\/piprestaciones.com\/resources\/mobile\/events\/1.jpg"},{"id":2,"name":"IX Congreso el forum venoso latinoamericano","image":"http:\/\/piprestaciones.com\/resources\/mobile\/events\/2.png"},{"id":3,"name":"XIII Jornadas nacionales de Mastolog\u00eda","image":"http:\/\/piprestaciones.com\/resources\/mobile\/events\/3.jpg"}]');
+    }
+    
     if (events === false) {
         alert('Error de conexión');
     }
@@ -25,13 +27,19 @@ piApi.loadEvents(function (events) {
         return;
     }
     
-    var relativeHeight = Math.round(Ti.Platform.displayCaps.platformWidth * 200 / 800);
+    var relativeHeight = null;
+    
+    if (Titanium.Platform.osname == 'android') {
+        relativeHeight = Math.round(Ti.Platform.displayCaps.platformWidth * 200 / 800) + 'px';
+    } else {
+        relativeHeight = Math.round(Ti.Platform.displayCaps.platformWidth * 200 / 800);        
+    }
     
     var quantity = 0, top = 0, button = null;
     for (var i in events) {
         
         button = Ti.UI.createButton({
-            image: events[i].image,
+            backgroundImage: events[i].image,
             top: 10,
             width: '100%',
             height: relativeHeight,
@@ -41,16 +49,18 @@ piApi.loadEvents(function (events) {
         
         button.addEventListener('click', function (e) {
             //this.idEvent
-            $.index.hide();
-            
             var win = Alloy.createController('event').getView();
-            win.open();
+            win.open({
+                animated: true
+            });
         });
         
         $.eventsView.add(button);
         
         quantity++;
     }
-    
-    $.eventsView.setHeight((events.length * relativeHeight) + (events.length * 10));
 });
+
+$.index.open();
+
+

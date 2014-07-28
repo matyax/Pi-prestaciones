@@ -4,4 +4,9 @@
             <View id="eventView"></View>    
         </Window>
     </NavigationWindow>
+    
+    <Window id="eventNavigationWindow" platform="android">
+        <View id="eventView"></View>    
+    </Window>
+    
 </Alloy>

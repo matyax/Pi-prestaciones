@@ -1,9 +1,20 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "index";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        __processArg(arguments[0], "__parentSymbol");
+        __processArg(arguments[0], "$model");
+        __processArg(arguments[0], "__itemTemplate");
+    }
     var $ = this;
     var exports = {};
     $.__views.index = Ti.UI.createWindow({
@@ -35,25 +46,26 @@ function Controller() {
     $.__views.index.add($.__views.congressTitle);
     $.__views.eventsScrollView = Ti.UI.createScrollView({
         top: "10dp",
+        height: "100%",
         id: "eventsScrollView",
         showVerticalScrollIndicator: "true",
         showHorizontalScrollIndicator: "false",
-        height: "100%",
         width: "100%"
     });
     $.__views.index.add($.__views.eventsScrollView);
     $.__views.eventsView = Ti.UI.createView({
-        height: "100%",
+        height: Ti.UI.SIZE,
         width: "100%",
         top: 0,
+        layout: "vertical",
         id: "eventsView"
     });
     $.__views.eventsScrollView.add($.__views.eventsView);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    $.index.open();
     var piApi = require("pi");
     piApi.loadEvents(function(events) {
+        events = JSON.parse('[{"id":1,"name":"AAOC","image":"http://piprestaciones.com/resources/mobile/events/1.jpg"},{"id":2,"name":"IX Congreso el forum venoso latinoamericano","image":"http://piprestaciones.com/resources/mobile/events/2.png"},{"id":3,"name":"XIII Jornadas nacionales de Mastología","image":"http://piprestaciones.com/resources/mobile/events/3.jpg"}]');
         false === events && alert("Error de conexión");
         if (!events.length) {
             var emptyLabel = Ti.UI.createLabel({
@@ -69,28 +81,29 @@ function Controller() {
             $.eventsView.add(emptyLabel);
             return;
         }
-        var relativeHeight = Math.round(200 * Ti.Platform.displayCaps.platformWidth / 800);
-        var quantity = 0, top = 0, button = null;
+        var relativeHeight = null;
+        relativeHeight = Math.round(200 * Ti.Platform.displayCaps.platformWidth / 800) + "px";
+        var quantity = 0, button = null;
         for (var i in events) {
-            top = quantity * relativeHeight + 10 * quantity;
             button = Ti.UI.createButton({
-                image: events[i].image,
-                top: top,
+                backgroundImage: events[i].image,
+                top: 10,
                 width: "100%",
                 height: relativeHeight,
                 style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN,
                 idEvent: events[i].id
             });
             button.addEventListener("click", function() {
-                $.index.hide();
                 var win = Alloy.createController("event").getView();
-                win.open();
+                win.open({
+                    animated: true
+                });
             });
             $.eventsView.add(button);
             quantity++;
         }
-        $.eventsView.setHeight(events.length * relativeHeight + 10 * events.length);
     });
+    $.index.open();
     _.extend($, exports);
 }
 

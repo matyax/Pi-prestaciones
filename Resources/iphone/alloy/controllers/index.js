@@ -46,15 +46,15 @@ function Controller() {
     $.__views.index.add($.__views.congressTitle);
     $.__views.eventsScrollView = Ti.UI.createScrollView({
         top: "10dp",
+        height: "100%",
         id: "eventsScrollView",
         showVerticalScrollIndicator: "true",
         showHorizontalScrollIndicator: "false",
-        height: "100%",
         width: "100%"
     });
     $.__views.index.add($.__views.eventsScrollView);
     $.__views.eventsView = Ti.UI.createView({
-        height: "100%",
+        height: Ti.UI.SIZE,
         width: "100%",
         top: 0,
         layout: "vertical",
@@ -63,9 +63,9 @@ function Controller() {
     $.__views.eventsScrollView.add($.__views.eventsView);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    $.index.open();
     var piApi = require("pi");
     piApi.loadEvents(function(events) {
+        "android" == Titanium.Platform.osname && (events = JSON.parse('[{"id":1,"name":"AAOC","image":"http://piprestaciones.com/resources/mobile/events/1.jpg"},{"id":2,"name":"IX Congreso el forum venoso latinoamericano","image":"http://piprestaciones.com/resources/mobile/events/2.png"},{"id":3,"name":"XIII Jornadas nacionales de Mastología","image":"http://piprestaciones.com/resources/mobile/events/3.jpg"}]'));
         false === events && alert("Error de conexión");
         if (!events.length) {
             var emptyLabel = Ti.UI.createLabel({
@@ -81,11 +81,12 @@ function Controller() {
             $.eventsView.add(emptyLabel);
             return;
         }
-        var relativeHeight = Math.round(200 * Ti.Platform.displayCaps.platformWidth / 800);
+        var relativeHeight = null;
+        relativeHeight = "android" == Titanium.Platform.osname ? Math.round(200 * Ti.Platform.displayCaps.platformWidth / 800) + "px" : Math.round(200 * Ti.Platform.displayCaps.platformWidth / 800);
         var quantity = 0, button = null;
         for (var i in events) {
             button = Ti.UI.createButton({
-                image: events[i].image,
+                backgroundImage: events[i].image,
                 top: 10,
                 width: "100%",
                 height: relativeHeight,
@@ -93,15 +94,16 @@ function Controller() {
                 idEvent: events[i].id
             });
             button.addEventListener("click", function() {
-                $.index.hide();
                 var win = Alloy.createController("event").getView();
-                win.open();
+                win.open({
+                    animated: true
+                });
             });
             $.eventsView.add(button);
             quantity++;
         }
-        $.eventsView.setHeight(events.length * relativeHeight + 10 * events.length);
     });
+    $.index.open();
     _.extend($, exports);
 }
 

@@ -1,7 +1,3 @@
-
-".container" : {
-  
-},
 '#eventView' : {
     height: Ti.UI.FILL,
     layout: 'vertical',
