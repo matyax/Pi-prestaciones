@@ -20,10 +20,14 @@ piApi.getEventDetail(function (event) {
     /*
      * Set general styles
      */
-    $.eventWindow.setTitle(event.title);
+    if (Titanium.Platform.osname == 'ios') {
+        $.eventWindow.setTitle(event.title);
+        $.eventWindow.setBackgroundColor(event.styles.background);        
+    } else {
+        $.eventNavigationWindow.setTitle(event.title);
+        $.eventNavigationWindow.setBackgroundColor(event.styles.background);
+    }
     
-    
-    $.eventWindow.setBackgroundColor(event.styles.background);
    
     /*
      * Add Logo

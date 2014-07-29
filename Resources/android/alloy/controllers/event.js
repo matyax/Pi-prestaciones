@@ -168,8 +168,8 @@ function Controller() {
             return;
         }
         eventData = event;
-        $.eventWindow.setTitle(event.title);
-        $.eventWindow.setBackgroundColor(event.styles.background);
+        $.eventNavigationWindow.setTitle(event.title);
+        $.eventNavigationWindow.setBackgroundColor(event.styles.background);
         var image = Ti.UI.createImageView({
             image: event.logo,
             width: "100%",

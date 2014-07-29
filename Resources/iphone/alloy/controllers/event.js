@@ -172,8 +172,13 @@ function Controller() {
             return;
         }
         eventData = event;
-        $.eventWindow.setTitle(event.title);
-        $.eventWindow.setBackgroundColor(event.styles.background);
+        if ("ios" == Titanium.Platform.osname) {
+            $.eventWindow.setTitle(event.title);
+            $.eventWindow.setBackgroundColor(event.styles.background);
+        } else {
+            $.eventNavigationWindow.setTitle(event.title);
+            $.eventNavigationWindow.setBackgroundColor(event.styles.background);
+        }
         var image = Ti.UI.createImageView({
             image: event.logo,
             width: "100%",
