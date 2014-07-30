@@ -19,7 +19,11 @@ function Controller() {
             backgroundColor: eventData.styles.button_background,
             color: eventData.styles.button_foreground
         });
-        button.addEventListener("click", item.onClick);
+        item.onClick ? button.addEventListener("click", item.onClick) : item.window && button.addEventListener("click", function() {
+            $.eventNavigationWindow.openWindow(item.window, {
+                animated: true
+            });
+        });
         $.eventView.add(button);
     }
     function createAccommodationDetailWindow(item) {
@@ -170,7 +174,6 @@ function Controller() {
         eventData = event;
         $.eventNavigationWindow.setTitle(event.title);
         $.eventNavigationWindow.setBackgroundColor(event.styles.background);
-        console.log(event.logo);
         var image = Ti.UI.createImageView({
             image: event.logo,
             width: "100%",
@@ -204,11 +207,7 @@ function Controller() {
             informationScrollView.add(informationLabel);
             addEventMenuItem({
                 label: label,
-                onClick: function() {
-                    $.eventNavigationWindow.openWindow(informationWindow, {
-                        animated: true
-                    });
-                }
+                window: informationWindow
             });
         }
         if (event.agenda) {
@@ -223,11 +222,7 @@ function Controller() {
             var agendaWindow = calendar.add(label, event.agenda, agendaOnclick, $.eventNavigationWindow, event.styles.background);
             addEventMenuItem({
                 label: label,
-                onClick: function() {
-                    $.eventNavigationWindow.openWindow(agendaWindow, {
-                        animated: true
-                    });
-                }
+                window: agendaWindow
             });
         }
         if (event.form) {
@@ -239,11 +234,7 @@ function Controller() {
             formWindow.add(formWebView);
             addEventMenuItem({
                 label: label,
-                onClick: function() {
-                    $.eventNavigationWindow.openWindow(formWindow, {
-                        animated: true
-                    });
-                }
+                window: formWindow
             });
         }
         if (event.certificate) {
@@ -255,11 +246,7 @@ function Controller() {
             cwWindow.add(cwWebView);
             addEventMenuItem({
                 label: label,
-                onClick: function() {
-                    $.eventNavigationWindow.openWindow(cwWindow, {
-                        animated: true
-                    });
-                }
+                window: cwWindow
             });
         }
         if (event.map) {
@@ -294,11 +281,7 @@ function Controller() {
             mapWindow.add(map);
             addEventMenuItem({
                 label: label,
-                onClick: function() {
-                    $.eventNavigationWindow.openWindow(mapWindow, {
-                        animated: true
-                    });
-                }
+                window: mapWindow
             });
         }
         if (event.accommodations) {

@@ -77,9 +77,7 @@ piApi.getEventDetail(function (event) {
         
         addEventMenuItem({
             label: label,
-            onClick: function () {
-                $.eventNavigationWindow.openWindow(informationWindow, { animated:true });
-            }            
+            window: informationWindow
         });
     }
     
@@ -107,9 +105,7 @@ piApi.getEventDetail(function (event) {
         
         addEventMenuItem({
             label: label,
-            onClick: function () {
-                $.eventNavigationWindow.openWindow(agendaWindow, {animated:true});
-            }
+            window: agendaWindow
         });
     }
     
@@ -129,9 +125,7 @@ piApi.getEventDetail(function (event) {
         
         addEventMenuItem({
             label: label,
-            onClick: function () {
-                $.eventNavigationWindow.openWindow(formWindow, { animated:true });
-            }
+            window: formWindow
         });
     }
     
@@ -151,9 +145,7 @@ piApi.getEventDetail(function (event) {
         
         addEventMenuItem({
             label: label,
-            onClick: function () {
-                $.eventNavigationWindow.openWindow(cwWindow, { animated:true });
-            }
+            window: cwWindow
         });
     }
     
@@ -194,9 +186,7 @@ piApi.getEventDetail(function (event) {
         
         addEventMenuItem({
             label: label,
-            onClick: function () {
-                $.eventNavigationWindow.openWindow(mapWindow, { animated:true });
-            }
+            window: mapWindow
         });
     }
     
@@ -244,7 +234,17 @@ function addEventMenuItem(item) {
         color: eventData.styles.button_foreground
     });
     
-    button.addEventListener('click', item.onClick);
+    if (item.onClick) {
+        button.addEventListener('click', item.onClick);
+    } else if (item.window){
+        button.addEventListener('click', function () {
+            if (Titanium.Platform.osname == 'android') {
+                
+            } else {
+                $.eventNavigationWindow.openWindow(item.window, { animated:true });
+            }
+        });
+    }
     
     $.eventView.add(button);
 }
