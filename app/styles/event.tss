@@ -1,5 +1,5 @@
 '#eventView' : {
     height: Ti.UI.FILL,
     layout: 'vertical',
-    top: '0dp'
+    top: 0
 }

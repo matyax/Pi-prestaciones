@@ -1,1 +1,1 @@
-module.exports = [{"isId":true,"priority":100000.0002,"key":"eventView","style":{height:Ti.UI.FILL,layout:"vertical",top:"0dp",}}];
+module.exports = [{"isId":true,"priority":100000.0002,"key":"eventView","style":{height:Ti.UI.FILL,layout:"vertical",top:0,}}];
