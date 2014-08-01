@@ -172,6 +172,7 @@ function Controller() {
             return;
         }
         eventData = event;
+        var windowReference = null;
         $.eventNavigationWindow.setTitle(event.title);
         $.eventNavigationWindow.setBackgroundColor(event.styles.background);
         var image = Ti.UI.createImageView({
@@ -214,12 +215,12 @@ function Controller() {
             label = event.agenda_label || "Agenda";
             var agendaOnclick = function(id) {
                 var detailWindow = createAgendaDetailWindow(searchItem(event.agenda, id));
-                $.eventNavigationWindow.openWindow(detailWindow, {
-                    animated: true
+                detailWindow.open({
+                    modal: true
                 });
             };
             var calendar = require("listNavigation");
-            var agendaWindow = calendar.add(label, event.agenda, agendaOnclick, $.eventNavigationWindow, event.styles.background);
+            var agendaWindow = calendar.add(label, event.agenda, agendaOnclick, windowReference, event.styles.background);
             addEventMenuItem({
                 label: label,
                 window: agendaWindow
@@ -288,19 +289,15 @@ function Controller() {
             label = event.accommodations_label || "Agenda";
             var accommodationOnclick = function(id) {
                 var detailWindow = createAccommodationDetailWindow(searchItem(event.accommodations, id));
-                $.eventNavigationWindow.openWindow(detailWindow, {
-                    animated: true
+                detailWindow.open({
+                    modal: true
                 });
             };
             var accommodationNavigation = require("listNavigation");
-            var accommodationWindow = accommodationNavigation.add(label, event.accommodations, accommodationOnclick, $.eventNavigationWindow, event.styles.background);
+            var accommodationWindow = accommodationNavigation.add(label, event.accommodations, accommodationOnclick, windowReference, event.styles.background);
             addEventMenuItem({
                 label: label,
-                onClick: function() {
-                    $.eventNavigationWindow.openWindow(accommodationWindow, {
-                        animated: true
-                    });
-                }
+                window: accommodationWindow
             });
         }
     });

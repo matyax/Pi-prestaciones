@@ -113,7 +113,13 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
                 
                 var subWindow = addCalendar(title, items[id], onClick, navigationWindow);
                 
-                navigationWindow.openWindow(subWindow, {animated:true});
+                if (navigationWindow == null) {
+                    subWindow.open({
+                        modal: true
+                    });
+                } else {
+                    navigationWindow.openWindow(subWindow, {animated:true});                    
+                }
             });
         } else {
             listView.addEventListener('itemclick', function (e) {
@@ -124,7 +130,13 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
                 
                 var subWindow = addCalendarTime(title, items[id], onClick, navigationWindow);
                 
-                navigationWindow.openWindow(subWindow, {animated:true});
+                if (navigationWindow == null) {
+                    subWindow.open({
+                        modal: true
+                    });
+                } else {
+                    navigationWindow.openWindow(subWindow, {animated:true});                    
+                }
             });
         }
         

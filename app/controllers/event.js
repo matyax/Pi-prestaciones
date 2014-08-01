@@ -17,12 +17,16 @@ piApi.getEventDetail(function (event) {
     
     eventData = event;
     
+    var windowReference = null;
+    
     /*
      * Set general styles
      */
     if (Titanium.Platform.osname == 'ios') {
         $.eventWindow.setTitle(event.title);
-        $.eventWindow.setBackgroundColor(event.styles.background);        
+        $.eventWindow.setBackgroundColor(event.styles.background);
+        
+        windowReference = $.eventNavigationWindow;        
     } else {
         $.eventNavigationWindow.setTitle(event.title);
         $.eventNavigationWindow.setBackgroundColor(event.styles.background);
@@ -90,7 +94,13 @@ piApi.getEventDetail(function (event) {
         var agendaOnclick = function (id, title) {
             var detailWindow = createAgendaDetailWindow(searchItem(event.agenda, id));
             
-            $.eventNavigationWindow.openWindow(detailWindow, { animated:true });
+            if (Titanium.Platform.osname == 'android') {
+                detailWindow.open({
+                    modal: true
+                });
+            } else {
+                $.eventNavigationWindow.openWindow(detailWindow, { animated:true });
+            }
         };
         
         var calendar = require('listNavigation');
@@ -99,7 +109,7 @@ piApi.getEventDetail(function (event) {
             label,
             event.agenda,
             agendaOnclick,
-            $.eventNavigationWindow,
+            windowReference,
             event.styles.background
         );
         
@@ -199,7 +209,13 @@ piApi.getEventDetail(function (event) {
         var accommodationOnclick = function (id, title) {
             var detailWindow = createAccommodationDetailWindow(searchItem(event.accommodations, id));
             
-            $.eventNavigationWindow.openWindow(detailWindow, { animated:true });
+            if (Titanium.Platform.osname == 'android') {
+                detailWindow.open({
+                    modal: true
+                });
+            } else {
+                $.eventNavigationWindow.openWindow(detailWindow, { animated:true });
+            }
         };
         
         var accommodationNavigation = require('listNavigation');
@@ -208,15 +224,13 @@ piApi.getEventDetail(function (event) {
             label,
             event.accommodations,
             accommodationOnclick,
-            $.eventNavigationWindow, 
+            windowReference, 
             event.styles.background
         );
         
         addEventMenuItem({
             label: label,
-            onClick: function () {
-                $.eventNavigationWindow.openWindow(accommodationWindow, {animated:true});
-            }
+            window: accommodationWindow
         });
     }
     
