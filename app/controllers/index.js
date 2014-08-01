@@ -1,6 +1,14 @@
 var piApi = require('pi');
 
-piApi.loadEvents(function (events) { 
+var loading = require('loadingWindow');
+
+$.index.open();
+
+loading.open();
+
+piApi.loadEvents(function (events) {
+    loading.close();
+     
     if (Titanium.Platform.osname == 'android') { //todo remove
         events = JSON.parse('[{"id":1,"name":"AAOC","image":"http:\/\/piprestaciones.com\/resources\/mobile\/events\/1.jpg"},{"id":2,"name":"IX Congreso el forum venoso latinoamericano","image":"http:\/\/piprestaciones.com\/resources\/mobile\/events\/2.png"},{"id":3,"name":"XIII Jornadas nacionales de Mastolog\u00eda","image":"http:\/\/piprestaciones.com\/resources\/mobile\/events\/3.jpg"}]');
     }
@@ -60,7 +68,4 @@ piApi.loadEvents(function (events) {
         quantity++;
     }
 });
-
-$.index.open();
-
 

@@ -60,7 +60,9 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor)
             var id = item.properties.id;
             var title = item.properties.title;
             var subWindow = addCalendar(title, items[id], onClick, navigationWindow);
-            navigationWindow.openWindow(subWindow, {
+            null == navigationWindow ? subWindow.open({
+                modal: true
+            }) : navigationWindow.openWindow(subWindow, {
                 animated: true
             });
         }) : listView.addEventListener("itemclick", function(e) {
@@ -68,7 +70,9 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor)
             var id = item.properties.id;
             var title = item.properties.title;
             var subWindow = addCalendarTime(title, items[id], onClick, navigationWindow);
-            navigationWindow.openWindow(subWindow, {
+            null == navigationWindow ? subWindow.open({
+                modal: true
+            }) : navigationWindow.openWindow(subWindow, {
                 animated: true
             });
         });
