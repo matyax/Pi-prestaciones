@@ -42,6 +42,7 @@ function Controller() {
             height: Ti.UI.FILL,
             width: "100%"
         });
+        var sectionView = createSectionView(eventData.accommodations_label + " - " + item.title);
         var titleLabel = Ti.UI.createLabel({
             color: eventData.styles.forecolor,
             font: {
@@ -62,16 +63,16 @@ function Controller() {
             text: item.description,
             top: 10,
             left: 10,
-            width: Ti.UI.SIZE,
+            width: "95%",
             height: Ti.UI.SIZE
         });
+        scrollView.add(sectionView);
         scrollView.add(titleLabel);
         scrollView.add(descriptionLabel);
         window.add(scrollView);
         return window;
     }
     function createAgendaDetailWindow(item) {
-        console.log(item);
         var window = Titanium.UI.createWindow({
             backgroundColor: eventData.styles.background,
             layout: "vertical",

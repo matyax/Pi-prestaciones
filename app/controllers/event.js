@@ -293,6 +293,10 @@ function createAccommodationDetailWindow(item) {
         width: '100%'
     });
     
+    var sectionView = createSectionView(
+        eventData.accommodations_label + ' - ' + item.title        
+    );
+    
     var titleLabel = Ti.UI.createLabel({
         color: eventData.styles.forecolor,
         font: { fontSize: 12 },
@@ -309,9 +313,10 @@ function createAccommodationDetailWindow(item) {
         text: item.description,
         top: 10,
         left: 10,
-        width: Ti.UI.SIZE, height: Ti.UI.SIZE
+        width: '95%', height: Ti.UI.SIZE
     });
-    
+
+    scrollView.add(sectionView);    
     scrollView.add(titleLabel);
     scrollView.add(descriptionLabel);
     
@@ -321,8 +326,6 @@ function createAccommodationDetailWindow(item) {
 }
 
 function createAgendaDetailWindow(item) {
-    
-    console.log(item);
     
     var window = Titanium.UI.createWindow({
         backgroundColor: eventData.styles.background,
