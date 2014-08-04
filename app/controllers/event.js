@@ -6,36 +6,9 @@ var loading = require('loadingWindow');
 
 var eventData = null, selectedEvent = data.get('event');
 
-if (selectedEvent.big_image) {
-    var bigEventWindow = Titanium.UI.createWindow();
-    var loadingView = Titanium.UI.createView({
-       layout: 'vertical',
-       top: 0,
-       backgroundImage: selectedEvent.big_image 
-    }); 
-    
-    bigEventWindow.add(loadingView);    
-    
-    hideWindowsForEventImage();
-    
-    bigEventWindow.show({
-        modal: true
-    })
-}
-
 loading.open();
 
 piApi.getEventDetail(function (event) {
-    
-    loading.close();
-    
-    if (selectedEvent.big_image) {
-        setTimeout(function () {
-            showWindowsAfterEventImage();
-        }, 5000);
-    }
-    
-    return;
     
     if (Titanium.Platform.osname == 'android') {
         event = JSON.parse('{"title":"Congreso Internacional de Prueba","address":"Vicente Gil 446","logo":"http:\/\/piprestaciones.com\/resources\/mobile\/events\/1.jpg","hashtag":"#congresoDePrueba","styles":{"background":"black","forecolor":"#e5e5e5","button_background":"#3b7183","button_foreground":"white"},"information_label":"Presentaci\u00f3n","information":"Lots of static text about this event. Lots of static text about this event. Lots of static text about this event. Lots of static text about this event. ","agenda_label":"Programa","agenda":{"headerTitle":"Especialidades","Psiquiatr\u00eda":{"headerTitle":"D\u00edas","Lunes 28":[{"id":"12","date":"2014-07-28","startTime":"12:00","endTime":"13:00","title":"Lunch","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"11","date":"2014-07-28","startTime":"12:00","endTime":"13:00","title":"Charla de algo","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}],"Martes 29":[{"id":"10","date":"2014-07-29","startTime":"14:00","endTime":"17:00","title":"Lunch","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"9","date":"2014-07-29","startTime":"15:00","endTime":"16:00","title":"Charla de algo","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}],"Mi\u00e9rcoles 30":[{"id":"8","date":"2014-07-30","startTime":"15:00","endTime":"16:00","title":"Lunch","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"7","date":"2014-07-30","startTime":"17:00","endTime":"18:00","title":"Charla de algo","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}]},"Ciruj\u00eda":{"Lunes 28":[{"id":"1","date":"2014-07-28","startTime":"12:00","endTime":"13:00","title":"Lunch","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"2","date":"2014-07-28","startTime":"12:00","endTime":"13:00","title":"Charla de algo","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}],"Martes 29":[{"id":"3","date":"2014-07-29","startTime":"14:00","endTime":"17:00","title":"Lunch","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"4","date":"2014-07-29","startTime":"15:00","endTime":"16:00","title":"Charla de algo","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}],"Mi\u00e9rcoles 30":[{"id":"5","date":"2014-07-30","startTime":"15:00","endTime":"16:00","title":"Lunch","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"6","date":"2014-07-30","startTime":"17:00","endTime":"18:00","title":"Charla de algo","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}]}},"accommodations_label":"Alojamientos recomendados","accommodations":[{"id":"1","title":"Hyatt","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"2","title":"Park Suites","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"3","title":"Aconcagua NH","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}],"form_label":"Inscripci\u00f3n","form":"http:\/\/piprestaciones.com\/f\/fvenoso2014","certificate_label":"Descarg\u00e1 tu certificado","certificate":"http:\/\/piprestaciones.com\/certificate\/bys\/","map_label":"Lugar del evento","map":{"lat":"-32.896958","lng":"-68.857484"}}');
@@ -54,14 +27,15 @@ piApi.getEventDetail(function (event) {
     /*
      * Set general styles
      */
-    if (Titanium.Platform.osname == 'ios') {
+    if (Titanium.Platform.osname == 'android') {
+        $.eventNavigationWindow.setTitle(event.title);
+        $.eventNavigationWindow.setBackgroundColor(event.styles.background);
+                
+    } else {
         $.eventWindow.setTitle(event.title);
         $.eventWindow.setBackgroundColor(event.styles.background);
         
-        windowReference = $.eventNavigationWindow;        
-    } else {
-        $.eventNavigationWindow.setTitle(event.title);
-        $.eventNavigationWindow.setBackgroundColor(event.styles.background);
+        windowReference = $.eventNavigationWindow;
     }
     
    
@@ -93,6 +67,7 @@ piApi.getEventDetail(function (event) {
             contentWidth: 'auto',
             contentHeight: 'auto',
             showVerticalScrollIndicator: true,
+            layout: 'vertical',
             height: Ti.UI.FILL,
             width: '100%'
         });
@@ -107,9 +82,12 @@ piApi.getEventDetail(function (event) {
             width: Ti.UI.SIZE, height: Ti.UI.SIZE
         });
         
-        informationWindow.add(informationScrollView);
+        var informationSectionView = createSectionView(label);
         
+        informationScrollView.add(informationSectionView);
         informationScrollView.add(informationLabel);
+        
+        informationWindow.add(informationScrollView);
         
         addEventMenuItem({
             label: label,
@@ -265,6 +243,8 @@ piApi.getEventDetail(function (event) {
             window: accommodationWindow
         });
     }
+    
+    loading.close();
 });
 
 function addEventMenuItem(item) {
@@ -342,12 +322,13 @@ function createAccommodationDetailWindow(item) {
 
 function createAgendaDetailWindow(item) {
     
+    console.log(item);
+    
     var window = Titanium.UI.createWindow({
         backgroundColor: eventData.styles.background,
         layout: 'vertical',
         title: item.title
     });
-    
     
     var scrollView =  Ti.UI.createScrollView({
         contentWidth: 'auto',
@@ -355,7 +336,25 @@ function createAgendaDetailWindow(item) {
         layout: 'vertical',
         showVerticalScrollIndicator: true,
         height: Ti.UI.FILL,
-        width: '90%'
+        width: '100%',
+        top: 0,
+        left: 0
+    });
+    
+    /* Title of section */
+    var sectionView = createSectionView(
+        eventData.agenda_label + ' ' + item.date + ' ' + item.startTime
+    );
+    
+    /* Event title */
+    var titleLabel = Ti.UI.createLabel({
+        color: eventData.styles.forecolor,
+        font: { fontSize: 12 },
+        text: item.title,
+        textAlign: 'left',
+        top: 10,
+        left: 10,
+        width: Titanium.Platform.displayCaps.platformWidth, height: Ti.UI.SIZE
     });
     
     var titleLabel = Ti.UI.createLabel({
@@ -368,7 +367,7 @@ function createAgendaDetailWindow(item) {
         width: Titanium.Platform.displayCaps.platformWidth, height: Ti.UI.SIZE
     });
     
-    var timeText = item.endTime ? item.startTime + ' - ' + item.endTime : item.startTime;
+    var timeText = item.endTime ? 'De ' + item.startTime + ' a ' + item.endTime + ' horas' : item.startTime + ' horas';
     
     var timeLabel = Ti.UI.createLabel({
         color: eventData.styles.forecolor,
@@ -384,8 +383,10 @@ function createAgendaDetailWindow(item) {
         text: item.description,
         top: 10,
         left: 10,
-        width: Ti.UI.SIZE, height: Ti.UI.SIZE
+        width: '95%', height: Ti.UI.SIZE
     });
+
+    scrollView.add(sectionView);
     
     scrollView.add(titleLabel);
     scrollView.add(timeLabel);
@@ -411,7 +412,7 @@ function searchItem(items, id) {
         } else {
             if ((items[i].id) && (items[i].id == id)) {
                 return items[i];
-            }            
+            }
         }
     }
     
@@ -426,21 +427,25 @@ function createEventWindow(title, backgroundColor) {
     });
 }
 
-/* For big event image */
-function hideWindowsForEventImage() {
-    if (Titanium.Platform.osname == 'android') {
-        $.eventNavigationWindow.hide();
-    } else {
-        $.eventNavigationWindow.hide();
-    }
-}
-
-function showWindowsAfterEventImage() {
-    bigEventWindow.hide();
+function createSectionView(title) {
+    var sectionView = Ti.UI.createView({
+        backgroundColor: eventData.styles.button_background,
+        width: '100%',
+        height: 25,
+        top: 0,
+        left: 0
+    });
     
-    if (Titanium.Platform.osname == 'android') {
-        $.eventNavigationWindow.show();
-    } else {
-        $.eventNavigationWindow.show();
-    }
+    var sectionLabel = Ti.UI.createLabel({
+        color: eventData.styles.button_foreground,
+        font: { fontSize: 12 },
+        text: title,
+        textAlign: 'left',
+        top: 5,
+        left: 10,
+    });
+    
+    sectionView.add(sectionLabel);
+    
+    return sectionView;
 }
