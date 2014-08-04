@@ -1,15 +1,41 @@
 var args = arguments[0] || {};
 
 var piApi = require('pi');
-
-var eventData = null;
-
+var data = require('data');
 var loading = require('loadingWindow');
+
+var eventData = null, selectedEvent = data.get('event');
+
+if (selectedEvent.big_image) {
+    var bigEventWindow = Titanium.UI.createWindow();
+    var loadingView = Titanium.UI.createView({
+       layout: 'vertical',
+       top: 0,
+       backgroundImage: selectedEvent.big_image 
+    }); 
+    
+    bigEventWindow.add(loadingView);    
+    
+    hideWindowsForEventImage();
+    
+    bigEventWindow.show({
+        modal: true
+    })
+}
 
 loading.open();
 
 piApi.getEventDetail(function (event) {
+    
     loading.close();
+    
+    if (selectedEvent.big_image) {
+        setTimeout(function () {
+            showWindowsAfterEventImage();
+        }, 5000);
+    }
+    
+    return;
     
     if (Titanium.Platform.osname == 'android') {
         event = JSON.parse('{"title":"Congreso Internacional de Prueba","address":"Vicente Gil 446","logo":"http:\/\/piprestaciones.com\/resources\/mobile\/events\/1.jpg","hashtag":"#congresoDePrueba","styles":{"background":"black","forecolor":"#e5e5e5","button_background":"#3b7183","button_foreground":"white"},"information_label":"Presentaci\u00f3n","information":"Lots of static text about this event. Lots of static text about this event. Lots of static text about this event. Lots of static text about this event. ","agenda_label":"Programa","agenda":{"headerTitle":"Especialidades","Psiquiatr\u00eda":{"headerTitle":"D\u00edas","Lunes 28":[{"id":"12","date":"2014-07-28","startTime":"12:00","endTime":"13:00","title":"Lunch","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"11","date":"2014-07-28","startTime":"12:00","endTime":"13:00","title":"Charla de algo","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}],"Martes 29":[{"id":"10","date":"2014-07-29","startTime":"14:00","endTime":"17:00","title":"Lunch","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"9","date":"2014-07-29","startTime":"15:00","endTime":"16:00","title":"Charla de algo","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}],"Mi\u00e9rcoles 30":[{"id":"8","date":"2014-07-30","startTime":"15:00","endTime":"16:00","title":"Lunch","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"7","date":"2014-07-30","startTime":"17:00","endTime":"18:00","title":"Charla de algo","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}]},"Ciruj\u00eda":{"Lunes 28":[{"id":"1","date":"2014-07-28","startTime":"12:00","endTime":"13:00","title":"Lunch","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"2","date":"2014-07-28","startTime":"12:00","endTime":"13:00","title":"Charla de algo","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}],"Martes 29":[{"id":"3","date":"2014-07-29","startTime":"14:00","endTime":"17:00","title":"Lunch","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"4","date":"2014-07-29","startTime":"15:00","endTime":"16:00","title":"Charla de algo","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}],"Mi\u00e9rcoles 30":[{"id":"5","date":"2014-07-30","startTime":"15:00","endTime":"16:00","title":"Lunch","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"6","date":"2014-07-30","startTime":"17:00","endTime":"18:00","title":"Charla de algo","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}]}},"accommodations_label":"Alojamientos recomendados","accommodations":[{"id":"1","title":"Hyatt","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"2","title":"Park Suites","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"3","title":"Aconcagua NH","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}],"form_label":"Inscripci\u00f3n","form":"http:\/\/piprestaciones.com\/f\/fvenoso2014","certificate_label":"Descarg\u00e1 tu certificado","certificate":"http:\/\/piprestaciones.com\/certificate\/bys\/","map_label":"Lugar del evento","map":{"lat":"-32.896958","lng":"-68.857484"}}');
@@ -239,7 +265,6 @@ piApi.getEventDetail(function (event) {
             window: accommodationWindow
         });
     }
-    
 });
 
 function addEventMenuItem(item) {
@@ -399,4 +424,23 @@ function createEventWindow(title, backgroundColor) {
         layout: 'vertical',
         title: title
     });
+}
+
+/* For big event image */
+function hideWindowsForEventImage() {
+    if (Titanium.Platform.osname == 'android') {
+        $.eventNavigationWindow.hide();
+    } else {
+        $.eventNavigationWindow.hide();
+    }
+}
+
+function showWindowsAfterEventImage() {
+    bigEventWindow.hide();
+    
+    if (Titanium.Platform.osname == 'android') {
+        $.eventNavigationWindow.show();
+    } else {
+        $.eventNavigationWindow.show();
+    }
 }

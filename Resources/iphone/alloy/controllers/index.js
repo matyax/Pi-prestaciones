@@ -64,6 +64,7 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     var piApi = require("pi");
+    var data = require("data");
     var loading = require("loadingWindow");
     $.index.open();
     loading.open();
@@ -98,6 +99,12 @@ function Controller() {
                 idEvent: events[i].id
             });
             button.addEventListener("click", function() {
+                var selectedEvent = null;
+                for (var i in events) if (events[i].id == this.idEvent) {
+                    selectedEvent = events[i];
+                    break;
+                }
+                data.set("event", selectedEvent);
                 var win = Alloy.createController("event").getView();
                 win.open({
                     animated: true

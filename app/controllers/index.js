@@ -1,5 +1,5 @@
 var piApi = require('pi');
-
+var data = require('data');
 var loading = require('loadingWindow');
 
 $.index.open();
@@ -56,7 +56,18 @@ piApi.loadEvents(function (events) {
         });
         
         button.addEventListener('click', function (e) {
+            var selectedEvent = null;
+            
             //this.idEvent
+            for (var i in events) {
+                if (events[i].id == this.idEvent) {
+                    selectedEvent = events[i];
+                    break; 
+                }
+            }
+            
+            data.set('event', selectedEvent);
+            
             var win = Alloy.createController('event').getView();
             win.open({
                 animated: true
