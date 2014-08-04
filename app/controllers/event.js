@@ -276,6 +276,39 @@ function addEventMenuItem(item) {
     $.eventView.add(button);
 }
 
+/* Event UI reusable functions */
+function createEventWindow(title, backgroundColor) {
+    return Titanium.UI.createWindow({
+        backgroundColor: backgroundColor,
+        layout: 'vertical',
+        title: title
+    });
+}
+
+function createSectionView(title) {
+    var sectionView = Ti.UI.createView({
+        backgroundColor: eventData.styles.button_background,
+        width: '100%',
+        height: 25,
+        top: 0,
+        left: 0
+    });
+    
+    var sectionLabel = Ti.UI.createLabel({
+        color: eventData.styles.button_foreground,
+        font: { fontSize: 12 },
+        text: title,
+        textAlign: 'left',
+        top: 5,
+        left: 10,
+    });
+    
+    sectionView.add(sectionLabel);
+    
+    return sectionView;
+}
+
+/* Accommodations detail */
 function createAccommodationDetailWindow(item) {
     
     var window = Titanium.UI.createWindow({
@@ -325,13 +358,17 @@ function createAccommodationDetailWindow(item) {
     return window; 
 }
 
+/* Agenda detail */
 function createAgendaDetailWindow(item) {
     
     var window = Titanium.UI.createWindow({
         backgroundColor: eventData.styles.background,
-        layout: 'vertical',
         title: item.title
     });
+    
+    window.add(
+        createAgendaShareView()
+    );
     
     var scrollView =  Ti.UI.createScrollView({
         contentWidth: 'auto',
@@ -400,6 +437,35 @@ function createAgendaDetailWindow(item) {
     return window; 
 }
 
+function createAgendaShareView() {
+    var shareView = Ti.UI.createView({
+        layout: 'horizontal',
+        width: '100%',
+        height: Ti.UI.SIZE,
+        left: 0,
+        bottom: 10
+    });
+    
+    var favorite = Ti.UI.createImageView({
+        image: '/icons/favorite.png',
+        width: '64px',
+        height: '64px',
+        left: 10
+    });
+    
+    var tweet = Ti.UI.createImageView({
+        image: '/icons/twitter.png',
+        width: '64px',
+        height: '64px',
+        left: 10
+    });
+    
+    shareView.add(favorite);
+    shareView.add(tweet);
+    
+    return shareView;
+}
+
 function searchItem(items, id) {
     var item = null;
     
@@ -420,35 +486,4 @@ function searchItem(items, id) {
     }
     
     return null;
-}
-
-function createEventWindow(title, backgroundColor) {
-    return Titanium.UI.createWindow({
-        backgroundColor: backgroundColor,
-        layout: 'vertical',
-        title: title
-    });
-}
-
-function createSectionView(title) {
-    var sectionView = Ti.UI.createView({
-        backgroundColor: eventData.styles.button_background,
-        width: '100%',
-        height: 25,
-        top: 0,
-        left: 0
-    });
-    
-    var sectionLabel = Ti.UI.createLabel({
-        color: eventData.styles.button_foreground,
-        font: { fontSize: 12 },
-        text: title,
-        textAlign: 'left',
-        top: 5,
-        left: 10,
-    });
-    
-    sectionView.add(sectionLabel);
-    
-    return sectionView;
 }

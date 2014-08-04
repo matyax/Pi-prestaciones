@@ -28,6 +28,34 @@ function Controller() {
         });
         $.eventView.add(button);
     }
+    function createEventWindow(title, backgroundColor) {
+        return Titanium.UI.createWindow({
+            backgroundColor: backgroundColor,
+            layout: "vertical",
+            title: title
+        });
+    }
+    function createSectionView(title) {
+        var sectionView = Ti.UI.createView({
+            backgroundColor: eventData.styles.button_background,
+            width: "100%",
+            height: 25,
+            top: 0,
+            left: 0
+        });
+        var sectionLabel = Ti.UI.createLabel({
+            color: eventData.styles.button_foreground,
+            font: {
+                fontSize: 12
+            },
+            text: title,
+            textAlign: "left",
+            top: 5,
+            left: 10
+        });
+        sectionView.add(sectionLabel);
+        return sectionView;
+    }
     function createAccommodationDetailWindow(item) {
         var window = Titanium.UI.createWindow({
             backgroundColor: eventData.styles.background,
@@ -75,9 +103,9 @@ function Controller() {
     function createAgendaDetailWindow(item) {
         var window = Titanium.UI.createWindow({
             backgroundColor: eventData.styles.background,
-            layout: "vertical",
             title: item.title
         });
+        window.add(createAgendaShareView());
         var scrollView = Ti.UI.createScrollView({
             contentWidth: "auto",
             contentHeight: "auto",
@@ -142,6 +170,30 @@ function Controller() {
         window.add(scrollView);
         return window;
     }
+    function createAgendaShareView() {
+        var shareView = Ti.UI.createView({
+            layout: "horizontal",
+            width: "100%",
+            height: Ti.UI.SIZE,
+            left: 0,
+            bottom: 10
+        });
+        var favorite = Ti.UI.createImageView({
+            image: "/icons/favorite.png",
+            width: "64px",
+            height: "64px",
+            left: 10
+        });
+        var tweet = Ti.UI.createImageView({
+            image: "/icons/twitter.png",
+            width: "64px",
+            height: "64px",
+            left: 10
+        });
+        shareView.add(favorite);
+        shareView.add(tweet);
+        return shareView;
+    }
     function searchItem(items, id) {
         var item = null;
         for (var i in items) {
@@ -152,34 +204,6 @@ function Controller() {
             } else if (items[i].id && items[i].id == id) return items[i];
         }
         return null;
-    }
-    function createEventWindow(title, backgroundColor) {
-        return Titanium.UI.createWindow({
-            backgroundColor: backgroundColor,
-            layout: "vertical",
-            title: title
-        });
-    }
-    function createSectionView(title) {
-        var sectionView = Ti.UI.createView({
-            backgroundColor: eventData.styles.button_background,
-            width: "100%",
-            height: 25,
-            top: 0,
-            left: 0
-        });
-        var sectionLabel = Ti.UI.createLabel({
-            color: eventData.styles.button_foreground,
-            font: {
-                fontSize: 12
-            },
-            text: title,
-            textAlign: "left",
-            top: 5,
-            left: 10
-        });
-        sectionView.add(sectionLabel);
-        return sectionView;
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "event";
