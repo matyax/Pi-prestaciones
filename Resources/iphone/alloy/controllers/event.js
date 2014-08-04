@@ -173,21 +173,24 @@ function Controller() {
     function createAgendaShareView() {
         var shareView = Ti.UI.createView({
             layout: "horizontal",
+            backgroundColor: eventData.styles.share_background,
             width: "100%",
-            height: Ti.UI.SIZE,
+            height: "74px",
             left: 0,
-            bottom: 10
+            bottom: 0
         });
         var favorite = Ti.UI.createImageView({
             image: "/icons/favorite.png",
             width: "64px",
             height: "64px",
+            top: "5px",
             left: 10
         });
         var tweet = Ti.UI.createImageView({
             image: "/icons/twitter.png",
             width: "64px",
             height: "64px",
+            top: "5px",
             left: 10
         });
         shareView.add(favorite);
