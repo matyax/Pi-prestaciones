@@ -289,14 +289,14 @@ function createSectionView(title) {
     var sectionView = Ti.UI.createView({
         backgroundColor: eventData.styles.button_background,
         width: '100%',
-        height: 25,
+        height: 30,
         top: 0,
         left: 0
     });
     
     var sectionLabel = Ti.UI.createLabel({
         color: eventData.styles.button_foreground,
-        font: { fontSize: 12 },
+        font: { fontSize: 14 },
         text: title,
         textAlign: 'left',
         top: 5,
