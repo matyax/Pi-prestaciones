@@ -270,6 +270,8 @@ function addEventMenuItem(item) {
         width: Ti.UI.FILL,
         height: 40,
         textAlign: 'left',
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
         borderWidth: 0,
         color: eventData.styles.button_foreground,
         top: 0,
