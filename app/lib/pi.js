@@ -1,17 +1,39 @@
 var rest = require('rest');
 var API_DOMAIN = 'http://dev.congresstools.com';
 
+var eventsResponse = null;
+
 exports.loadEvents = function (callback) {
+    if (eventsResponse) {
+        callback(eventsResponse);
+        
+        return;
+    }
+    
     rest.get(API_DOMAIN + '/congressApi/events', {
         success: function (response) {
+            eventsResponse = response;
+            
             callback(response);
         }
     });
 };
 
-exports.getEventDetail = function (callback) {
-    rest.get(API_DOMAIN + '/congressApi/eventDetail', {
+var eventResponse = {
+    
+};
+
+exports.getEventDetail = function (idEvent, callback) {
+    if (eventResponse[idEvent]) {
+        callback(eventResponse[idEvent]);
+        
+        return;
+    }
+    
+    rest.get(API_DOMAIN + '/congressApi/eventDetail?id=' + idEvent, {
         success: function (response) {
+            eventResponse[idEvent] = response;
+            
             callback(response);
         }
     });

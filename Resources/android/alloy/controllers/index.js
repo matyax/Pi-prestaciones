@@ -105,9 +105,14 @@ function Controller() {
                     break;
                 }
                 data.set("event", selectedEvent);
-                var win = Alloy.createController("event").getView();
-                win.open({
-                    animated: true
+                loading.open();
+                piApi.getEventDetail(selectedEvent.id, function(eventData) {
+                    loading.close();
+                    data.set("eventData", eventData);
+                    var win = Alloy.createController("event").getView();
+                    win.open({
+                        animated: true
+                    });
                 });
             });
             $.eventsView.add(button);
