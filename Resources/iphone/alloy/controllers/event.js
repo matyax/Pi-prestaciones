@@ -11,14 +11,30 @@ function Controller() {
     function addEventMenuItem(item) {
         var button = Titanium.UI.createButton({
             title: item.label,
-            top: 1,
-            width: "100%",
+            width: Ti.UI.FILL,
             height: 40,
             textAlign: "left",
             borderWidth: 0,
-            backgroundColor: eventData.styles.button_background,
-            color: eventData.styles.button_foreground
+            color: eventData.styles.button_foreground,
+            top: 0,
+            left: 5
         });
+        var icon = Ti.UI.createImageView({
+            image: "/icons/" + item.icon + ".png",
+            width: 30,
+            height: 30,
+            left: 10,
+            top: 5
+        });
+        var view = Titanium.UI.createView({
+            layout: "horizontal",
+            top: 1,
+            width: "100%",
+            height: 40,
+            backgroundColor: eventData.styles.button_background
+        });
+        view.add(icon);
+        view.add(button);
         item.onClick ? button.addEventListener("click", item.onClick) : item.window && button.addEventListener("click", function() {
             "android" == Titanium.Platform.osname ? item.window.open({
                 modal: true
@@ -26,7 +42,7 @@ function Controller() {
                 animated: true
             });
         });
-        $.eventView.add(button);
+        $.eventView.add(view);
     }
     function createEventWindow(title, backgroundColor) {
         return Titanium.UI.createWindow({
@@ -244,7 +260,7 @@ function Controller() {
     piApi.getEventDetail(function(event) {
         "android" == Titanium.Platform.osname && (event = JSON.parse('{"title":"Congreso Internacional de Prueba","address":"Vicente Gil 446","logo":"http://piprestaciones.com/resources/mobile/events/1.jpg","hashtag":"#congresoDePrueba","styles":{"background":"black","forecolor":"#e5e5e5","button_background":"#3b7183","button_foreground":"white"},"information_label":"Presentación","information":"Lots of static text about this event. Lots of static text about this event. Lots of static text about this event. Lots of static text about this event. ","agenda_label":"Programa","agenda":{"headerTitle":"Especialidades","Psiquiatría":{"headerTitle":"Días","Lunes 28":[{"id":"12","date":"2014-07-28","startTime":"12:00","endTime":"13:00","title":"Lunch","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"11","date":"2014-07-28","startTime":"12:00","endTime":"13:00","title":"Charla de algo","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}],"Martes 29":[{"id":"10","date":"2014-07-29","startTime":"14:00","endTime":"17:00","title":"Lunch","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"9","date":"2014-07-29","startTime":"15:00","endTime":"16:00","title":"Charla de algo","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}],"Miércoles 30":[{"id":"8","date":"2014-07-30","startTime":"15:00","endTime":"16:00","title":"Lunch","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"7","date":"2014-07-30","startTime":"17:00","endTime":"18:00","title":"Charla de algo","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}]},"Cirujía":{"Lunes 28":[{"id":"1","date":"2014-07-28","startTime":"12:00","endTime":"13:00","title":"Lunch","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"2","date":"2014-07-28","startTime":"12:00","endTime":"13:00","title":"Charla de algo","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}],"Martes 29":[{"id":"3","date":"2014-07-29","startTime":"14:00","endTime":"17:00","title":"Lunch","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"4","date":"2014-07-29","startTime":"15:00","endTime":"16:00","title":"Charla de algo","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}],"Miércoles 30":[{"id":"5","date":"2014-07-30","startTime":"15:00","endTime":"16:00","title":"Lunch","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"6","date":"2014-07-30","startTime":"17:00","endTime":"18:00","title":"Charla de algo","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}]}},"accommodations_label":"Alojamientos recomendados","accommodations":[{"id":"1","title":"Hyatt","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"2","title":"Park Suites","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"},{"id":"3","title":"Aconcagua NH","description":"Lots of static text about this event. Lots of static textLots of static text about this event. Lots of static text"}],"form_label":"Inscripción","form":"http://piprestaciones.com/f/fvenoso2014","certificate_label":"Descargá tu certificado","certificate":"http://piprestaciones.com/certificate/bys/","map_label":"Lugar del evento","map":{"lat":"-32.896958","lng":"-68.857484"}}'));
         if (!event) {
-            $.event.close();
+            $.eventNavigationWindow.close();
             return;
         }
         eventData = event;
@@ -264,6 +280,13 @@ function Controller() {
         });
         $.eventView.add(image);
         var label = "";
+        addEventMenuItem({
+            icon: "home",
+            label: "Inicio",
+            onClick: function() {
+                $.eventNavigationWindow.close();
+            }
+        });
         if (event.information) {
             label = event.information_label || "Presentación";
             var informationWindow = createEventWindow(label, event.styles.background);
@@ -292,6 +315,7 @@ function Controller() {
             informationScrollView.add(informationLabel);
             informationWindow.add(informationScrollView);
             addEventMenuItem({
+                icon: "information",
                 label: label,
                 window: informationWindow
             });
@@ -309,6 +333,7 @@ function Controller() {
             var calendar = require("listNavigation");
             var agendaWindow = calendar.add(label, event.agenda, agendaOnclick, windowReference, event.styles.background);
             addEventMenuItem({
+                icon: "agenda",
                 label: label,
                 window: agendaWindow
             });
@@ -321,6 +346,7 @@ function Controller() {
             });
             formWindow.add(formWebView);
             addEventMenuItem({
+                icon: "form",
                 label: label,
                 window: formWindow
             });
@@ -333,6 +359,7 @@ function Controller() {
             });
             cwWindow.add(cwWebView);
             addEventMenuItem({
+                icon: "certificate",
                 label: label,
                 window: cwWindow
             });
@@ -368,6 +395,7 @@ function Controller() {
             });
             mapWindow.add(map);
             addEventMenuItem({
+                icon: "map",
                 label: label,
                 window: mapWindow
             });
@@ -385,6 +413,7 @@ function Controller() {
             var accommodationNavigation = require("listNavigation");
             var accommodationWindow = accommodationNavigation.add(label, event.accommodations, accommodationOnclick, windowReference, event.styles.background);
             addEventMenuItem({
+                icon: "accommodation",
                 label: label,
                 window: accommodationWindow
             });

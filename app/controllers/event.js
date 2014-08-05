@@ -15,7 +15,7 @@ piApi.getEventDetail(function (event) {
     }
     
     if (! event) {
-        $.event.close();
+        $.eventNavigationWindow.close();
         
         return;
     }
@@ -56,6 +56,17 @@ piApi.getEventDetail(function (event) {
     var label = '';
     
     /*
+     * Home button
+     */
+    addEventMenuItem({
+        icon: 'home',
+        label: 'Inicio',
+        onClick: function () {
+            $.eventNavigationWindow.close();
+        }
+    });
+    
+    /*
      * Information
      */
     if (event.information) {
@@ -90,6 +101,7 @@ piApi.getEventDetail(function (event) {
         informationWindow.add(informationScrollView);
         
         addEventMenuItem({
+            icon: 'information',
             label: label,
             window: informationWindow
         });
@@ -124,6 +136,7 @@ piApi.getEventDetail(function (event) {
         );
         
         addEventMenuItem({
+            icon: 'agenda',
             label: label,
             window: agendaWindow
         });
@@ -144,6 +157,7 @@ piApi.getEventDetail(function (event) {
         formWindow.add(formWebView);
         
         addEventMenuItem({
+            icon: 'form',
             label: label,
             window: formWindow
         });
@@ -164,6 +178,7 @@ piApi.getEventDetail(function (event) {
         cwWindow.add(cwWebView);
         
         addEventMenuItem({
+            icon: 'certificate',
             label: label,
             window: cwWindow
         });
@@ -205,6 +220,7 @@ piApi.getEventDetail(function (event) {
         mapWindow.add(map);
         
         addEventMenuItem({
+            icon: 'map',
             label: label,
             window: mapWindow
         });
@@ -239,6 +255,7 @@ piApi.getEventDetail(function (event) {
         );
         
         addEventMenuItem({
+            icon: 'accommodation',
             label: label,
             window: accommodationWindow
         });
@@ -250,14 +267,33 @@ piApi.getEventDetail(function (event) {
 function addEventMenuItem(item) {
     var button = Titanium.UI.createButton({
         title: item.label,
-        top: 1,
-        width: '100%',
+        width: Ti.UI.FILL,
         height: 40,
         textAlign: 'left',
         borderWidth: 0,
-        backgroundColor: eventData.styles.button_background,
-        color: eventData.styles.button_foreground
+        color: eventData.styles.button_foreground,
+        top: 0,
+        left: 5
     });
+    
+    var icon = Ti.UI.createImageView({
+        image: '/icons/' + item.icon + '.png',
+        width: 30,
+        height: 30,
+        left: 10,
+        top: 5
+    });
+    
+    var view = Titanium.UI.createView({
+        layout: 'horizontal',
+        top: 1,
+        width: '100%',
+        height: 40,
+        backgroundColor: eventData.styles.button_background,   
+    });
+    
+    view.add(icon);
+    view.add(button);
     
     if (item.onClick) {
         button.addEventListener('click', item.onClick);
@@ -273,7 +309,7 @@ function addEventMenuItem(item) {
         });
     }
     
-    $.eventView.add(button);
+    $.eventView.add(view);
 }
 
 /* Event UI reusable functions */
