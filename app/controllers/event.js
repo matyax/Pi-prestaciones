@@ -400,10 +400,6 @@ function createAgendaDetailWindow(item) {
         title: item.title
     });
     
-    window.add(
-        createAgendaShareView()
-    );
-    
     var scrollView =  Ti.UI.createScrollView({
         contentWidth: 'auto',
         contentHeight: 'auto',
@@ -412,8 +408,13 @@ function createAgendaDetailWindow(item) {
         height: Ti.UI.FILL,
         width: '100%',
         top: 0,
-        left: 0
+        left: 0,
+        zIndex: 1
     });
+    
+    window.add(
+        createAgendaShareView(item)
+    );
     
     /* Title of section */
     var sectionView = createSectionView(
@@ -471,18 +472,19 @@ function createAgendaDetailWindow(item) {
     return window; 
 }
 
-function createAgendaShareView() {
+function createAgendaShareView(item) {
     var shareView = Ti.UI.createView({
         layout: 'horizontal',
         backgroundColor: eventData.styles.share_background,
         width: '100%',
         height: '74px',
         left: 0,
-        bottom: 0
+        bottom: 0,
+        zIndex: 2
     });
     
-    var favorite = Ti.UI.createImageView({
-        image: '/icons/favorite.png',
+    var favoriteButton = Titanium.UI.createButton({
+        backgroundImage: '/icons/favorite.png',
         width: '64px',
         height: '64px',
         top: '5px',
@@ -497,7 +499,46 @@ function createAgendaShareView() {
         left: 10
     });
     
-    shareView.add(favorite);
+    tweet.addEventListener('click', function (e) {
+        Titanium.API.info("You clicked the button");        
+    });
+    
+    favoriteButton.addEventListener('click', function(e) {
+        var favorites = Alloy.createCollection('favorite'),
+            favorite = null;
+        
+        var favorites = Alloy.createCollection('favorite');
+        favorites.fetch();
+        
+        var exists = false;
+        
+        favorites.map(function (favorite) {
+            if (favorite.get('idAgendaItem') == item.id) {
+                exists = true;
+            }
+        });
+        
+        if (exists) {
+            alert('El item ya existe en tus favoritos.');
+            
+            return;
+        }
+        
+        favorite = Alloy.createModel('favorite', {
+            idAgendaItem: item.id,
+            title: item.title,
+            description: item.description,
+            date: item.date,
+            startTime: item.startTime,
+            endTime: item.endTime,
+        }); 
+        
+        favorite.save();
+                
+        alert('Agregado a favoritos.');
+    });
+    
+    shareView.add(favoriteButton);
     shareView.add(tweet);
     
     return shareView;
