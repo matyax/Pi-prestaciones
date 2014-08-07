@@ -527,7 +527,9 @@ function createAgendaShareView(item) {
     });
     
     tweet.addEventListener('click', function (e) {
-        Titanium.API.info("You clicked the button");        
+        var social = require('social');
+        
+        social.tweet(eventData, item);        
     });
     
     favoriteButton.addEventListener('click', function(e) {

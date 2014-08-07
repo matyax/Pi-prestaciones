@@ -392,7 +392,8 @@ function Controller() {
             left: 10
         });
         tweet.addEventListener("click", function() {
-            Titanium.API.info("You clicked the button");
+            var social = require("social");
+            social.tweet(eventData, item);
         });
         favoriteButton.addEventListener("click", function() {
             var favorites = require("favorites");
