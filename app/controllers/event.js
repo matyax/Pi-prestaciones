@@ -34,6 +34,7 @@ function generateEventWindow(event) {
         windowReference = $.eventNavigationWindow;
     }
     
+    data.set('windowReference', windowReference);
    
     /*
      * Add Logo
@@ -223,6 +224,19 @@ function generateEventWindow(event) {
     }
     
     /*
+     * Favorites
+     */
+    if (event.agenda) {
+        label = event.favorites_label || 'Favoritos';
+        
+        addEventMenuItem({
+            icon: 'favorite',
+            label: label,
+            controller: 'favorite'
+        });
+    }
+    
+    /*
      * Accommodations
      */
     if (event.accommodations) {
@@ -292,6 +306,10 @@ function addEventMenuItem(item) {
     
     view.add(icon);
     view.add(button);
+    
+    if (item.controller) {
+        item.window = Alloy.createController('favorite').getView();
+    }
     
     if (item.onClick) {
         button.addEventListener('click', item.onClick);
@@ -507,7 +525,6 @@ function createAgendaShareView(item) {
         var favorites = Alloy.createCollection('favorite'),
             favorite = null;
         
-        var favorites = Alloy.createCollection('favorite');
         favorites.fetch();
         
         var exists = false;

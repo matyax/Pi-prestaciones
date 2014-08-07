@@ -24,6 +24,7 @@ function Controller() {
             $.eventWindow.setBackgroundColor(event.styles.background);
             windowReference = $.eventNavigationWindow;
         }
+        data.set("windowReference", windowReference);
         var image = Ti.UI.createImageView({
             image: event.logo,
             width: "100%",
@@ -151,6 +152,14 @@ function Controller() {
                 window: mapWindow
             });
         }
+        if (event.agenda) {
+            label = event.favorites_label || "Favoritos";
+            addEventMenuItem({
+                icon: "favorite",
+                label: label,
+                controller: "favorite"
+            });
+        }
         if (event.accommodations) {
             label = event.accommodations_label || "Agenda";
             var accommodationOnclick = function(id) {
@@ -199,6 +208,7 @@ function Controller() {
         });
         view.add(icon);
         view.add(button);
+        item.controller && (item.window = Alloy.createController("favorite").getView());
         item.onClick ? button.addEventListener("click", item.onClick) : item.window && button.addEventListener("click", function() {
             "android" == Titanium.Platform.osname ? item.window.open({
                 modal: true
@@ -380,7 +390,6 @@ function Controller() {
         });
         favoriteButton.addEventListener("click", function() {
             var favorites = Alloy.createCollection("favorite"), favorite = null;
-            var favorites = Alloy.createCollection("favorite");
             favorites.fetch();
             var exists = false;
             favorites.map(function(favorite) {

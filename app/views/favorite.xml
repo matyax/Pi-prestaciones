@@ -1,0 +1,9 @@
+<Alloy>
+    <Window id="favoriteWindow" title="Lista">
+        <View id="favoriteView" class="container">
+            <ListView id="list">
+                
+            </ListView>
+        </View>
+    </Window>
+</Alloy>
