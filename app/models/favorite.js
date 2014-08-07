@@ -1,6 +1,8 @@
     exports.definition = {
 	config: {
 		columns: {
+		    "id": "INTEGER PRIMARY KEY AUTOINCREMENT",
+		    "idEvent": "INTEGER",
 		    "idAgendaItem": "INTEGER",
 		    "title": "TEXT",
 		    "startTime": "TEXT",
@@ -9,7 +11,8 @@
 		},
 		adapter: {
 			type: "sql",
-			collection_name: "favorite"
+			collection_name: "favorite",
+			idAttribute: "id"
 		}
 	},
 	extendModel: function(Model) {

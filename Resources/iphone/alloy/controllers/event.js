@@ -389,26 +389,8 @@ function Controller() {
             Titanium.API.info("You clicked the button");
         });
         favoriteButton.addEventListener("click", function() {
-            var favorites = Alloy.createCollection("favorite"), favorite = null;
-            favorites.fetch();
-            var exists = false;
-            favorites.map(function(favorite) {
-                favorite.get("idAgendaItem") == item.id && (exists = true);
-            });
-            if (exists) {
-                alert("El item ya existe en tus favoritos.");
-                return;
-            }
-            favorite = Alloy.createModel("favorite", {
-                idAgendaItem: item.id,
-                title: item.title,
-                description: item.description,
-                date: item.date,
-                startTime: item.startTime,
-                endTime: item.endTime
-            });
-            favorite.save();
-            alert("Agregado a favoritos.");
+            var favorites = require("favorites");
+            favorites.toggle(eventData.id_event, item);
         });
         shareView.add(favoriteButton);
         shareView.add(tweet);

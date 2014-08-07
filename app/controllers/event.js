@@ -522,37 +522,9 @@ function createAgendaShareView(item) {
     });
     
     favoriteButton.addEventListener('click', function(e) {
-        var favorites = Alloy.createCollection('favorite'),
-            favorite = null;
+        var favorites = require('favorites');
         
-        favorites.fetch();
-        
-        var exists = false;
-        
-        favorites.map(function (favorite) {
-            if (favorite.get('idAgendaItem') == item.id) {
-                exists = true;
-            }
-        });
-        
-        if (exists) {
-            alert('El item ya existe en tus favoritos.');
-            
-            return;
-        }
-        
-        favorite = Alloy.createModel('favorite', {
-            idAgendaItem: item.id,
-            title: item.title,
-            description: item.description,
-            date: item.date,
-            startTime: item.startTime,
-            endTime: item.endTime,
-        }); 
-        
-        favorite.save();
-                
-        alert('Agregado a favoritos.');
+        favorites.toggle(eventData.id_event, item);
     });
     
     shareView.add(favoriteButton);

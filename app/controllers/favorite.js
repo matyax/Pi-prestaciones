@@ -3,7 +3,8 @@ var args = arguments[0] || {};
 var data            = require('data'),
     eventData       = data.get('eventData'),
     title           = eventData.favorites_label || 'Favoritos',
-    windowReference = data.get('windowReference'); 
+    windowReference = data.get('windowReference'),
+    section         = null;
     
 $.favoriteWindow.setTitle(title);
 
@@ -11,12 +12,13 @@ refreshList();
 
 function refreshList(clear) {
     if (clear == true) {
-        $.list.deleteSectionAt(0);        
+        $.list.deleteSectionAt(0);
+        
+        $.list.removeEventListener('itemclick', itemClicked);
     }
     
     var sections    = [],
         dataSet     = [],
-        section     = Ti.UI.createListSection(),
         favorites   = favorites = Alloy.createCollection('favorite');
         
     favorites.fetch();
@@ -29,13 +31,20 @@ function refreshList(clear) {
             } 
         });
     });
+    
+    console.log(dataSet);
+    
+    section = Ti.UI.createListSection(), 
         
     section.setItems(dataSet);
     sections.push(section);
     
     $.list.setSections(sections);
     
-    $.list.addEventListener('itemclick', function (e) {
+    $.list.addEventListener('itemclick', itemClicked);
+}
+
+function itemClicked(e) {
         var item = section.getItemAt(e.itemIndex);
         
         var item = getFavorite(item.properties.id);
@@ -49,8 +58,7 @@ function refreshList(clear) {
         } else {
             windowReference.openWindow(window, { animated:true });
         }
-    });
-}
+    }
 
 function getFavorite(id) {
     var favorites   = favorites = Alloy.createCollection('favorite');
@@ -187,37 +195,9 @@ function createAgendaShareView(item) {
     });
     
     favoriteButton.addEventListener('click', function(e) {
-        var favorites = Alloy.createCollection('favorite'),
-            favorite = null;
+        var favorites = require('favorites');
         
-        favorites.fetch();
-        
-        var exists = false;
-        
-        favorites.map(function (favorite) {
-            if (favorite.get('idAgendaItem') == item.id) {
-                favorite.destroy();
-                
-                exists = true;
-            }
-        });
-        
-        if (exists) {
-            alert('Item removido de favoritos.');
-        } else {
-            favorite = Alloy.createModel('favorite', {
-                idAgendaItem: item.id,
-                title: item.title,
-                description: item.description,
-                date: item.date,
-                startTime: item.startTime,
-                endTime: item.endTime,
-            }); 
-            
-            favorite.save();
-                    
-            alert('Agregado a favoritos.');
-        }
+        favorites.toggle(eventData.id_event, item);
         
         refreshList(true);
     });

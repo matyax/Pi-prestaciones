@@ -9,8 +9,11 @@ function __processArg(obj, key) {
 
 function Controller() {
     function refreshList(clear) {
-        true == clear && $.list.deleteSectionAt(0);
-        var sections = [], dataSet = [], section = Ti.UI.createListSection(), favorites = favorites = Alloy.createCollection("favorite");
+        if (true == clear) {
+            $.list.deleteSectionAt(0);
+            $.list.removeEventListener("itemclick", itemClicked);
+        }
+        var sections = [], dataSet = [], favorites = favorites = Alloy.createCollection("favorite");
         favorites.fetch();
         favorites.map(function(favorite) {
             dataSet.push({
@@ -20,18 +23,20 @@ function Controller() {
                 }
             });
         });
-        section.setItems(dataSet);
+        console.log(dataSet);
+        section = Ti.UI.createListSection(), section.setItems(dataSet);
         sections.push(section);
         $.list.setSections(sections);
-        $.list.addEventListener("itemclick", function(e) {
-            var item = section.getItemAt(e.itemIndex);
-            var item = getFavorite(item.properties.id);
-            var window = createAgendaDetailWindow(item);
-            "android" == Titanium.Platform.osname ? window.open({
-                modal: true
-            }) : windowReference.openWindow(window, {
-                animated: true
-            });
+        $.list.addEventListener("itemclick", itemClicked);
+    }
+    function itemClicked(e) {
+        var item = section.getItemAt(e.itemIndex);
+        var item = getFavorite(item.properties.id);
+        var window = createAgendaDetailWindow(item);
+        "android" == Titanium.Platform.osname ? window.open({
+            modal: true
+        }) : windowReference.openWindow(window, {
+            animated: true
         });
     }
     function getFavorite(id) {
@@ -149,27 +154,8 @@ function Controller() {
             Titanium.API.info("You clicked the button");
         });
         favoriteButton.addEventListener("click", function() {
-            var favorites = Alloy.createCollection("favorite"), favorite = null;
-            favorites.fetch();
-            var exists = false;
-            favorites.map(function(favorite) {
-                if (favorite.get("idAgendaItem") == item.id) {
-                    favorite.destroy();
-                    exists = true;
-                }
-            });
-            if (exists) alert("Item removido de favoritos."); else {
-                favorite = Alloy.createModel("favorite", {
-                    idAgendaItem: item.id,
-                    title: item.title,
-                    description: item.description,
-                    date: item.date,
-                    startTime: item.startTime,
-                    endTime: item.endTime
-                });
-                favorite.save();
-                alert("Agregado a favoritos.");
-            }
+            var favorites = require("favorites");
+            favorites.toggle(eventData.id_event, item);
             refreshList(true);
         });
         shareView.add(favoriteButton);
@@ -223,7 +209,7 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     arguments[0] || {};
-    var data = require("data"), eventData = data.get("eventData"), title = eventData.favorites_label || "Favoritos", windowReference = data.get("windowReference");
+    var data = require("data"), eventData = data.get("eventData"), title = eventData.favorites_label || "Favoritos", windowReference = data.get("windowReference"), section = null;
     $.favoriteWindow.setTitle(title);
     refreshList();
     _.extend($, exports);
