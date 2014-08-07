@@ -15,7 +15,12 @@ function Controller() {
         }
         var sections = [], dataSet = [], favorites = favorites = Alloy.createCollection("favorite");
         favorites.fetch();
-        favorites.map(function(favorite) {
+        section = Ti.UI.createListSection(), favorites.map(function(favorite) {
+            if (!favorite.get("idAgendaItem")) {
+                favorite.destroy();
+                return;
+            }
+            console.log(favorite.get("idAgendaItem") + ": " + favorite.get("title"));
             dataSet.push({
                 properties: {
                     title: favorite.get("title"),
@@ -23,16 +28,14 @@ function Controller() {
                 }
             });
         });
-        console.log(dataSet);
-        section = Ti.UI.createListSection(), section.setItems(dataSet);
+        section.setItems(dataSet);
         sections.push(section);
         $.list.setSections(sections);
         $.list.addEventListener("itemclick", itemClicked);
     }
     function itemClicked(e) {
-        var item = section.getItemAt(e.itemIndex);
-        var item = getFavorite(item.properties.id);
-        var window = createAgendaDetailWindow(item);
+        var clickedItem = section.getItemAt(e.itemIndex);
+        var window = createAgendaDetailWindow(getFavorite(clickedItem.properties.id));
         "android" == Titanium.Platform.osname ? window.open({
             modal: true
         }) : windowReference.openWindow(window, {
@@ -45,7 +48,7 @@ function Controller() {
         var item = null;
         favorites.map(function(favorite) {
             favorite.get("idAgendaItem") == id && (item = {
-                idAgendaItem: favorite.get("idAgendaItem"),
+                id: favorite.get("idAgendaItem"),
                 title: favorite.get("title"),
                 description: favorite.get("description"),
                 date: favorite.get("date"),

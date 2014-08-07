@@ -308,10 +308,19 @@ function addEventMenuItem(item) {
     view.add(button);
     
     if (item.controller) {
-        item.window = Alloy.createController('favorite').getView();
-    }
-    
-    if (item.onClick) {
+        button.addEventListener('click', function () {
+            var window = Alloy.createController(item.controller).getView();
+            
+            if (Titanium.Platform.osname == 'android') {
+                window.open({
+                    modal: true
+                });
+            } else {
+                $.eventNavigationWindow.openWindow(window, { animated:true });
+            }
+        });
+    }    
+    else if (item.onClick) {
         button.addEventListener('click', item.onClick);
     } else if (item.window){
         button.addEventListener('click', function () {

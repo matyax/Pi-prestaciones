@@ -208,8 +208,14 @@ function Controller() {
         });
         view.add(icon);
         view.add(button);
-        item.controller && (item.window = Alloy.createController("favorite").getView());
-        item.onClick ? button.addEventListener("click", item.onClick) : item.window && button.addEventListener("click", function() {
+        item.controller ? button.addEventListener("click", function() {
+            var window = Alloy.createController(item.controller).getView();
+            "android" == Titanium.Platform.osname ? window.open({
+                modal: true
+            }) : $.eventNavigationWindow.openWindow(window, {
+                animated: true
+            });
+        }) : item.onClick ? button.addEventListener("click", item.onClick) : item.window && button.addEventListener("click", function() {
             "android" == Titanium.Platform.osname ? item.window.open({
                 modal: true
             }) : $.eventNavigationWindow.openWindow(item.window, {

@@ -23,18 +23,24 @@ function refreshList(clear) {
         
     favorites.fetch();
     
+    section = Ti.UI.createListSection(),
+    
     favorites.map(function (favorite) {
+        if (! favorite.get('idAgendaItem')) {
+            favorite.destroy();
+            
+            return;
+        }
+        
+        //console.log(favorite.get('idAgendaItem') + ': ' + favorite.get('title'));
+        
         dataSet.push({ 
             properties: { 
                 title: favorite.get('title'), 
                 id: favorite.get('idAgendaItem') 
             } 
         });
-    });
-    
-    console.log(dataSet);
-    
-    section = Ti.UI.createListSection(), 
+    }); 
         
     section.setItems(dataSet);
     sections.push(section);
@@ -45,11 +51,11 @@ function refreshList(clear) {
 }
 
 function itemClicked(e) {
-        var item = section.getItemAt(e.itemIndex);
+        var clickedItem = section.getItemAt(e.itemIndex);
         
-        var item = getFavorite(item.properties.id);
-        
-        var window = createAgendaDetailWindow(item);
+        var window = createAgendaDetailWindow(
+            getFavorite(clickedItem.properties.id)
+        );
         
         if (Titanium.Platform.osname == 'android') {
             window.open({
@@ -70,7 +76,7 @@ function getFavorite(id) {
     favorites.map(function (favorite) {
         if (favorite.get('idAgendaItem') == id) {
             item = {
-                idAgendaItem: favorite.get('idAgendaItem'),
+                id: favorite.get('idAgendaItem'),
                 title: favorite.get('title'),
                 description: favorite.get('description'),
                 date: favorite.get('date'),

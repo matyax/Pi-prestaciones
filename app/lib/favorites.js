@@ -3,6 +3,8 @@ exports.toggle = toggleFavorite;
 function toggleFavorite(idEvent, item) {
     var favorites   = Alloy.createCollection('favorite'),
         favorite    = null;
+        
+    //console.log('Toggling: ' + item.id);
 
     favorites.fetch();
 
@@ -10,6 +12,8 @@ function toggleFavorite(idEvent, item) {
 
     favorites.map(function(favorite) {
         if (favorite.get('idAgendaItem') == item.id) {
+            //console.log('Destroying: ' + favorite.get('idAgendaItem'));
+            
             favorite.destroy();
             
             exists = true;
@@ -33,6 +37,8 @@ function toggleFavorite(idEvent, item) {
     });
 
     favorite.save();
+    
+    //console.log('Saved: ' + item.id);
 
     alert('Agregado a favoritos.');
     
