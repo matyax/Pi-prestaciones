@@ -1,9 +1,9 @@
 function setData(key, value) {
-    data.key = value;
+    data[key] = value;
 }
 
-function getData() {
-    return data.key;
+function getData(key) {
+    return data[key];
 }
 
 var data = {};

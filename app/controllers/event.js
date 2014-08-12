@@ -20,9 +20,7 @@ function generateEventWindow(event) {
     
     var windowReference = null;
     
-    /*
-     * Set general styles
-     */
+    /* General styles */
     if (Titanium.Platform.osname == 'android') {
         $.eventNavigationWindow.setTitle(event.title);
         $.eventNavigationWindow.setBackgroundColor(event.styles.background);
@@ -36,9 +34,7 @@ function generateEventWindow(event) {
     
     data.set('windowReference', windowReference);
    
-    /*
-     * Add Logo
-     */
+    /* LOGO */
     var image = Ti.UI.createImageView({
        image: event.logo,
        width: '100%',
@@ -47,14 +43,9 @@ function generateEventWindow(event) {
     
     $.eventView.add(image);
     
-    /*
-     * Add menu items
-     */
     var label = '';
     
-    /*
-     * Home button
-     */
+    /* HOME BUTTON */
     addEventMenuItem({
         icon: 'home',
         label: 'Inicio',
@@ -63,9 +54,7 @@ function generateEventWindow(event) {
         }
     });
     
-    /*
-     * Information
-     */
+    /* INFORMATION */
     if (event.information) {
         label = event.information_label || 'Presentación';
         
@@ -104,9 +93,7 @@ function generateEventWindow(event) {
         });
     }
     
-    /*
-     * Agenda
-     */
+    /* AGENDA */
     if (event.agenda) {
         label = event.agenda_label || 'Agenda';
         
@@ -139,9 +126,7 @@ function generateEventWindow(event) {
         });
     }
     
-    /*
-     * Form
-     */
+    /* FORM */
     if (event.form) {
         label = event.form_label || 'Inscripción online';
         
@@ -160,9 +145,7 @@ function generateEventWindow(event) {
         });
     }
     
-    /*
-     * Form
-     */
+    /* CERTIFICATE */
     if (event.certificate) {
         label = event.certificate_label || 'Certificación web';
         
@@ -181,9 +164,7 @@ function generateEventWindow(event) {
         });
     }
     
-    /*
-     * Map
-     */
+    /* MAP */
     if (event.map) {
         label = event.map_label || 'Ubicación';
         

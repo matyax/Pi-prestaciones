@@ -18,6 +18,7 @@ function Controller() {
         var windowReference = null;
         $.eventNavigationWindow.setTitle(event.title);
         $.eventNavigationWindow.setBackgroundColor(event.styles.background);
+        data.set("windowReference", windowReference);
         var image = Ti.UI.createImageView({
             image: event.logo,
             width: "100%",
@@ -109,6 +110,7 @@ function Controller() {
         }
         if (event.map) {
             label = event.map_label || "Ubicación";
+            Ti.API.info("creando ventana de mapa");
             var mapWindow = createEventWindow(label, event.styles.background);
             var MapModule = require("ti.map");
             event.map.lat = parseFloat(event.map.lat);
@@ -141,6 +143,14 @@ function Controller() {
                 icon: "map",
                 label: label,
                 window: mapWindow
+            });
+        }
+        if (event.agenda) {
+            label = event.favorites_label || "Favoritos";
+            addEventMenuItem({
+                icon: "favorite",
+                label: label,
+                controller: "favorite"
             });
         }
         if (event.accommodations) {
@@ -189,7 +199,12 @@ function Controller() {
         });
         view.add(icon);
         view.add(button);
-        item.onClick ? button.addEventListener("click", item.onClick) : item.window && button.addEventListener("click", function() {
+        item.controller ? button.addEventListener("click", function() {
+            var window = Alloy.createController(item.controller).getView();
+            window.open({
+                modal: true
+            });
+        }) : item.onClick ? button.addEventListener("click", item.onClick) : item.window && button.addEventListener("click", function() {
             item.window.open({
                 modal: true
             });
@@ -273,7 +288,6 @@ function Controller() {
             backgroundColor: eventData.styles.background,
             title: item.title
         });
-        window.add(createAgendaShareView());
         var scrollView = Ti.UI.createScrollView({
             contentWidth: "auto",
             contentHeight: "auto",
@@ -282,8 +296,10 @@ function Controller() {
             height: Ti.UI.FILL,
             width: "100%",
             top: 0,
-            left: 0
+            left: 0,
+            zIndex: 1
         });
+        window.add(createAgendaShareView(item));
         var sectionView = createSectionView(eventData.agenda_label + " " + item.date + " " + item.startTime);
         var titleLabel = Ti.UI.createLabel({
             color: eventData.styles.forecolor,
@@ -338,17 +354,18 @@ function Controller() {
         window.add(scrollView);
         return window;
     }
-    function createAgendaShareView() {
+    function createAgendaShareView(item) {
         var shareView = Ti.UI.createView({
             layout: "horizontal",
             backgroundColor: eventData.styles.share_background,
             width: "100%",
             height: "74px",
             left: 0,
-            bottom: 0
+            bottom: 0,
+            zIndex: 2
         });
-        var favorite = Ti.UI.createImageView({
-            image: "/icons/favorite.png",
+        var favoriteButton = Titanium.UI.createButton({
+            backgroundImage: "/icons/favorite.png",
             width: "64px",
             height: "64px",
             top: "5px",
@@ -361,7 +378,15 @@ function Controller() {
             top: "5px",
             left: 10
         });
-        shareView.add(favorite);
+        tweet.addEventListener("click", function() {
+            var social = require("social");
+            social.tweet(eventData, item);
+        });
+        favoriteButton.addEventListener("click", function() {
+            var favorites = require("favorites");
+            favorites.toggle(eventData.id_event, item);
+        });
+        shareView.add(favoriteButton);
         shareView.add(tweet);
         return shareView;
     }

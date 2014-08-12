@@ -51,20 +51,20 @@ function refreshList(clear) {
 }
 
 function itemClicked(e) {
-        var clickedItem = section.getItemAt(e.itemIndex);
-        
-        var window = createAgendaDetailWindow(
-            getFavorite(clickedItem.properties.id)
-        );
-        
-        if (Titanium.Platform.osname == 'android') {
-            window.open({
-                modal: true
-            });
-        } else {
-            windowReference.openWindow(window, { animated:true });
-        }
+    var clickedItem = section.getItemAt(e.itemIndex);
+    
+    var window = createAgendaDetailWindow(
+        getFavorite(clickedItem.properties.id)
+    );
+    
+    if (Titanium.Platform.osname == 'android') {
+        window.open({
+            modal: true
+        });
+    } else {
+        windowReference.openWindow(window, { animated:true });
     }
+}
 
 function getFavorite(id) {
     var favorites   = favorites = Alloy.createCollection('favorite');
