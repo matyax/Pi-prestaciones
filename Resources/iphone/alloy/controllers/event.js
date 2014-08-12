@@ -72,6 +72,24 @@ function Controller() {
                 window: informationWindow
             });
         }
+        for (var j in event.pages) addEventMenuItem({
+            icon: "page",
+            label: event.pages[j].title,
+            onClick: function(e) {
+                var page = null, title = e.source.getTitle();
+                for (var i in eventData.pages) if (eventData.pages[i].title == title) {
+                    page = eventData.pages[i];
+                    break;
+                }
+                data.set("page", page);
+                var window = Alloy.createController("page").getView();
+                "android" == Titanium.Platform.osname ? window.open({
+                    modal: true
+                }) : $.eventNavigationWindow.openWindow(window, {
+                    animated: true
+                });
+            }
+        });
         if (event.agenda) {
             label = event.agenda_label || "Agenda";
             var agendaOnclick = function(id) {

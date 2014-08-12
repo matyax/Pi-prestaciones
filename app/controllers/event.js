@@ -93,6 +93,38 @@ function generateEventWindow(event) {
         });
     }
     
+    /* Pages */
+    for (var j in event.pages) {
+        addEventMenuItem({
+            icon: 'page',
+            label: event.pages[j].title,
+            onClick: function(e) {
+                var page    = null,
+                    title   = e.source.getTitle();
+                    
+                for (var i in eventData.pages) {
+                    if (eventData.pages[i].title == title) {
+                        page = eventData.pages[i];
+                        
+                        break;
+                    }
+                }
+                
+                data.set('page', page);
+                
+                var window = Alloy.createController('page').getView();
+                
+                if (Titanium.Platform.osname == 'android') {
+                    window.open({
+                        modal: true
+                    });
+                } else {
+                    $.eventNavigationWindow.openWindow(window, { animated:true });
+                }
+            }
+        });
+    }
+    
     /* AGENDA */
     if (event.agenda) {
         label = event.agenda_label || 'Agenda';

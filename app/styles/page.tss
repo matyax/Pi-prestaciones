@@ -1,0 +1,42 @@
+".container" : {
+    layout: 'vertical'
+},
+'#imageBefore' : {
+    visible: false
+},
+'#imageAfter' : {
+    visible: false
+},
+'#content': {
+    top: 10,
+    font: {
+        fontSize: 12
+    }
+},
+'#title' : {
+    font: { fontSize: 14 },
+    textAlign: 'left',
+    top: 5,
+    left: 10,
+},
+'#sectionView' : {
+    width: '100%',
+    height: 30,
+    top: 0,
+    left: 0
+},
+'#pageScrollView' : {
+    layout: 'vertical',
+    width: '95%',
+    left: 10,
+    height: Ti.UI.FILL
+},
+'#imageBefore' : {
+    top: 10,
+    width: '100%'
+},
+'#imageAfter' : {
+    top: 10,
+    width: '100%'
+}
+
