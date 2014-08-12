@@ -1,6 +1,6 @@
 ".container": {
 	layout: 'vertical',
-    backgroundColor: '#4f4f4f'
+    backgroundColor: 'white'
 },
 '#piLogo': {
     left: '10dp',
@@ -11,7 +11,7 @@
     top: '30dp',
     width: '100%',
     textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-    color: 'white',
+    color: 'black',
     font: {
         fontSize: '12dp'
     }

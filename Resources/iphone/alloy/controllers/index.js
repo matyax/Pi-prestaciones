@@ -19,7 +19,7 @@ function Controller() {
     var exports = {};
     $.__views.index = Ti.UI.createWindow({
         layout: "vertical",
-        backgroundColor: "#4f4f4f",
+        backgroundColor: "white",
         id: "index",
         title: ""
     });
@@ -36,7 +36,7 @@ function Controller() {
         top: "30dp",
         width: "100%",
         textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-        color: "white",
+        color: "black",
         font: {
             fontSize: "12dp"
         },
@@ -92,8 +92,10 @@ function Controller() {
         for (var i in events) {
             button = Ti.UI.createButton({
                 backgroundImage: events[i].image,
+                borderRadius: 15,
                 top: 10,
-                width: "100%",
+                left: "5%",
+                width: "90%",
                 height: relativeHeight,
                 style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN,
                 idEvent: events[i].id
