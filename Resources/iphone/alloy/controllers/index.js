@@ -24,14 +24,18 @@ function Controller() {
         title: ""
     });
     $.__views.index && $.addTopLevelView($.__views.index);
+    $.__views.__alloyId0 = Ti.UI.createView({
+        top: 25,
+        height: 90,
+        id: "__alloyId0"
+    });
+    $.__views.index.add($.__views.__alloyId0);
     $.__views.piLogo = Ti.UI.createImageView({
-        left: "10dp",
-        top: "20dp",
         width: "60dp",
         id: "piLogo",
         image: "/pi/logo.png"
     });
-    $.__views.index.add($.__views.piLogo);
+    $.__views.__alloyId0.add($.__views.piLogo);
     $.__views.congressTitle = Ti.UI.createLabel({
         top: "30dp",
         width: "100%",

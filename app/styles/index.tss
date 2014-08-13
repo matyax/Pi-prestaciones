@@ -2,9 +2,11 @@
 	layout: 'vertical',
     backgroundColor: 'white'
 },
+'.logoContainer': {
+    top: 25,
+    height: 90
+},
 '#piLogo': {
-    left: '10dp',
-    top: '20dp',
     width: '60dp'
 },
 '#congressTitle': {
