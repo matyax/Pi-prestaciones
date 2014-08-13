@@ -19,24 +19,28 @@ function Controller() {
     var exports = {};
     $.__views.index = Ti.UI.createWindow({
         layout: "vertical",
-        backgroundColor: "#4f4f4f",
+        backgroundColor: "white",
         id: "index",
         title: ""
     });
     $.__views.index && $.addTopLevelView($.__views.index);
+    $.__views.__alloyId0 = Ti.UI.createView({
+        top: 25,
+        height: 90,
+        id: "__alloyId0"
+    });
+    $.__views.index.add($.__views.__alloyId0);
     $.__views.piLogo = Ti.UI.createImageView({
-        left: "10dp",
-        top: "20dp",
         width: "60dp",
         id: "piLogo",
         image: "/pi/logo.png"
     });
-    $.__views.index.add($.__views.piLogo);
+    $.__views.__alloyId0.add($.__views.piLogo);
     $.__views.congressTitle = Ti.UI.createLabel({
         top: "30dp",
         width: "100%",
         textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-        color: "white",
+        color: "black",
         font: {
             fontSize: "12dp"
         },
@@ -92,8 +96,10 @@ function Controller() {
         for (var i in events) {
             button = Ti.UI.createButton({
                 backgroundImage: events[i].image,
+                borderRadius: 15,
                 top: 10,
-                width: "100%",
+                left: "5%",
+                width: "90%",
                 height: relativeHeight,
                 style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN,
                 idEvent: events[i].id
