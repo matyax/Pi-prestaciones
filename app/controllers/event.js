@@ -256,6 +256,8 @@ function generateEventWindow(event) {
         label = event.accommodations_label || 'Agenda';
         
         var accommodationOnclick = function (id, title) {
+            console.log(event.accommodations);
+            
             var detailWindow = createAccommodationDetailWindow(searchItem(event.accommodations, id));
             
             if (Titanium.Platform.osname == 'android') {
@@ -404,6 +406,16 @@ function createAccommodationDetailWindow(item) {
         eventData.accommodations_label + ' - ' + item.title        
     );
     
+    var image = null;
+    if (item.image) {
+        image = Ti.UI.createImageView({
+            image: item.image,
+            top: 10,
+            left: 10,
+            width: '95%'            
+        });
+    }
+    
     var titleLabel = Ti.UI.createLabel({
         color: eventData.styles.forecolor,
         font: { fontSize: 12 },
@@ -423,7 +435,12 @@ function createAccommodationDetailWindow(item) {
         width: '95%', height: Ti.UI.SIZE
     });
 
-    scrollView.add(sectionView);    
+    scrollView.add(sectionView);
+      
+    if (image) {
+        scrollView.add(image);        
+    }
+    
     scrollView.add(titleLabel);
     scrollView.add(descriptionLabel);
     

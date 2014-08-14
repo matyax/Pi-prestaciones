@@ -181,6 +181,7 @@ function Controller() {
         if (event.accommodations) {
             label = event.accommodations_label || "Agenda";
             var accommodationOnclick = function(id) {
+                console.log(event.accommodations);
                 var detailWindow = createAccommodationDetailWindow(searchItem(event.accommodations, id));
                 "android" == Titanium.Platform.osname ? detailWindow.open({
                     modal: true
@@ -285,6 +286,13 @@ function Controller() {
             width: "100%"
         });
         var sectionView = createSectionView(eventData.accommodations_label + " - " + item.title);
+        var image = null;
+        item.image && (image = Ti.UI.createImageView({
+            image: item.image,
+            top: 10,
+            left: 10,
+            width: "95%"
+        }));
         var titleLabel = Ti.UI.createLabel({
             color: eventData.styles.forecolor,
             font: {
@@ -309,6 +317,7 @@ function Controller() {
             height: Ti.UI.SIZE
         });
         scrollView.add(sectionView);
+        image && scrollView.add(image);
         scrollView.add(titleLabel);
         scrollView.add(descriptionLabel);
         window.add(scrollView);
