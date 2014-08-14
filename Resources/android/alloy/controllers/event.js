@@ -429,13 +429,20 @@ function Controller() {
         id: "eventNavigationWindow"
     });
     $.__views.eventNavigationWindow && $.addTopLevelView($.__views.eventNavigationWindow);
-    $.__views.eventView = Ti.UI.createView({
+    $.__views.eventScrollView = Ti.UI.createScrollView({
         height: Ti.UI.FILL,
+        layout: "vertical",
+        width: "100%",
+        id: "eventScrollView"
+    });
+    $.__views.eventNavigationWindow.add($.__views.eventScrollView);
+    $.__views.eventView = Ti.UI.createView({
+        height: Ti.UI.SIZE,
         layout: "vertical",
         top: 0,
         id: "eventView"
     });
-    $.__views.eventNavigationWindow.add($.__views.eventView);
+    $.__views.eventScrollView.add($.__views.eventView);
     exports.destroy = function() {};
     _.extend($, $.__views);
     arguments[0] || {};

@@ -1,12 +1,16 @@
 <Alloy>
     <NavigationWindow id="eventNavigationWindow" platform="ios">
         <Window id="eventWindow">
-            <View id="eventView"></View>    
+            <ScrollView id="eventScrollView">
+                <View id="eventView"></View>                
+            </ScrollView>
         </Window>
     </NavigationWindow>
     
     <Window id="eventNavigationWindow" platform="android">
-        <View id="eventView"></View>    
+        <ScrollView id="eventScrollView">
+            <View id="eventView"></View>                
+        </ScrollView>    
     </Window>
     
 </Alloy>

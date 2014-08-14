@@ -444,13 +444,20 @@ function Controller() {
     $.__views.eventWindow = Ti.UI.createWindow({
         id: "eventWindow"
     });
-    $.__views.eventView = Ti.UI.createView({
+    $.__views.eventScrollView = Ti.UI.createScrollView({
         height: Ti.UI.FILL,
+        layout: "vertical",
+        width: "100%",
+        id: "eventScrollView"
+    });
+    $.__views.eventWindow.add($.__views.eventScrollView);
+    $.__views.eventView = Ti.UI.createView({
+        height: Ti.UI.SIZE,
         layout: "vertical",
         top: 0,
         id: "eventView"
     });
-    $.__views.eventWindow.add($.__views.eventView);
+    $.__views.eventScrollView.add($.__views.eventView);
     $.__views.eventNavigationWindow = Ti.UI.iOS.createNavigationWindow({
         window: $.__views.eventWindow,
         id: "eventNavigationWindow"

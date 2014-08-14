@@ -1,5 +1,10 @@
 '#eventView' : {
-    height: Ti.UI.FILL,
+    height: Ti.UI.SIZE,
     layout: 'vertical',
     top: 0
+},
+'#eventScrollView' : {
+    height: Ti.UI.FILL,
+    layout: 'vertical',
+    width: '100%'
 }
