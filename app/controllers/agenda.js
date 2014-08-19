@@ -1,11 +1,13 @@
 var args = arguments[0] || {};
 
-var data = require('data'),
-    eventData = data.get('eventData'),
+var data            = require('data'),
+    eventData       = data.get('eventData'),
     windowReference = data.get('windowReference');
         
 var agendaOnclick = function (id, title) {
-    var detailWindow = createAgendaDetailWindow(searchItem(eventData.agenda, id));
+    data.set('agendaItem', searchItem(eventData.agenda, id));
+    
+    var detailWindow = Alloy.createController('agendaDetail').getView();
     
     if (Titanium.Platform.osname == 'android') {
         detailWindow.open({

@@ -192,27 +192,6 @@ function Controller() {
             title: title
         });
     }
-    function createSectionView(title) {
-        var sectionView = Ti.UI.createView({
-            backgroundColor: eventData.styles.button_background,
-            width: "100%",
-            height: 30,
-            top: 0,
-            left: 0
-        });
-        var sectionLabel = Ti.UI.createLabel({
-            color: eventData.styles.button_foreground,
-            font: {
-                fontSize: 14
-            },
-            text: title,
-            textAlign: "left",
-            top: 5,
-            left: 10
-        });
-        sectionView.add(sectionLabel);
-        return sectionView;
-    }
     function createAccommodationDetailWindow(item) {
         var window = Titanium.UI.createWindow({
             backgroundColor: eventData.styles.background,
@@ -227,7 +206,7 @@ function Controller() {
             height: Ti.UI.FILL,
             width: "100%"
         });
-        var sectionView = createSectionView(eventData.accommodations_label + " - " + item.title);
+        var sectionView = ui.createSectionView(eventData, eventData.accommodations_label + " - " + item.title);
         var image = null;
         item.image && (image = Ti.UI.createImageView({
             image: item.image,
@@ -306,8 +285,7 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     arguments[0] || {};
-    require("pi");
-    var data = require("data");
+    var data = (require("pi"), require("data")), ui = require("ui");
     var eventData = data.get("eventData");
     data.get("event");
     generateEventWindow(eventData);
