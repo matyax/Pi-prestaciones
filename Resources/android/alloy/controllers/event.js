@@ -50,18 +50,10 @@ function Controller() {
         });
         if (event.agenda) {
             label = event.agenda_label || "Agenda";
-            var agendaOnclick = function(id) {
-                var detailWindow = createAgendaDetailWindow(searchItem(event.agenda, id));
-                detailWindow.open({
-                    modal: true
-                });
-            };
-            var calendar = require("listNavigation");
-            var agendaWindow = calendar.add(label, event.agenda, agendaOnclick, windowReference, event.styles.background);
             addEventMenuItem({
                 icon: "agenda",
                 label: label,
-                window: agendaWindow
+                controller: "agenda"
             });
         }
         if (event.form) {
@@ -272,113 +264,6 @@ function Controller() {
         scrollView.add(descriptionLabel);
         window.add(scrollView);
         return window;
-    }
-    function createAgendaDetailWindow(item) {
-        var window = Titanium.UI.createWindow({
-            backgroundColor: eventData.styles.background,
-            title: item.title
-        });
-        var scrollView = Ti.UI.createScrollView({
-            contentWidth: "auto",
-            contentHeight: "auto",
-            layout: "vertical",
-            showVerticalScrollIndicator: true,
-            height: Ti.UI.FILL,
-            width: "100%",
-            top: 0,
-            left: 0,
-            zIndex: 1
-        });
-        window.add(createAgendaShareView(item));
-        var sectionView = createSectionView(eventData.agenda_label + " " + item.date + " " + item.startTime);
-        var titleLabel = Ti.UI.createLabel({
-            color: eventData.styles.forecolor,
-            font: {
-                fontSize: 12
-            },
-            text: item.title,
-            textAlign: "left",
-            top: 10,
-            left: 10,
-            width: Titanium.Platform.displayCaps.platformWidth,
-            height: Ti.UI.SIZE
-        });
-        var titleLabel = Ti.UI.createLabel({
-            color: eventData.styles.forecolor,
-            font: {
-                fontSize: 12
-            },
-            text: item.title,
-            textAlign: "left",
-            top: 10,
-            left: 10,
-            width: Titanium.Platform.displayCaps.platformWidth,
-            height: Ti.UI.SIZE
-        });
-        var timeText = item.endTime ? "De " + item.startTime + " a " + item.endTime + " horas" : item.startTime + " horas";
-        var timeLabel = Ti.UI.createLabel({
-            color: eventData.styles.forecolor,
-            font: {
-                fontSize: 12
-            },
-            text: timeText,
-            left: 10,
-            width: Ti.UI.SIZE,
-            height: Ti.UI.SIZE
-        });
-        var descriptionLabel = Ti.UI.createLabel({
-            color: eventData.styles.forecolor,
-            font: {
-                fontSize: 12
-            },
-            text: item.description,
-            top: 10,
-            left: 10,
-            width: "95%",
-            height: Ti.UI.SIZE
-        });
-        scrollView.add(sectionView);
-        scrollView.add(titleLabel);
-        scrollView.add(timeLabel);
-        scrollView.add(descriptionLabel);
-        window.add(scrollView);
-        return window;
-    }
-    function createAgendaShareView(item) {
-        var shareView = Ti.UI.createView({
-            layout: "horizontal",
-            backgroundColor: eventData.styles.share_background,
-            width: "100%",
-            height: "74px",
-            left: 0,
-            bottom: 0,
-            zIndex: 2
-        });
-        var favoriteButton = Titanium.UI.createButton({
-            backgroundImage: "/icons/favorite.png",
-            width: "64px",
-            height: "64px",
-            top: "5px",
-            left: 10
-        });
-        var tweet = Ti.UI.createImageView({
-            image: "/icons/twitter.png",
-            width: "64px",
-            height: "64px",
-            top: "5px",
-            left: 10
-        });
-        tweet.addEventListener("click", function() {
-            var social = require("social");
-            social.tweet(eventData, item);
-        });
-        favoriteButton.addEventListener("click", function() {
-            var favorites = require("favorites");
-            favorites.toggle(eventData.id_event, item);
-        });
-        shareView.add(favoriteButton);
-        shareView.add(tweet);
-        return shareView;
     }
     function searchItem(items, id) {
         var item = null;

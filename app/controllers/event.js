@@ -90,32 +90,10 @@ function generateEventWindow(event) {
     if (event.agenda) {
         label = event.agenda_label || 'Agenda';
         
-        var agendaOnclick = function (id, title) {
-            var detailWindow = createAgendaDetailWindow(searchItem(event.agenda, id));
-            
-            if (Titanium.Platform.osname == 'android') {
-                detailWindow.open({
-                    modal: true
-                });
-            } else {
-                $.eventNavigationWindow.openWindow(detailWindow, { animated:true });
-            }
-        };
-        
-        var calendar = require('listNavigation');
-        
-        var agendaWindow = calendar.add(
-            label,
-            event.agenda,
-            agendaOnclick,
-            windowReference,
-            event.styles.background
-        );
-        
         addEventMenuItem({
             icon: 'agenda',
             label: label,
-            window: agendaWindow
+            controller: 'agenda'
         });
     }
     

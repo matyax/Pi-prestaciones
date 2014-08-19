@@ -1,1 +1,1 @@
-module.exports = [{"isId":true,"priority":100000.0002,"key":"eventView","style":{height:Ti.UI.SIZE,layout:"vertical",top:0,}},{"isId":true,"priority":100000.0003,"key":"eventScrollView","style":{height:Ti.UI.FILL,layout:"vertical",width:"100%",}}];
+module.exports = [{"isId":true,"priority":100000.0003,"key":"eventView","style":{height:Ti.UI.SIZE,layout:"vertical",top:0,}},{"isId":true,"priority":100000.0004,"key":"eventScrollView","style":{height:Ti.UI.FILL,layout:"vertical",width:"100%",}}];

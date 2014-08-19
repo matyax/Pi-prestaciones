@@ -1,4 +1,7 @@
-exports.add = function(label, items, onClick, navigationWindow, backgroundColor) {
+exports.add = function(label, items, onClick, navigationWindow, backgroundColor, openerWindow) {
+    function init(label, items, onClick, navigationWindow, openerWindow) {
+        createWindow(label, backgroundColor, createListView(items, onClick, navigationWindow), openerWindow);
+    }
     function addCalendar(label, items, onClick, navigationWindow) {
         var window = createWindow(label, backgroundColor, createListView(items, onClick, navigationWindow));
         return window;
@@ -7,8 +10,14 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor)
         items = addTimeLabels(items);
         return createWindow(label, backgroundColor, createMultipleTitleListView(items, onClick, navigationWindow));
     }
-    function createWindow(title, backgroundColor, viewChildren) {
-        var window = Titanium.UI.createWindow({
+    function createWindow(title, backgroundColor, viewChildren, localOpenerWindow) {
+        var window = null;
+        if (localOpenerWindow) {
+            console.log("of course is not undefined");
+            window = localOpenerWindow;
+            window.setBackgroundColor(backgroundColor);
+            window.setTitle(title);
+        } else window = Titanium.UI.createWindow({
             backgroundColor: backgroundColor,
             title: title
         });
@@ -114,5 +123,5 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor)
         }
         return timeItems;
     }
-    return addCalendar(label, items, onClick, navigationWindow);
+    return init(label, items, onClick, navigationWindow, openerWindow);
 };
