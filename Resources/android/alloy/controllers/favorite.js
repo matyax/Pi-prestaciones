@@ -213,6 +213,7 @@ function Controller() {
     var data = require("data"), eventData = data.get("eventData"), title = eventData.favorites_label || "Favoritos", section = (data.get("windowReference"), 
     null);
     $.favoriteWindow.setTitle(title);
+    $.favoriteWindow.setBackgroundColor(eventData.styles.background);
     refreshList();
     _.extend($, exports);
 }

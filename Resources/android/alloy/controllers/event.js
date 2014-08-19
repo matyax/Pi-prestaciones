@@ -32,39 +32,6 @@ function Controller() {
                 $.eventNavigationWindow.close();
             }
         });
-        if (event.information) {
-            label = event.information_label || "Presentación";
-            var informationWindow = createEventWindow(label, event.styles.background);
-            var informationScrollView = Ti.UI.createScrollView({
-                contentWidth: "auto",
-                contentHeight: "auto",
-                showVerticalScrollIndicator: true,
-                layout: "vertical",
-                height: Ti.UI.FILL,
-                width: "100%"
-            });
-            var informationLabel = Ti.UI.createLabel({
-                color: event.styles.forecolor,
-                font: {
-                    fontSize: 12
-                },
-                text: event.information,
-                textAlign: "left",
-                top: 10,
-                left: 10,
-                width: Ti.UI.SIZE,
-                height: Ti.UI.SIZE
-            });
-            var informationSectionView = createSectionView(label);
-            informationScrollView.add(informationSectionView);
-            informationScrollView.add(informationLabel);
-            informationWindow.add(informationScrollView);
-            addEventMenuItem({
-                icon: "information",
-                label: label,
-                window: informationWindow
-            });
-        }
         for (var j in event.pages) addEventMenuItem({
             icon: "page",
             label: event.pages[j].title,

@@ -7,6 +7,7 @@ var data            = require('data'),
     section         = null;
     
 $.favoriteWindow.setTitle(title);
+$.favoriteWindow.setBackgroundColor(eventData.styles.background);
 
 refreshList();
 

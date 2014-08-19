@@ -54,45 +54,6 @@ function generateEventWindow(event) {
         }
     });
     
-    /* INFORMATION */
-    if (event.information) {
-        label = event.information_label || 'Presentación';
-        
-        var informationWindow = createEventWindow(label, event.styles.background);
-        
-        var informationScrollView =  Ti.UI.createScrollView({
-            contentWidth: 'auto',
-            contentHeight: 'auto',
-            showVerticalScrollIndicator: true,
-            layout: 'vertical',
-            height: Ti.UI.FILL,
-            width: '100%'
-        });
-        
-        var informationLabel = Ti.UI.createLabel({
-            color: event.styles.forecolor,
-            font: { fontSize: 12 },
-            text: event.information,
-            textAlign: 'left',
-            top: 10,
-            left: 10,
-            width: Ti.UI.SIZE, height: Ti.UI.SIZE
-        });
-        
-        var informationSectionView = createSectionView(label);
-        
-        informationScrollView.add(informationSectionView);
-        informationScrollView.add(informationLabel);
-        
-        informationWindow.add(informationScrollView);
-        
-        addEventMenuItem({
-            icon: 'information',
-            label: label,
-            window: informationWindow
-        });
-    }
-    
     /* Pages */
     for (var j in event.pages) {
         addEventMenuItem({
@@ -337,8 +298,9 @@ function addEventMenuItem(item) {
     }    
     else if (item.onClick) {
         button.addEventListener('click', item.onClick);
-    } else if (item.window){
+    } else if (item.window) {
         button.addEventListener('click', function () {
+            
             if (Titanium.Platform.osname == 'android') {
                 item.window.open({
                     modal: true
