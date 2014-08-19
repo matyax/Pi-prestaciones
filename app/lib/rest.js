@@ -1,6 +1,6 @@
 exports.get = function (url, options) {
     var xhr = Titanium.Network.createHTTPClient({
-        timeout : 5000
+        timeout : 10000
     });
     
     xhr.onload = function (e) {

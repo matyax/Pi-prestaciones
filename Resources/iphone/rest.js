@@ -1,6 +1,7 @@
 exports.get = function(url, options) {
-    var xhr = Titanium.Network.createHTTPClient();
-    xhr.open("GET", url);
+    var xhr = Titanium.Network.createHTTPClient({
+        timeout: 1e4
+    });
     xhr.onload = function() {
         var response = this.responseText;
         options.success(JSON.parse(response));
@@ -8,5 +9,6 @@ exports.get = function(url, options) {
     xhr.onerror = function() {
         options.success(false);
     };
+    xhr.open("GET", url);
     xhr.send();
 };

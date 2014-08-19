@@ -1,6 +1,6 @@
 var rest = require("rest");
 
-var API_DOMAIN = "http://192.168.0.102";
+var API_DOMAIN = "http://192.168.0.100";
 
 var eventsResponse = null;
 

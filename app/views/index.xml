@@ -1,5 +1,5 @@
 <Alloy>
-	<Window class="container" id="index" title="">
+	<Window class="container" id="index" title="" exitOnClose="true">
 	    <View class="logoContainer">
 	       <ImageView id="piLogo" image="/pi/logo.png" />
 	   </View>
