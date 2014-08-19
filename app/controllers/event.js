@@ -54,7 +54,7 @@ function generateEventWindow(event) {
         }
     });
     
-    /* Pages */
+    /* PAGES */
     for (var j in event.pages) {
         addEventMenuItem({
             icon: 'page',
