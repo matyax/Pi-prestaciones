@@ -1,6 +1,6 @@
 var rest = require("rest");
 
-var API_DOMAIN = "http://dev.congresstools.com";
+var API_DOMAIN = "http://192.168.0.102";
 
 var eventsResponse = null;
 
