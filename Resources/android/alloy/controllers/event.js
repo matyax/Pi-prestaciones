@@ -128,19 +128,10 @@ function Controller() {
         }
         if (event.accommodations) {
             label = event.accommodations_label || "Agenda";
-            var accommodationOnclick = function(id) {
-                console.log(event.accommodations);
-                var detailWindow = createAccommodationDetailWindow(searchItem(event.accommodations, id));
-                detailWindow.open({
-                    modal: true
-                });
-            };
-            var accommodationNavigation = require("listNavigation");
-            var accommodationWindow = accommodationNavigation.add(label, event.accommodations, accommodationOnclick, windowReference, event.styles.background);
             addEventMenuItem({
                 icon: "accommodation",
                 label: label,
-                window: accommodationWindow
+                controller: "accommodations"
             });
         }
     }
@@ -192,69 +183,6 @@ function Controller() {
             title: title
         });
     }
-    function createAccommodationDetailWindow(item) {
-        var window = Titanium.UI.createWindow({
-            backgroundColor: eventData.styles.background,
-            layout: "vertical",
-            title: item.title
-        });
-        var scrollView = Ti.UI.createScrollView({
-            contentWidth: "auto",
-            contentHeight: "auto",
-            showVerticalScrollIndicator: true,
-            layout: "vertical",
-            height: Ti.UI.FILL,
-            width: "100%"
-        });
-        var sectionView = ui.createSectionView(eventData, eventData.accommodations_label + " - " + item.title);
-        var image = null;
-        item.image && (image = Ti.UI.createImageView({
-            image: item.image,
-            top: 10,
-            left: 10,
-            width: "95%"
-        }));
-        var titleLabel = Ti.UI.createLabel({
-            color: eventData.styles.forecolor,
-            font: {
-                fontSize: 12
-            },
-            text: item.title,
-            textAlign: "left",
-            top: 10,
-            left: 10,
-            width: Titanium.Platform.displayCaps.platformWidth,
-            height: Ti.UI.SIZE
-        });
-        var descriptionLabel = Ti.UI.createLabel({
-            color: eventData.styles.forecolor,
-            font: {
-                fontSize: 12
-            },
-            text: item.description,
-            top: 10,
-            left: 10,
-            width: "95%",
-            height: Ti.UI.SIZE
-        });
-        scrollView.add(sectionView);
-        image && scrollView.add(image);
-        scrollView.add(titleLabel);
-        scrollView.add(descriptionLabel);
-        window.add(scrollView);
-        return window;
-    }
-    function searchItem(items, id) {
-        var item = null;
-        for (var i in items) {
-            if ("object" != typeof items[i]) continue;
-            if (isNaN(parseInt(i))) {
-                item = searchItem(items[i], id);
-                if (item) return item;
-            } else if (items[i].id && items[i].id == id) return items[i];
-        }
-        return null;
-    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "event";
     if (arguments[0]) {
@@ -285,7 +213,8 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     arguments[0] || {};
-    var data = (require("pi"), require("data")), ui = require("ui");
+    var data = (require("pi"), require("data"));
+    require("ui");
     var eventData = data.get("eventData");
     data.get("event");
     generateEventWindow(eventData);

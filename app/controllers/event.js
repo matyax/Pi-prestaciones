@@ -195,34 +195,10 @@ function generateEventWindow(event) {
     if (event.accommodations) {
         label = event.accommodations_label || 'Agenda';
         
-        var accommodationOnclick = function (id, title) {
-            console.log(event.accommodations);
-            
-            var detailWindow = createAccommodationDetailWindow(searchItem(event.accommodations, id));
-            
-            if (Titanium.Platform.osname == 'android') {
-                detailWindow.open({
-                    modal: true
-                });
-            } else {
-                $.eventNavigationWindow.openWindow(detailWindow, { animated:true });
-            }
-        };
-        
-        var accommodationNavigation = require('listNavigation');
-        
-        var accommodationWindow = accommodationNavigation.add(
-            label,
-            event.accommodations,
-            accommodationOnclick,
-            windowReference, 
-            event.styles.background
-        );
-        
         addEventMenuItem({
             icon: 'accommodation',
             label: label,
-            window: accommodationWindow
+            controller: 'accommodations'
         });
     }
 };
