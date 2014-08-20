@@ -19,6 +19,7 @@ function Controller() {
     var exports = {};
     $.__views.certificateWindow = Ti.UI.createWindow({
         layout: "vertical",
+        orientationModes: [ Ti.UI.PORTRAIT ],
         id: "certificateWindow"
     });
     $.__views.certificateWindow && $.addTopLevelView($.__views.certificateWindow);

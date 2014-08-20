@@ -1,3 +1,6 @@
+var data        = require('data'),
+    eventData   = data.get('eventData');
+
 exports.add = function (label, items, onClick, navigationWindow, backgroundColor, openerWindow) {
     
     function init(label, items, onClick, navigationWindow, openerWindow) {
@@ -70,7 +73,9 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
             isFinalList = true;
         }
         
-        var listView = Ti.UI.createListView();
+        var listView = Ti.UI.createListView({
+            backgroundColor: eventData.styles.background
+        });
         var sections = [];
         
         var section = Ti.UI.createListSection(sectionParameters);
@@ -103,9 +108,14 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
                 itemId = i;
             }
             
-            dataSet.push(
-                { properties: { title: title, id: itemId } }
-            );
+            dataSet.push({ 
+                properties: { 
+                    title: title, 
+                    id: itemId,
+                    color: eventData.styles.button_foreground,
+                    backgroundColor: eventData.styles.button_background
+                } 
+            });
         }
         
         section.setItems(dataSet);
@@ -164,7 +174,10 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
     
     function createMultipleTitleListView(items, onClick, navigationWindow)
     {
-        var listView = Ti.UI.createListView();
+        var listView = Ti.UI.createListView({
+            backgroundColor: eventData.styles.background            
+        });
+        
         var sections = [];
         
         var section = null;
@@ -174,9 +187,14 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
             section = Ti.UI.createListSection({ headerTitle: title });
             
             for (var i in items[title]) {
-                dataSet.push(
-                    { properties: { title: items[title][i].title, id: items[title][i].id } }
-                );            
+                dataSet.push({ 
+                    properties: {
+                        title: items[title][i].title, 
+                        id: items[title][i].id,
+                        color: eventData.styles.button_foreground,
+                        backgroundColor: eventData.styles.button_background
+                    } 
+                });            
             }
             
             section.setItems(dataSet);

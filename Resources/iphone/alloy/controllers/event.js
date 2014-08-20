@@ -177,6 +177,7 @@ function Controller() {
     });
     $.__views.eventScrollView.add($.__views.eventView);
     $.__views.eventNavigationWindow = Ti.UI.iOS.createNavigationWindow({
+        orientationModes: [ Ti.UI.PORTRAIT ],
         window: $.__views.eventWindow,
         id: "eventNavigationWindow"
     });

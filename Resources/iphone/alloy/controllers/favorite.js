@@ -196,12 +196,13 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.favoriteWindow = Ti.UI.createWindow({
+        layout: "vertical",
+        orientationModes: [ Ti.UI.PORTRAIT ],
         id: "favoriteWindow",
         title: "Lista"
     });
     $.__views.favoriteWindow && $.addTopLevelView($.__views.favoriteWindow);
     $.__views.favoriteView = Ti.UI.createView({
-        layout: "vertical",
         id: "favoriteView"
     });
     $.__views.favoriteWindow.add($.__views.favoriteView);

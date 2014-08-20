@@ -1,1 +1,1 @@
-module.exports = [{"isId":true,"priority":100000.0002,"key":"accommodationDetail","style":{layout:"vertical",}}];
+module.exports = [{"isId":true,"priority":100000.0002,"key":"accommodationDetail","style":{layout:"vertical",orientationModes:[Ti.UI.PORTRAIT,],}}];

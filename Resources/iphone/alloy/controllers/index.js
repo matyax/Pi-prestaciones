@@ -19,6 +19,7 @@ function Controller() {
     var exports = {};
     $.__views.index = Ti.UI.createWindow({
         layout: "vertical",
+        orientationModes: [ Ti.UI.PORTRAIT ],
         backgroundColor: "white",
         id: "index",
         title: "",

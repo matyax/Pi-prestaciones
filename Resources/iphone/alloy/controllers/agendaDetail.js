@@ -54,6 +54,7 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.agendaDetail = Ti.UI.createWindow({
+        orientationModes: [ Ti.UI.PORTRAIT ],
         id: "agendaDetail"
     });
     $.__views.agendaDetail && $.addTopLevelView($.__views.agendaDetail);

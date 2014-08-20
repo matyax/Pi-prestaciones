@@ -19,6 +19,7 @@ function Controller() {
     var exports = {};
     $.__views.mapWindow = Ti.UI.createWindow({
         layout: "vertical",
+        orientationModes: [ Ti.UI.PORTRAIT ],
         id: "mapWindow"
     });
     $.__views.mapWindow && $.addTopLevelView($.__views.mapWindow);

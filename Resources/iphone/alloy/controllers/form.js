@@ -19,6 +19,7 @@ function Controller() {
     var exports = {};
     $.__views.formWindow = Ti.UI.createWindow({
         layout: "vertical",
+        orientationModes: [ Ti.UI.PORTRAIT ],
         id: "formWindow"
     });
     $.__views.formWindow && $.addTopLevelView($.__views.formWindow);

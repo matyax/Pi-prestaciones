@@ -29,6 +29,7 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.accommodations = Ti.UI.createWindow({
+        orientationModes: [ Ti.UI.PORTRAIT ],
         id: "accommodations"
     });
     $.__views.accommodations && $.addTopLevelView($.__views.accommodations);
