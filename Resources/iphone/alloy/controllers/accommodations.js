@@ -41,7 +41,7 @@ function Controller() {
         var detailWindow = Alloy.createController("accommodationDetail").getView();
         "android" == Titanium.Platform.osname ? detailWindow.open({
             modal: true
-        }) : $.eventNavigationWindow.openWindow(detailWindow, {
+        }) : windowReference.openWindow(detailWindow, {
             animated: true
         });
     };

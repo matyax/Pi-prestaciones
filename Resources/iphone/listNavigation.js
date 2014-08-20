@@ -13,7 +13,6 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
     function createWindow(title, backgroundColor, viewChildren, localOpenerWindow) {
         var window = null;
         if (localOpenerWindow) {
-            console.log("of course is not undefined");
             window = localOpenerWindow;
             window.setBackgroundColor(backgroundColor);
             window.setTitle(title);

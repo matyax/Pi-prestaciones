@@ -5,7 +5,7 @@ var data            = require('data'),
     windowReference = data.get('windowReference');
     
 var accommodationOnclick = function (id, title) {
-    data.set('accommodationItem', searchItem(eventData.agenda, id));
+    data.set('accommodationItem', searchItem(eventData.accommodations, id));
     
     var detailWindow = Alloy.createController('accommodationDetail').getView();
     
