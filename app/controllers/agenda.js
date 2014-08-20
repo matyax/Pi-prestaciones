@@ -14,7 +14,7 @@ var agendaOnclick = function (id, title) {
             modal: true
         });
     } else {
-        $.eventNavigationWindow.openWindow(detailWindow, { animated:true });
+        windowReference.openWindow(detailWindow, { animated:true });
     }
 };
 

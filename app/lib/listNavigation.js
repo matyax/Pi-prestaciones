@@ -33,8 +33,6 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
         var window = null;
         
         if (localOpenerWindow) {
-            console.log('of course is not undefined');
-            
             window = localOpenerWindow;
             
             window.setBackgroundColor(backgroundColor);
