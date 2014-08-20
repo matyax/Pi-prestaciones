@@ -113,18 +113,10 @@ function generateEventWindow(event) {
     if (event.certificate) {
         label = event.certificate_label || 'Certificación web';
         
-        var cwWindow = createEventWindow(label, event.styles.background);
-        
-        var cwWebView = Titanium.UI.createWebView({
-            url: event.certificate
-        });
-        
-        cwWindow.add(cwWebView);
-        
         addEventMenuItem({
             icon: 'certificate',
             label: label,
-            window: cwWindow
+            'controller': 'certificate'
         });
     }
     
