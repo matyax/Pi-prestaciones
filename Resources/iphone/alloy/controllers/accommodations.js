@@ -37,7 +37,7 @@ function Controller() {
     arguments[0] || {};
     var data = require("data"), eventData = data.get("eventData"), windowReference = data.get("windowReference");
     var accommodationOnclick = function(id) {
-        data.set("accommodationItem", searchItem(eventData.agenda, id));
+        data.set("accommodationItem", searchItem(eventData.accommodations, id));
         var detailWindow = Alloy.createController("accommodationDetail").getView();
         "android" == Titanium.Platform.osname ? detailWindow.open({
             modal: true
