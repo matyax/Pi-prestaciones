@@ -58,15 +58,10 @@ function Controller() {
         }
         if (event.form) {
             label = event.form_label || "Inscripción online";
-            var formWindow = createEventWindow(label, event.styles.background);
-            var formWebView = Titanium.UI.createWebView({
-                url: event.form
-            });
-            formWindow.add(formWebView);
             addEventMenuItem({
                 icon: "form",
                 label: label,
-                window: formWindow
+                controller: "form"
             });
         }
         if (event.certificate) {
