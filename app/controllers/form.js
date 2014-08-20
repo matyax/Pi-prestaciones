@@ -1,7 +1,7 @@
 var args = arguments[0] || {};
 
-var data            = require('data'),
-    eventData       = data.get('eventData');
+var data        = require('data'),
+    eventData   = data.get('eventData');
 
 $.formWindow.setTitle(eventData.form_label);
 $.formWindow.setBackgroundColor(eventData.styles.background);
