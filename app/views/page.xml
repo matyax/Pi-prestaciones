@@ -1,5 +1,5 @@
 <Alloy>
-    <Window>
+    <Window id="pageWindow">
         <View id="pageView" class="container">
             <View id="sectionView">
                 <Label id="title"></Label>

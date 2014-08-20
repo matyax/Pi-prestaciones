@@ -1,0 +1,5 @@
+"#agendaDetail" : {
+    orientationModes: [
+        Ti.UI.PORTRAIT
+    ]
+}

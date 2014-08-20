@@ -1,3 +1,8 @@
+"#pageWindow" : {
+    orientationModes: [
+        Ti.UI.PORTRAIT
+    ] 
+},
 ".container" : {
     layout: 'vertical'
 },

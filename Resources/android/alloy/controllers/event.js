@@ -74,38 +74,10 @@ function Controller() {
         }
         if (event.map) {
             label = event.map_label || "Ubicación";
-            var mapWindow = createEventWindow(label, event.styles.background);
-            var MapModule = require("ti.map");
-            event.map.lat = parseFloat(event.map.lat);
-            event.map.lng = parseFloat(event.map.lng);
-            var marker = MapModule.createAnnotation({
-                latitude: event.map.lat,
-                longitude: event.map.lng,
-                pincolor: MapModule.ANNOTATION_PURPLE,
-                title: event.title,
-                subtitle: event.address,
-                leftButton: Ti.UI.iPhone.SystemButton.INFO_DARK
-            });
-            var map = MapModule.createView({
-                userLocation: true,
-                mapType: MapModule.NORMAL_TYPE,
-                animate: true,
-                region: {
-                    latitude: event.map.lat,
-                    longitude: event.map.lng,
-                    latitudeDelta: .05,
-                    longitudeDelta: .05
-                },
-                height: "100%",
-                top: 0,
-                width: Ti.UI.FILL,
-                annotations: [ marker ]
-            });
-            mapWindow.add(map);
             addEventMenuItem({
                 icon: "map",
                 label: label,
-                window: mapWindow
+                controller: "map"
             });
         }
         if (event.agenda) {
@@ -166,13 +138,6 @@ function Controller() {
         });
         $.eventView.add(view);
     }
-    function createEventWindow(title, backgroundColor) {
-        return Titanium.UI.createWindow({
-            backgroundColor: backgroundColor,
-            layout: "vertical",
-            title: title
-        });
-    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "event";
     if (arguments[0]) {
@@ -183,6 +148,7 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.eventNavigationWindow = Ti.UI.createWindow({
+        orientationModes: [ Ti.UI.PORTRAIT ],
         id: "eventNavigationWindow"
     });
     $.__views.eventNavigationWindow && $.addTopLevelView($.__views.eventNavigationWindow);

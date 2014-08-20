@@ -1,3 +1,6 @@
-".container" : {
-    layout: 'vertical'
+"#favoriteWindow" : {
+    layout: 'vertical',
+    orientationModes: [
+        Ti.UI.PORTRAIT
+    ]
 }

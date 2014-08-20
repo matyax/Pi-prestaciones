@@ -1,1 +1,1 @@
-module.exports = [];
+module.exports = [{"isId":true,"priority":100000.0005,"key":"agendaDetail","style":{orientationModes:[Ti.UI.PORTRAIT,],}}];

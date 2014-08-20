@@ -17,15 +17,16 @@ function Controller() {
     }
     var $ = this;
     var exports = {};
-    $.__views.page = Ti.UI.createWindow({
-        id: "page"
+    $.__views.pageWindow = Ti.UI.createWindow({
+        orientationModes: [ Ti.UI.PORTRAIT ],
+        id: "pageWindow"
     });
-    $.__views.page && $.addTopLevelView($.__views.page);
+    $.__views.pageWindow && $.addTopLevelView($.__views.pageWindow);
     $.__views.pageView = Ti.UI.createView({
         layout: "vertical",
         id: "pageView"
     });
-    $.__views.page.add($.__views.pageView);
+    $.__views.pageWindow.add($.__views.pageView);
     $.__views.sectionView = Ti.UI.createView({
         width: "100%",
         height: 30,

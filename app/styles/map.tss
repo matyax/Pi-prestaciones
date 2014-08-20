@@ -1,3 +1,6 @@
 "#mapWindow" : {
-    layout: 'vertical'
+    layout: 'vertical',
+    orientationModes: [
+        Ti.UI.PORTRAIT
+    ]
 }

@@ -1,1 +1,1 @@
-module.exports = [{"isId":true,"priority":100000.0009,"key":"formWindow","style":{layout:"vertical",}}];
+module.exports = [{"isId":true,"priority":100000.0011,"key":"formWindow","style":{layout:"vertical",orientationModes:[Ti.UI.PORTRAIT,],}}];
