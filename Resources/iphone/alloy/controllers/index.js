@@ -21,7 +21,8 @@ function Controller() {
         layout: "vertical",
         backgroundColor: "white",
         id: "index",
-        title: ""
+        title: "",
+        exitOnClose: "true"
     });
     $.__views.index && $.addTopLevelView($.__views.index);
     $.__views.__alloyId0 = Ti.UI.createView({

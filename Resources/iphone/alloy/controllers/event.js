@@ -38,39 +38,6 @@ function Controller() {
                 $.eventNavigationWindow.close();
             }
         });
-        if (event.information) {
-            label = event.information_label || "Presentación";
-            var informationWindow = createEventWindow(label, event.styles.background);
-            var informationScrollView = Ti.UI.createScrollView({
-                contentWidth: "auto",
-                contentHeight: "auto",
-                showVerticalScrollIndicator: true,
-                layout: "vertical",
-                height: Ti.UI.FILL,
-                width: "100%"
-            });
-            var informationLabel = Ti.UI.createLabel({
-                color: event.styles.forecolor,
-                font: {
-                    fontSize: 12
-                },
-                text: event.information,
-                textAlign: "left",
-                top: 10,
-                left: 10,
-                width: Ti.UI.SIZE,
-                height: Ti.UI.SIZE
-            });
-            var informationSectionView = createSectionView(label);
-            informationScrollView.add(informationSectionView);
-            informationScrollView.add(informationLabel);
-            informationWindow.add(informationScrollView);
-            addEventMenuItem({
-                icon: "information",
-                label: label,
-                window: informationWindow
-            });
-        }
         for (var j in event.pages) addEventMenuItem({
             icon: "page",
             label: event.pages[j].title,
@@ -91,82 +58,34 @@ function Controller() {
         });
         if (event.agenda) {
             label = event.agenda_label || "Agenda";
-            var agendaOnclick = function(id) {
-                var detailWindow = createAgendaDetailWindow(searchItem(event.agenda, id));
-                "android" == Titanium.Platform.osname ? detailWindow.open({
-                    modal: true
-                }) : $.eventNavigationWindow.openWindow(detailWindow, {
-                    animated: true
-                });
-            };
-            var calendar = require("listNavigation");
-            var agendaWindow = calendar.add(label, event.agenda, agendaOnclick, windowReference, event.styles.background);
             addEventMenuItem({
                 icon: "agenda",
                 label: label,
-                window: agendaWindow
+                controller: "agenda"
             });
         }
         if (event.form) {
             label = event.form_label || "Inscripción online";
-            var formWindow = createEventWindow(label, event.styles.background);
-            var formWebView = Titanium.UI.createWebView({
-                url: event.form
-            });
-            formWindow.add(formWebView);
             addEventMenuItem({
                 icon: "form",
                 label: label,
-                window: formWindow
+                controller: "form"
             });
         }
         if (event.certificate) {
             label = event.certificate_label || "Certificación web";
-            var cwWindow = createEventWindow(label, event.styles.background);
-            var cwWebView = Titanium.UI.createWebView({
-                url: event.certificate
-            });
-            cwWindow.add(cwWebView);
             addEventMenuItem({
                 icon: "certificate",
                 label: label,
-                window: cwWindow
+                controller: "certificate"
             });
         }
         if (event.map) {
             label = event.map_label || "Ubicación";
-            var mapWindow = createEventWindow(label, event.styles.background);
-            var MapModule = require("ti.map");
-            event.map.lat = parseFloat(event.map.lat);
-            event.map.lng = parseFloat(event.map.lng);
-            var marker = MapModule.createAnnotation({
-                latitude: event.map.lat,
-                longitude: event.map.lng,
-                pincolor: MapModule.ANNOTATION_PURPLE,
-                title: event.title,
-                subtitle: event.address,
-                leftButton: Ti.UI.iPhone.SystemButton.INFO_DARK
-            });
-            var map = MapModule.createView({
-                userLocation: true,
-                mapType: MapModule.NORMAL_TYPE,
-                animate: true,
-                region: {
-                    latitude: event.map.lat,
-                    longitude: event.map.lng,
-                    latitudeDelta: .05,
-                    longitudeDelta: .05
-                },
-                height: "100%",
-                top: 0,
-                width: Ti.UI.FILL,
-                annotations: [ marker ]
-            });
-            mapWindow.add(map);
             addEventMenuItem({
                 icon: "map",
                 label: label,
-                window: mapWindow
+                controller: "map"
             });
         }
         if (event.agenda) {
@@ -179,21 +98,10 @@ function Controller() {
         }
         if (event.accommodations) {
             label = event.accommodations_label || "Agenda";
-            var accommodationOnclick = function(id) {
-                console.log(event.accommodations);
-                var detailWindow = createAccommodationDetailWindow(searchItem(event.accommodations, id));
-                "android" == Titanium.Platform.osname ? detailWindow.open({
-                    modal: true
-                }) : $.eventNavigationWindow.openWindow(detailWindow, {
-                    animated: true
-                });
-            };
-            var accommodationNavigation = require("listNavigation");
-            var accommodationWindow = accommodationNavigation.add(label, event.accommodations, accommodationOnclick, windowReference, event.styles.background);
             addEventMenuItem({
                 icon: "accommodation",
                 label: label,
-                window: accommodationWindow
+                controller: "accommodations"
             });
         }
     }
@@ -242,204 +150,6 @@ function Controller() {
         });
         $.eventView.add(view);
     }
-    function createEventWindow(title, backgroundColor) {
-        return Titanium.UI.createWindow({
-            backgroundColor: backgroundColor,
-            layout: "vertical",
-            title: title
-        });
-    }
-    function createSectionView(title) {
-        var sectionView = Ti.UI.createView({
-            backgroundColor: eventData.styles.button_background,
-            width: "100%",
-            height: 30,
-            top: 0,
-            left: 0
-        });
-        var sectionLabel = Ti.UI.createLabel({
-            color: eventData.styles.button_foreground,
-            font: {
-                fontSize: 14
-            },
-            text: title,
-            textAlign: "left",
-            top: 5,
-            left: 10
-        });
-        sectionView.add(sectionLabel);
-        return sectionView;
-    }
-    function createAccommodationDetailWindow(item) {
-        var window = Titanium.UI.createWindow({
-            backgroundColor: eventData.styles.background,
-            layout: "vertical",
-            title: item.title
-        });
-        var scrollView = Ti.UI.createScrollView({
-            contentWidth: "auto",
-            contentHeight: "auto",
-            showVerticalScrollIndicator: true,
-            layout: "vertical",
-            height: Ti.UI.FILL,
-            width: "100%"
-        });
-        var sectionView = createSectionView(eventData.accommodations_label + " - " + item.title);
-        var image = null;
-        item.image && (image = Ti.UI.createImageView({
-            image: item.image,
-            top: 10,
-            left: 10,
-            width: "95%"
-        }));
-        var titleLabel = Ti.UI.createLabel({
-            color: eventData.styles.forecolor,
-            font: {
-                fontSize: 12
-            },
-            text: item.title,
-            textAlign: "left",
-            top: 10,
-            left: 10,
-            width: Titanium.Platform.displayCaps.platformWidth,
-            height: Ti.UI.SIZE
-        });
-        var descriptionLabel = Ti.UI.createLabel({
-            color: eventData.styles.forecolor,
-            font: {
-                fontSize: 12
-            },
-            text: item.description,
-            top: 10,
-            left: 10,
-            width: "95%",
-            height: Ti.UI.SIZE
-        });
-        scrollView.add(sectionView);
-        image && scrollView.add(image);
-        scrollView.add(titleLabel);
-        scrollView.add(descriptionLabel);
-        window.add(scrollView);
-        return window;
-    }
-    function createAgendaDetailWindow(item) {
-        var window = Titanium.UI.createWindow({
-            backgroundColor: eventData.styles.background,
-            title: item.title
-        });
-        var scrollView = Ti.UI.createScrollView({
-            contentWidth: "auto",
-            contentHeight: "auto",
-            layout: "vertical",
-            showVerticalScrollIndicator: true,
-            height: Ti.UI.FILL,
-            width: "100%",
-            top: 0,
-            left: 0,
-            zIndex: 1
-        });
-        window.add(createAgendaShareView(item));
-        var sectionView = createSectionView(eventData.agenda_label + " " + item.date + " " + item.startTime);
-        var titleLabel = Ti.UI.createLabel({
-            color: eventData.styles.forecolor,
-            font: {
-                fontSize: 12
-            },
-            text: item.title,
-            textAlign: "left",
-            top: 10,
-            left: 10,
-            width: Titanium.Platform.displayCaps.platformWidth,
-            height: Ti.UI.SIZE
-        });
-        var titleLabel = Ti.UI.createLabel({
-            color: eventData.styles.forecolor,
-            font: {
-                fontSize: 12
-            },
-            text: item.title,
-            textAlign: "left",
-            top: 10,
-            left: 10,
-            width: Titanium.Platform.displayCaps.platformWidth,
-            height: Ti.UI.SIZE
-        });
-        var timeText = item.endTime ? "De " + item.startTime + " a " + item.endTime + " horas" : item.startTime + " horas";
-        var timeLabel = Ti.UI.createLabel({
-            color: eventData.styles.forecolor,
-            font: {
-                fontSize: 12
-            },
-            text: timeText,
-            left: 10,
-            width: Ti.UI.SIZE,
-            height: Ti.UI.SIZE
-        });
-        var descriptionLabel = Ti.UI.createLabel({
-            color: eventData.styles.forecolor,
-            font: {
-                fontSize: 12
-            },
-            text: item.description,
-            top: 10,
-            left: 10,
-            width: "95%",
-            height: Ti.UI.SIZE
-        });
-        scrollView.add(sectionView);
-        scrollView.add(titleLabel);
-        scrollView.add(timeLabel);
-        scrollView.add(descriptionLabel);
-        window.add(scrollView);
-        return window;
-    }
-    function createAgendaShareView(item) {
-        var shareView = Ti.UI.createView({
-            layout: "horizontal",
-            backgroundColor: eventData.styles.share_background,
-            width: "100%",
-            height: "74px",
-            left: 0,
-            bottom: 0,
-            zIndex: 2
-        });
-        var favoriteButton = Titanium.UI.createButton({
-            backgroundImage: "/icons/favorite.png",
-            width: "64px",
-            height: "64px",
-            top: "5px",
-            left: 10
-        });
-        var tweet = Ti.UI.createImageView({
-            image: "/icons/twitter.png",
-            width: "64px",
-            height: "64px",
-            top: "5px",
-            left: 10
-        });
-        tweet.addEventListener("click", function() {
-            var social = require("social");
-            social.tweet(eventData, item);
-        });
-        favoriteButton.addEventListener("click", function() {
-            var favorites = require("favorites");
-            favorites.toggle(eventData.id_event, item);
-        });
-        shareView.add(favoriteButton);
-        shareView.add(tweet);
-        return shareView;
-    }
-    function searchItem(items, id) {
-        var item = null;
-        for (var i in items) {
-            if ("object" != typeof items[i]) continue;
-            if (isNaN(parseInt(i))) {
-                item = searchItem(items[i], id);
-                if (item) return item;
-            } else if (items[i].id && items[i].id == id) return items[i];
-        }
-        return null;
-    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "event";
     if (arguments[0]) {
@@ -474,8 +184,8 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     arguments[0] || {};
-    require("pi");
-    var data = require("data");
+    var data = (require("pi"), require("data"));
+    require("ui");
     var eventData = data.get("eventData");
     data.get("event");
     generateEventWindow(eventData);
