@@ -34,7 +34,7 @@ function generateEventWindow(event) {
    
     /* LOGO */
     var image = Ti.UI.createImageView({
-       image: event.logo,
+       image: event.image,
        width: '100%',
        top: '0dp'
     });
