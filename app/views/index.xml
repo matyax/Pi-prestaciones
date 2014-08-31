@@ -1,6 +1,6 @@
 <Alloy>
-	<Window class="container" id="index" title="" exitOnClose="true">
-	    <View class="logoContainer">
+	<Window class="container" id="index" title="" fullscreen="true" exitOnClose="true">
+	    <View class="logoContainer" id="logoContainer">
 	       <ImageView id="piLogo" image="/pi/logo.png" />
 	   </View>
 	    
