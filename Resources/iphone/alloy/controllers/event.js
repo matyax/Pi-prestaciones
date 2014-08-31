@@ -122,13 +122,15 @@ function Controller() {
             image: "/icons/" + item.icon + ".png",
             width: 30,
             height: 30,
-            left: 10,
+            left: 15,
             top: 5
         });
         var view = Titanium.UI.createView({
+            borderRadius: 15,
             layout: "horizontal",
-            top: 1,
-            width: "100%",
+            top: 10,
+            left: 10,
+            width: Titanium.Platform.displayCaps.platformWidth - 20,
             height: 40,
             backgroundColor: eventData.styles.button_background
         });
