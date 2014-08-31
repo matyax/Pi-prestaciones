@@ -74,7 +74,7 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
         }
         
         var listView = Ti.UI.createListView({
-            backgroundColor: eventData.styles.background
+            backgroundColor: eventData.styles.button_background
         });
         var sections = [];
         

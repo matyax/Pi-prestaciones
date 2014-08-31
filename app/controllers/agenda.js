@@ -25,7 +25,7 @@ listNavigation.add(
     eventData.agenda,
     agendaOnclick,
     windowReference,
-    eventData.styles.background,
+    eventData.styles.button_background,
     $.agenda
 );
 

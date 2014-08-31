@@ -39,7 +39,7 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
             headerTitle: items.headerTitle
         } : isFinalList = true;
         var listView = Ti.UI.createListView({
-            backgroundColor: eventData.styles.background
+            backgroundColor: eventData.styles.button_background
         });
         var sections = [];
         var section = Ti.UI.createListSection(sectionParameters);
