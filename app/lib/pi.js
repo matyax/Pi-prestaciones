@@ -1,5 +1,5 @@
 var rest = require('rest');
-var API_DOMAIN = 'http://192.168.0.100';
+var API_DOMAIN = 'http://piprestaciones.com';
 
 var eventsResponse = null;
 

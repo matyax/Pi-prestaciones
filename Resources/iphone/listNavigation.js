@@ -93,7 +93,9 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
         return listView;
     }
     function createMultipleTitleListView(items, onClick) {
-        var listView = Ti.UI.createListView();
+        var listView = Ti.UI.createListView({
+            backgroundColor: eventData.styles.background
+        });
         var sections = [];
         var section = null;
         var dataSet = [];
@@ -104,7 +106,9 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
             for (var i in items[title]) dataSet.push({
                 properties: {
                     title: items[title][i].title,
-                    id: items[title][i].id
+                    id: items[title][i].id,
+                    color: eventData.styles.button_foreground,
+                    backgroundColor: eventData.styles.button_background
                 }
             });
             section.setItems(dataSet);
