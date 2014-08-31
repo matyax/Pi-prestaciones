@@ -94,7 +94,7 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
     }
     function createMultipleTitleListView(items, onClick) {
         var listView = Ti.UI.createListView({
-            backgroundColor: eventData.styles.background
+            backgroundColor: eventData.styles.button_background
         });
         var sections = [];
         var section = null;
