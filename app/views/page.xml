@@ -1,16 +1,8 @@
 <Alloy>
     <Window id="pageWindow">
         <View id="pageView" class="container">
-            <View id="sectionView">
-                <Label id="title"></Label>
-            </View>
-            
-            <ScrollView id="pageScrollView">
-                <ImageView id="imageBefore"></ImageView>
-            
-                <Label id="content"></Label>
-                
-                <ImageView id="imageAfter"></ImageView>    
+            <ScrollView id="pageScrollView" showHorizontalScrollIndicator="false">
+                    
             </ScrollView>
         </View>
     </Window>

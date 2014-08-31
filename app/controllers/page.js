@@ -4,28 +4,74 @@ var data = require('data'),
     page = data.get('page'),
     eventData = data.get('eventData');
 
-$.sectionView.setBackgroundColor(eventData.styles.button_background);
+$.pageView.setBackgroundColor(page.background_color);
+
+for (var i in page.items) {
     
-$.title.setText(page.title);
-$.title.setColor(eventData.styles.button_foreground);
-
-$.content.setText(page.content);
-$.content.setColor(eventData.styles.forecolor);
-
-$.pageView.setBackgroundColor(eventData.styles.background);
-
-if (page.image) {
-    if (page.image_position == 'before') {
-        $.imageBefore.setImage(
-            page.image
+    if (page.items[i].type == 'paragraph') {
+        
+        $.pageScrollView.add(
+            createParagraph(page.items[i])
         );
         
-        $.imageBefore.setVisible(true);
-    } else if (page.image_position == 'after') {
-        $.imageAfter.setImage(
-            page.image
+    } else if (page.items[i].type == 'title') {
+        
+        $.pageScrollView.add(
+            createTitle(page.items[i])
         );
         
-        $.imageAfter.setVisible(true);
+    } else if (page.items[i].type == 'image') {
+        $.pageScrollView.add(
+            createImage(page.items[i])
+        );
     }
+}
+
+function createParagraph(item) {
+    return Ti.UI.createLabel({
+        text: item.value,
+        color: item.style_foreground,
+        font: {
+            fontSize: item.style_font_size
+        },
+        width: '95%',
+        top: 10,
+        left: 0
+    });
+}
+
+function createTitle(item) {
+    var view = Ti.UI.createView({
+        backgroundColor: item.style_background,
+        width: '100%',
+        height: (item.style_font_size * 2),
+        top: 10     
+    });
+    
+    view.add(Ti.UI.createLabel({
+        text: item.value,
+        color: item.style_foreground,
+        font: {
+            fontSize: item.style_font_size
+        },
+        top: Math.round(item.style_font_size / 2),
+        left: 10
+    }));
+    
+    return view;
+}
+
+function createImage(item) {
+    
+    var view = Ti.UI.createView({
+        width: '100%',
+        height: Ti.UI.SIZE,
+        top: 10
+    });
+    
+    view.add(Ti.UI.createImageView({
+        image: item.value,
+    }));
+    
+    return view;
 }
