@@ -9,7 +9,7 @@ var data        = require('data'),
     
 var window = $.agendaDetail;
 
-window.setBackgroundColor(eventData.styles.background);
+window.setBackgroundColor(item.style_background);
 window.setTitle(item.title);
     
 var scrollView =  Ti.UI.createScrollView({
@@ -36,17 +36,7 @@ var sectionView = ui.createSectionView(
 
 /* Event title */
 var titleLabel = Ti.UI.createLabel({
-    color: eventData.styles.forecolor,
-    font: { fontSize: 12 },
-    text: item.title,
-    textAlign: 'left',
-    top: 10,
-    left: 10,
-    width: Titanium.Platform.displayCaps.platformWidth, height: Ti.UI.SIZE
-});
-
-var titleLabel = Ti.UI.createLabel({
-    color: eventData.styles.forecolor,
+    color: item.style_foreground,
     font: { fontSize: 12 },
     text: item.title,
     textAlign: 'left',
@@ -58,7 +48,7 @@ var titleLabel = Ti.UI.createLabel({
 var timeText = item.endTime ? 'De ' + item.startTime + ' a ' + item.endTime + ' horas' : item.startTime + ' horas';
 
 var timeLabel = Ti.UI.createLabel({
-    color: eventData.styles.forecolor,
+    color: item.style_foreground,
     font: { fontSize: 12 },
     text: timeText,
     left: 10,
@@ -66,7 +56,7 @@ var timeLabel = Ti.UI.createLabel({
 });
 
 var descriptionLabel = Ti.UI.createLabel({
-    color: eventData.styles.forecolor,
+    color: item.style_foreground,
     font: { fontSize: 12 },
     text: item.description,
     top: 10,
