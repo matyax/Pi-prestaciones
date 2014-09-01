@@ -92,11 +92,29 @@ function createAgendaShareView(item) {
         left: 10
     });
     
+    var favoriteLabel = Titanium.UI.createLabel({
+        text: 'Favoritos',
+        font: {
+            fontSize: 12
+        },
+        top: 11,
+        left: 10
+    });
+    
     var tweet = Ti.UI.createImageView({
         image: '/icons/twitter.png',
         width: '64px',
         height: '64px',
         top: '5px',
+        left: 40
+    });
+    
+    var tweetLabel = Titanium.UI.createLabel({
+        text: 'Twittear',
+        font: {
+            fontSize: 12
+        },
+        top: 11,
         left: 10
     });
     
@@ -113,7 +131,9 @@ function createAgendaShareView(item) {
     });
     
     shareView.add(favoriteButton);
+    shareView.add(favoriteLabel);
     shareView.add(tweet);
+    shareView.add(tweetLabel);
     
     return shareView;
 }
