@@ -9,6 +9,8 @@ var data            = require('data'),
 $.favoriteWindow.setTitle(title);
 $.favoriteWindow.setBackgroundColor(eventData.styles.background);
 
+$.list.setBackgroundColor(eventData.styles.button_background);
+
 refreshList();
 
 function refreshList(clear) {
@@ -38,7 +40,9 @@ function refreshList(clear) {
         dataSet.push({ 
             properties: { 
                 title: favorite.get('title'), 
-                id: favorite.get('idAgendaItem') 
+                id: favorite.get('idAgendaItem'),
+                color: eventData.styles.button_foreground,
+                backgroundColor: eventData.styles.button_background
             } 
         });
     }); 
@@ -52,18 +56,38 @@ function refreshList(clear) {
 }
 
 function itemClicked(e) {
-    var clickedItem = section.getItemAt(e.itemIndex);
+    var item = section.getItemAt(e.itemIndex);
     
-    var window = createAgendaDetailWindow(
-        getFavorite(clickedItem.properties.id)
-    );
+    var agendaItem = searchItem(eventData.agenda, item.properties.id);
+    
+    if (agendaItem == null) {
+        var favorites = Alloy.createCollection('favorite');
+        
+        favorites.fetch();
+        
+        favorites.map(function (favorite) {
+            if (favorite.get('idAgendaItem') == item.properties.id) {
+                favorite.destroy();
+                
+                return;
+            }
+        });
+        
+        refreshList(true); 
+        
+        return;
+    }
+    
+    data.set('agendaItem', agendaItem);
+    
+   var detailWindow = Alloy.createController('agendaDetail').getView();
     
     if (Titanium.Platform.osname == 'android') {
-        window.open({
+        detailWindow.open({
             modal: true
         });
     } else {
-        windowReference.openWindow(window, { animated:true });
+        windowReference.openWindow(detailWindow, { animated:true });
     }
 }
 
@@ -90,152 +114,24 @@ function getFavorite(id) {
     return item;
 }
 
-/* -------------- REPLICATED METHODS -------------- */
-function createAgendaDetailWindow(item) {
+function searchItem(items, id) {
+    var item = null;
     
-    var window = Titanium.UI.createWindow({
-        backgroundColor: eventData.styles.background,
-        title: item.title
-    });
+    for (var i in items) {
+        if (typeof items[i] != 'object') {
+            continue;
+        } else if (isNaN(parseInt(i))) {
+            item = searchItem(items[i], id);
+            
+            if (item) {
+                return item;
+            }
+        } else {
+            if ((items[i].id) && (items[i].id == id)) {
+                return items[i];
+            }
+        }
+    }
     
-    var scrollView =  Ti.UI.createScrollView({
-        contentWidth: 'auto',
-        contentHeight: 'auto',
-        layout: 'vertical',
-        showVerticalScrollIndicator: true,
-        height: Ti.UI.FILL,
-        width: '100%',
-        top: 0,
-        left: 0,
-        zIndex: 1
-    });
-    
-    window.add(
-        createAgendaShareView(item)
-    );
-    
-    /* Title of section */
-    var sectionView = createSectionView(
-        eventData.agenda_label + ' ' + item.date + ' ' + item.startTime
-    );
-    
-    /* Event title */
-    var titleLabel = Ti.UI.createLabel({
-        color: eventData.styles.forecolor,
-        font: { fontSize: 12 },
-        text: item.title,
-        textAlign: 'left',
-        top: 10,
-        left: 10,
-        width: Titanium.Platform.displayCaps.platformWidth, height: Ti.UI.SIZE
-    });
-    
-    var titleLabel = Ti.UI.createLabel({
-        color: eventData.styles.forecolor,
-        font: { fontSize: 12 },
-        text: item.title,
-        textAlign: 'left',
-        top: 10,
-        left: 10,
-        width: Titanium.Platform.displayCaps.platformWidth, height: Ti.UI.SIZE
-    });
-    
-    var timeText = item.endTime ? 'De ' + item.startTime + ' a ' + item.endTime + ' horas' : item.startTime + ' horas';
-    
-    var timeLabel = Ti.UI.createLabel({
-        color: eventData.styles.forecolor,
-        font: { fontSize: 12 },
-        text: timeText,
-        left: 10,
-        width: Ti.UI.SIZE, height: Ti.UI.SIZE
-    });
-    
-    var descriptionLabel = Ti.UI.createLabel({
-        color: eventData.styles.forecolor,
-        font: { fontSize: 12 },
-        text: item.description,
-        top: 10,
-        left: 10,
-        width: '95%', height: Ti.UI.SIZE
-    });
-
-    scrollView.add(sectionView);
-    
-    scrollView.add(titleLabel);
-    scrollView.add(timeLabel);
-    scrollView.add(descriptionLabel);
-    
-    window.add(scrollView);
-    
-    return window; 
-}
-
-function createAgendaShareView(item) {
-    var shareView = Ti.UI.createView({
-        layout: 'horizontal',
-        backgroundColor: eventData.styles.share_background,
-        width: '100%',
-        height: '74px',
-        left: 0,
-        bottom: 0,
-        zIndex: 2
-    });
-    
-    var favoriteButton = Titanium.UI.createButton({
-        backgroundImage: '/icons/favorite.png',
-        width: '64px',
-        height: '64px',
-        top: '5px',
-        left: 10
-    });
-    
-    var tweet = Ti.UI.createImageView({
-        image: '/icons/twitter.png',
-        width: '64px',
-        height: '64px',
-        top: '5px',
-        left: 10
-    });
-    
-    tweet.addEventListener('click', function (e) {
-        var social = require('social');
-        
-        social.tweet(eventData, item);        
-    });
-    
-    favoriteButton.addEventListener('click', function(e) {
-        var favorites = require('favorites');
-        
-        favorites.toggle(eventData.id_event, item);
-        
-        refreshList(true);
-    });
-    
-    shareView.add(favoriteButton);
-    shareView.add(tweet);
-    
-    return shareView;
-}
-
-function createSectionView(title) {
-    var sectionView = Ti.UI.createView({
-        backgroundColor: eventData.styles.button_background,
-        width: '100%',
-        height: 30,
-        top: 0,
-        left: 0
-    });
-    
-    var sectionLabel = Ti.UI.createLabel({
-        color: eventData.styles.button_foreground,
-        font: { fontSize: 14 },
-        text: title,
-        textAlign: 'left',
-        top: 5,
-        left: 10,
-    });
-    
-    sectionView.add(sectionLabel);
-    
-    return sectionView;
+    return null;
 }
