@@ -153,6 +153,13 @@ function generateEventWindow(event) {
             controller: 'accommodations'
         });
     }
+    
+    $.eventView.add(Ti.UI.createView({
+        height: 10,
+        width: '100%',
+        left: 0,
+        top: 0
+    }));
 };
 
 generateEventWindow(eventData);

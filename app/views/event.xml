@@ -9,7 +9,9 @@
     
     <Window id="eventNavigationWindow" platform="android">
         <ScrollView id="eventScrollView">
-            <View id="eventView"></View>                
+            <View id="eventView"></View>
+            
+            <View class="padding"></View>          
         </ScrollView>    
     </Window>
     
