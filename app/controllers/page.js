@@ -54,7 +54,7 @@ function createTitle(item) {
         font: {
             fontSize: item.style_font_size
         },
-        top: Math.round(item.style_font_size / 2),
+        top: Math.round(item.style_font_size / 2) - 2,
         left: 20
     }));
     
