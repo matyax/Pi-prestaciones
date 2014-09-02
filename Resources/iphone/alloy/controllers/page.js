@@ -22,19 +22,28 @@ function Controller() {
     }
     function createTitle(item) {
         var view = Ti.UI.createView({
+            layout: "vertical",
             backgroundColor: item.style_background,
             width: "100%",
-            height: 2 * item.style_font_size,
+            height: Ti.UI.SIZE,
             top: 10
         });
+        view.add(Ti.UI.createView({
+            width: "100%",
+            height: 5
+        }));
         view.add(Ti.UI.createLabel({
             text: item.value,
             color: item.style_foreground,
             font: {
                 fontSize: item.style_font_size
             },
-            top: Math.round(item.style_font_size / 2) - 2,
+            top: 0,
             left: 20
+        }));
+        view.add(Ti.UI.createView({
+            width: "100%",
+            height: 5
         }));
         return view;
     }
