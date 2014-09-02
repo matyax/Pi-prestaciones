@@ -186,12 +186,21 @@ function addEventMenuItem(item) {
         top: 5
     });
     
+    var viewWidth   = Titanium.Platform.displayCaps.platformWidth - 20
+        viewLeft    = 10;
+    
+    if (Titanium.Platform.osname == 'android') {
+        viewWidth = viewWidth + 'px'
+        
+        viewLeft = viewLeft + 'px' 
+    }
+    
     var view = Titanium.UI.createView({
         borderRadius: 15,
         layout: 'horizontal',
         top: 10,
-        left: 10,
-        width: Titanium.Platform.displayCaps.platformWidth - 20,
+        left: viewLeft,
+        width: viewWidth,
         height: 40,
         backgroundColor: eventData.styles.button_background,   
     });

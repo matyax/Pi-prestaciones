@@ -38,8 +38,8 @@ function Controller() {
     arguments[0] || {};
     var data = require("data"), eventData = data.get("eventData"), windowReference = data.get("windowReference");
     var accommodationOnclick = function(id) {
-        data.set("accommodationItem", searchItem(eventData.accommodations, id));
-        var detailWindow = Alloy.createController("accommodationDetail").getView();
+        data.set("page", searchItem(eventData.accommodations, id));
+        var detailWindow = Alloy.createController("page").getView();
         detailWindow.open({
             modal: true
         });

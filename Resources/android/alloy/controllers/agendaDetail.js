@@ -25,11 +25,27 @@ function Controller() {
             top: "5px",
             left: 10
         });
+        var favoriteLabel = Titanium.UI.createLabel({
+            text: "Favoritos",
+            font: {
+                fontSize: 12
+            },
+            top: 11,
+            left: 10
+        });
         var tweet = Ti.UI.createImageView({
             image: "/icons/twitter.png",
             width: "64px",
             height: "64px",
             top: "5px",
+            left: 40
+        });
+        var tweetLabel = Titanium.UI.createLabel({
+            text: "Twittear",
+            font: {
+                fontSize: 12
+            },
+            top: 11,
             left: 10
         });
         tweet.addEventListener("click", function() {
@@ -41,7 +57,9 @@ function Controller() {
             favorites.toggle(eventData.id_event, item);
         });
         shareView.add(favoriteButton);
+        shareView.add(favoriteLabel);
         shareView.add(tweet);
+        shareView.add(tweetLabel);
         return shareView;
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
@@ -63,7 +81,7 @@ function Controller() {
     arguments[0] || {};
     var data = require("data"), eventData = data.get("eventData"), item = data.get("agendaItem"), ui = require("ui");
     var window = $.agendaDetail;
-    window.setBackgroundColor(eventData.styles.background);
+    window.setBackgroundColor(item.style_background);
     window.setTitle(item.title);
     var scrollView = Ti.UI.createScrollView({
         contentWidth: "auto",
@@ -79,19 +97,7 @@ function Controller() {
     window.add(createAgendaShareView(item));
     var sectionView = ui.createSectionView(eventData, eventData.agenda_label + " " + item.date + " " + item.startTime);
     var titleLabel = Ti.UI.createLabel({
-        color: eventData.styles.forecolor,
-        font: {
-            fontSize: 12
-        },
-        text: item.title,
-        textAlign: "left",
-        top: 10,
-        left: 10,
-        width: Titanium.Platform.displayCaps.platformWidth,
-        height: Ti.UI.SIZE
-    });
-    var titleLabel = Ti.UI.createLabel({
-        color: eventData.styles.forecolor,
+        color: item.style_foreground,
         font: {
             fontSize: 12
         },
@@ -104,7 +110,7 @@ function Controller() {
     });
     var timeText = item.endTime ? "De " + item.startTime + " a " + item.endTime + " horas" : item.startTime + " horas";
     var timeLabel = Ti.UI.createLabel({
-        color: eventData.styles.forecolor,
+        color: item.style_foreground,
         font: {
             fontSize: 12
         },
@@ -114,7 +120,7 @@ function Controller() {
         height: Ti.UI.SIZE
     });
     var descriptionLabel = Ti.UI.createLabel({
-        color: eventData.styles.forecolor,
+        color: item.style_foreground,
         font: {
             fontSize: 12
         },

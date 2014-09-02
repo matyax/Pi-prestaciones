@@ -19,7 +19,7 @@ function Controller() {
         $.eventNavigationWindow.setBackgroundColor(event.styles.background);
         data.set("windowReference", windowReference);
         var image = Ti.UI.createImageView({
-            image: event.logo,
+            image: event.image,
             width: "100%",
             top: "0dp"
         });
@@ -96,6 +96,12 @@ function Controller() {
                 controller: "accommodations"
             });
         }
+        $.eventView.add(Ti.UI.createView({
+            height: 10,
+            width: "100%",
+            left: 0,
+            top: 0
+        }));
     }
     function addEventMenuItem(item) {
         var button = Titanium.UI.createButton({
@@ -114,13 +120,19 @@ function Controller() {
             image: "/icons/" + item.icon + ".png",
             width: 30,
             height: 30,
-            left: 10,
+            left: 15,
             top: 5
         });
+        var viewWidth = Titanium.Platform.displayCaps.platformWidth - 20;
+        viewLeft = 10;
+        viewWidth += "px";
+        viewLeft += "px";
         var view = Titanium.UI.createView({
+            borderRadius: 15,
             layout: "horizontal",
-            top: 1,
-            width: "100%",
+            top: 10,
+            left: viewLeft,
+            width: viewWidth,
             height: 40,
             backgroundColor: eventData.styles.button_background
         });
@@ -166,6 +178,10 @@ function Controller() {
         id: "eventView"
     });
     $.__views.eventScrollView.add($.__views.eventView);
+    $.__views.__alloyId0 = Ti.UI.createView({
+        id: "__alloyId0"
+    });
+    $.__views.eventScrollView.add($.__views.__alloyId0);
     exports.destroy = function() {};
     _.extend($, $.__views);
     arguments[0] || {};

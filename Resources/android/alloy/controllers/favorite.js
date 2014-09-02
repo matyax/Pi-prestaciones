@@ -23,7 +23,9 @@ function Controller() {
             dataSet.push({
                 properties: {
                     title: favorite.get("title"),
-                    id: favorite.get("idAgendaItem")
+                    id: favorite.get("idAgendaItem"),
+                    color: eventData.styles.button_foreground,
+                    backgroundColor: eventData.styles.button_background
                 }
             });
         });
@@ -33,156 +35,36 @@ function Controller() {
         $.list.addEventListener("itemclick", itemClicked);
     }
     function itemClicked(e) {
-        var clickedItem = section.getItemAt(e.itemIndex);
-        var window = createAgendaDetailWindow(getFavorite(clickedItem.properties.id));
-        window.open({
+        var item = section.getItemAt(e.itemIndex);
+        var agendaItem = searchItem(eventData.agenda, item.properties.id);
+        if (null == agendaItem) {
+            var favorites = Alloy.createCollection("favorite");
+            favorites.fetch();
+            favorites.map(function(favorite) {
+                if (favorite.get("idAgendaItem") == item.properties.id) {
+                    favorite.destroy();
+                    return;
+                }
+            });
+            refreshList(true);
+            return;
+        }
+        data.set("agendaItem", agendaItem);
+        var detailWindow = Alloy.createController("agendaDetail").getView();
+        detailWindow.open({
             modal: true
         });
     }
-    function getFavorite(id) {
-        var favorites = favorites = Alloy.createCollection("favorite");
-        favorites.fetch();
+    function searchItem(items, id) {
         var item = null;
-        favorites.map(function(favorite) {
-            favorite.get("idAgendaItem") == id && (item = {
-                id: favorite.get("idAgendaItem"),
-                title: favorite.get("title"),
-                description: favorite.get("description"),
-                date: favorite.get("date"),
-                startTime: favorite.get("startTime"),
-                endTime: favorite.get("endTime")
-            });
-        });
-        return item;
-    }
-    function createAgendaDetailWindow(item) {
-        var window = Titanium.UI.createWindow({
-            backgroundColor: eventData.styles.background,
-            title: item.title
-        });
-        var scrollView = Ti.UI.createScrollView({
-            contentWidth: "auto",
-            contentHeight: "auto",
-            layout: "vertical",
-            showVerticalScrollIndicator: true,
-            height: Ti.UI.FILL,
-            width: "100%",
-            top: 0,
-            left: 0,
-            zIndex: 1
-        });
-        window.add(createAgendaShareView(item));
-        var sectionView = createSectionView(eventData.agenda_label + " " + item.date + " " + item.startTime);
-        var titleLabel = Ti.UI.createLabel({
-            color: eventData.styles.forecolor,
-            font: {
-                fontSize: 12
-            },
-            text: item.title,
-            textAlign: "left",
-            top: 10,
-            left: 10,
-            width: Titanium.Platform.displayCaps.platformWidth,
-            height: Ti.UI.SIZE
-        });
-        var titleLabel = Ti.UI.createLabel({
-            color: eventData.styles.forecolor,
-            font: {
-                fontSize: 12
-            },
-            text: item.title,
-            textAlign: "left",
-            top: 10,
-            left: 10,
-            width: Titanium.Platform.displayCaps.platformWidth,
-            height: Ti.UI.SIZE
-        });
-        var timeText = item.endTime ? "De " + item.startTime + " a " + item.endTime + " horas" : item.startTime + " horas";
-        var timeLabel = Ti.UI.createLabel({
-            color: eventData.styles.forecolor,
-            font: {
-                fontSize: 12
-            },
-            text: timeText,
-            left: 10,
-            width: Ti.UI.SIZE,
-            height: Ti.UI.SIZE
-        });
-        var descriptionLabel = Ti.UI.createLabel({
-            color: eventData.styles.forecolor,
-            font: {
-                fontSize: 12
-            },
-            text: item.description,
-            top: 10,
-            left: 10,
-            width: "95%",
-            height: Ti.UI.SIZE
-        });
-        scrollView.add(sectionView);
-        scrollView.add(titleLabel);
-        scrollView.add(timeLabel);
-        scrollView.add(descriptionLabel);
-        window.add(scrollView);
-        return window;
-    }
-    function createAgendaShareView(item) {
-        var shareView = Ti.UI.createView({
-            layout: "horizontal",
-            backgroundColor: eventData.styles.share_background,
-            width: "100%",
-            height: "74px",
-            left: 0,
-            bottom: 0,
-            zIndex: 2
-        });
-        var favoriteButton = Titanium.UI.createButton({
-            backgroundImage: "/icons/favorite.png",
-            width: "64px",
-            height: "64px",
-            top: "5px",
-            left: 10
-        });
-        var tweet = Ti.UI.createImageView({
-            image: "/icons/twitter.png",
-            width: "64px",
-            height: "64px",
-            top: "5px",
-            left: 10
-        });
-        tweet.addEventListener("click", function() {
-            var social = require("social");
-            social.tweet(eventData, item);
-        });
-        favoriteButton.addEventListener("click", function() {
-            var favorites = require("favorites");
-            favorites.toggle(eventData.id_event, item);
-            refreshList(true);
-        });
-        shareView.add(favoriteButton);
-        shareView.add(tweet);
-        return shareView;
-    }
-    function createSectionView(title) {
-        var sectionView = Ti.UI.createView({
-            backgroundColor: eventData.styles.button_background,
-            width: "100%",
-            height: 30,
-            top: 0,
-            left: 0
-        });
-        var sectionLabel = Ti.UI.createLabel({
-            color: eventData.styles.button_foreground,
-            font: {
-                fontSize: 14
-            },
-            text: title,
-            textAlign: "left",
-            top: 5,
-            left: 10
-        });
-        sectionView.add(sectionLabel);
-        return sectionView;
+        for (var i in items) {
+            if ("object" != typeof items[i]) continue;
+            if (isNaN(parseInt(i))) {
+                item = searchItem(items[i], id);
+                if (item) return item;
+            } else if (items[i].id && items[i].id == id) return items[i];
+        }
+        return null;
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "favorite";
@@ -215,6 +97,7 @@ function Controller() {
     null);
     $.favoriteWindow.setTitle(title);
     $.favoriteWindow.setBackgroundColor(eventData.styles.background);
+    $.list.setBackgroundColor(eventData.styles.button_background);
     refreshList();
     _.extend($, exports);
 }

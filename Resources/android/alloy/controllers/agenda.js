@@ -45,7 +45,7 @@ function Controller() {
         });
     };
     var listNavigation = require("listNavigation");
-    listNavigation.add(eventData.agenda_label, eventData.agenda, agendaOnclick, windowReference, eventData.styles.background, $.agenda);
+    listNavigation.add(eventData.agenda_label, eventData.agenda, agendaOnclick, windowReference, eventData.styles.button_background, $.agenda);
     _.extend($, exports);
 }
 
