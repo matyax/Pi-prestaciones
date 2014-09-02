@@ -17,7 +17,7 @@ function Controller() {
             },
             width: "95%",
             top: 10,
-            left: 0
+            left: 10
         });
     }
     function createTitle(item) {
@@ -34,7 +34,7 @@ function Controller() {
                 fontSize: item.style_font_size
             },
             top: Math.round(item.style_font_size / 2),
-            left: 10
+            left: 20
         }));
         return view;
     }
@@ -70,9 +70,10 @@ function Controller() {
     $.__views.pageWindow.add($.__views.pageView);
     $.__views.pageScrollView = Ti.UI.createScrollView({
         layout: "vertical",
-        width: "95%",
-        left: 10,
+        top: 0,
+        left: 0,
         height: Ti.UI.FILL,
+        width: "100%",
         id: "pageScrollView",
         showHorizontalScrollIndicator: "false"
     });

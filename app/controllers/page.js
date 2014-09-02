@@ -36,7 +36,7 @@ function createParagraph(item) {
         },
         width: '95%',
         top: 10,
-        left: 0
+        left: 10
     });
 }
 
@@ -45,7 +45,7 @@ function createTitle(item) {
         backgroundColor: item.style_background,
         width: '100%',
         height: (item.style_font_size * 2),
-        top: 10     
+        top: 10
     });
     
     view.add(Ti.UI.createLabel({
@@ -55,7 +55,7 @@ function createTitle(item) {
             fontSize: item.style_font_size
         },
         top: Math.round(item.style_font_size / 2),
-        left: 10
+        left: 20
     }));
     
     return view;

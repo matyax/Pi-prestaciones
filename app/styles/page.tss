@@ -8,7 +8,8 @@
 },
 '#pageScrollView' : {
     layout: 'vertical',
-    width: '95%',
-    left: 10,
-    height: Ti.UI.FILL
+    top: 0,
+    left: 0,
+    height: Ti.UI.FILL,
+    width: '100%'
 }
