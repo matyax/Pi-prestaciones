@@ -117,6 +117,17 @@ function generateEventWindow(event) {
         });
     }
     
+    /* LINK */
+    if (event.link_url) {
+        label = event.link_label || 'Link';
+        
+        addEventMenuItem({
+            icon: 'certificate',
+            label: label,
+            'controller': 'link'
+        });
+    }
+    
     /* MAP */
     if (event.map) {
         label = event.map_label || 'Ubicación';
