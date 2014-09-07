@@ -80,6 +80,14 @@ function Controller() {
                 controller: "certificate"
             });
         }
+        if (event.link_url) {
+            label = event.link_label || "Link";
+            addEventMenuItem({
+                icon: "certificate",
+                label: label,
+                controller: "link"
+            });
+        }
         if (event.map) {
             label = event.map_label || "Ubicación";
             addEventMenuItem({
@@ -131,12 +139,18 @@ function Controller() {
             left: 15,
             top: 5
         });
+        var viewWidth = Titanium.Platform.displayCaps.platformWidth - 20;
+        viewLeft = 10;
+        if ("android" == Titanium.Platform.osname) {
+            viewWidth += "px";
+            viewLeft += "px";
+        }
         var view = Titanium.UI.createView({
             borderRadius: 15,
             layout: "horizontal",
             top: 10,
-            left: 10,
-            width: Titanium.Platform.displayCaps.platformWidth - 20,
+            left: viewLeft,
+            width: viewWidth,
             height: 40,
             backgroundColor: eventData.styles.button_background
         });
