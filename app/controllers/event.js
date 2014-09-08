@@ -159,7 +159,7 @@ function generateEventWindow(event) {
         label = event.accommodations_label || 'Agenda';
         
         addEventMenuItem({
-            icon: 'accommodation',
+            icon: event.accommodations_icon,
             label: label,
             controller: 'accommodations'
         });
@@ -190,7 +190,7 @@ function addEventMenuItem(item) {
     });
     
     var icon = Ti.UI.createImageView({
-        image: '/icons/' + item.icon + '.png',
+        image: '/icons/' + item.icon,
         width: 30,
         height: 30,
         left: 15,
