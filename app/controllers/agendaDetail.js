@@ -94,6 +94,7 @@ function createAgendaShareView(item) {
     
     var favoriteLabel = Titanium.UI.createLabel({
         text: 'Favoritos',
+        color: eventData.style.share_foreground,        
         font: {
             fontSize: 12
         },
@@ -111,6 +112,7 @@ function createAgendaShareView(item) {
     
     var tweetLabel = Titanium.UI.createLabel({
         text: 'Twittear',
+        color: eventData.style.share_foreground,
         font: {
             fontSize: 12
         },
