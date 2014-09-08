@@ -45,7 +45,7 @@ function generateEventWindow(event) {
     
     /* HOME BUTTON */
     addEventMenuItem({
-        icon: 'home',
+        icon: event.home_icon,
         label: 'Inicio',
         onClick: function () {
             $.eventNavigationWindow.close();
@@ -55,7 +55,7 @@ function generateEventWindow(event) {
     /* PAGES */
     for (var j in event.pages) {
         addEventMenuItem({
-            icon: 'page',
+            icon: event.page_icon,
             label: event.pages[j].title,
             onClick: function(e) {
                 var page    = null,
@@ -89,7 +89,7 @@ function generateEventWindow(event) {
         label = event.agenda_label || 'Agenda';
         
         addEventMenuItem({
-            icon: 'agenda',
+            icon: event.agenda_icon,
             label: label,
             controller: 'agenda'
         });
@@ -100,7 +100,7 @@ function generateEventWindow(event) {
         label = event.form_label || 'Inscripción online';
         
         addEventMenuItem({
-            icon: 'form',
+            icon: event.form_icon,
             label: label,
             controller: 'form'
         });
@@ -111,7 +111,7 @@ function generateEventWindow(event) {
         label = event.certificate_label || 'Certificación web';
         
         addEventMenuItem({
-            icon: 'certificate',
+            icon: event.certificate_icon,
             label: label,
             'controller': 'certificate'
         });
@@ -122,7 +122,7 @@ function generateEventWindow(event) {
         label = event.link_label || 'Link';
         
         addEventMenuItem({
-            icon: 'certificate',
+            icon: event.link_icon,
             label: label,
             'controller': 'link'
         });
@@ -133,7 +133,7 @@ function generateEventWindow(event) {
         label = event.map_label || 'Ubicación';
         
         addEventMenuItem({
-            icon: 'map',
+            icon: event.map_icon,
             label: label,
             controller: 'map'
         });
@@ -146,7 +146,7 @@ function generateEventWindow(event) {
         label = event.favorites_label || 'Favoritos';
         
         addEventMenuItem({
-            icon: 'favorite',
+            icon: event.favorites_icon,
             label: label,
             controller: 'favorite'
         });
