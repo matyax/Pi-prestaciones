@@ -27,7 +27,7 @@ function Controller() {
         });
         var favoriteLabel = Titanium.UI.createLabel({
             text: "Favoritos",
-            color: eventData.style.share_foreground,
+            color: eventData.styles.share_foreground,
             font: {
                 fontSize: 12
             },
@@ -43,7 +43,7 @@ function Controller() {
         });
         var tweetLabel = Titanium.UI.createLabel({
             text: "Twittear",
-            color: eventData.style.share_foreground,
+            color: eventData.styles.share_foreground,
             font: {
                 fontSize: 12
             },
