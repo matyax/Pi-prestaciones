@@ -32,14 +32,14 @@ function Controller() {
         $.eventView.add(image);
         var label = "";
         addEventMenuItem({
-            icon: "home",
+            icon: event.home_icon,
             label: "Inicio",
             onClick: function() {
                 $.eventNavigationWindow.close();
             }
         });
         for (var j in event.pages) addEventMenuItem({
-            icon: "page",
+            icon: event.page_icon,
             label: event.pages[j].title,
             onClick: function(e) {
                 var page = null, title = e.source.getTitle();
@@ -59,7 +59,7 @@ function Controller() {
         if (event.agenda) {
             label = event.agenda_label || "Agenda";
             addEventMenuItem({
-                icon: "agenda",
+                icon: event.agenda_icon,
                 label: label,
                 controller: "agenda"
             });
@@ -67,7 +67,7 @@ function Controller() {
         if (event.form) {
             label = event.form_label || "Inscripción online";
             addEventMenuItem({
-                icon: "form",
+                icon: event.form_icon,
                 label: label,
                 controller: "form"
             });
@@ -75,7 +75,7 @@ function Controller() {
         if (event.certificate) {
             label = event.certificate_label || "Certificación web";
             addEventMenuItem({
-                icon: "certificate",
+                icon: event.certificate_icon,
                 label: label,
                 controller: "certificate"
             });
@@ -83,7 +83,7 @@ function Controller() {
         if (event.link_url) {
             label = event.link_label || "Link";
             addEventMenuItem({
-                icon: "certificate",
+                icon: event.link_icon,
                 label: label,
                 controller: "link"
             });
@@ -91,7 +91,7 @@ function Controller() {
         if (event.map) {
             label = event.map_label || "Ubicación";
             addEventMenuItem({
-                icon: "map",
+                icon: event.map_icon,
                 label: label,
                 controller: "map"
             });
@@ -99,7 +99,7 @@ function Controller() {
         if (event.agenda) {
             label = event.favorites_label || "Favoritos";
             addEventMenuItem({
-                icon: "favorite",
+                icon: event.favorites_icon,
                 label: label,
                 controller: "favorite"
             });
