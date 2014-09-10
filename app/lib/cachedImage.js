@@ -1,4 +1,4 @@
-exports.load = function(imageUrl, callback, tempContainer) {
+exports.load = function(imageUrl, callback, tempContainer, callbackData) {
     var image = null;
 
     function doRemote(imageUrl) {
@@ -16,7 +16,7 @@ exports.load = function(imageUrl, callback, tempContainer) {
             
             tempContainer.add(image);
         } else {
-           callback(file.nativePath);
+           callback(file.nativePath, callbackData);
         }
     };
 
@@ -27,7 +27,7 @@ exports.load = function(imageUrl, callback, tempContainer) {
         
         tempContainer.remove(image);
         
-        callback(imageUrl);
+        callback(imageUrl, callbackData);
     };
 
     function localFileName(imageUrl) {
