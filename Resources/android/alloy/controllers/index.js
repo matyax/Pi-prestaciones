@@ -8,30 +8,36 @@ function __processArg(obj, key) {
 }
 
 function Controller() {
-    function addButtons(events, buttonOptions) {
+    function addButton(event, buttonOptions) {
         var button = null;
-        for (var i in events) {
-            buttonOptions.idEvent = events[i].id;
-            button = Ti.UI.createButton(buttonOptions);
-            button.addEventListener("click", function() {
-                var selectedEvent = null;
-                for (var i in events) if (events[i].id == this.idEvent) {
-                    selectedEvent = events[i];
-                    break;
-                }
-                data.set("event", selectedEvent);
-                loading.open();
-                piApi.getEventDetail(selectedEvent.id, function(eventData) {
-                    loading.close();
-                    data.set("eventData", eventData);
-                    var win = Alloy.createController("event").getView();
-                    win.open({
-                        animated: true
-                    });
+        buttonOptions.idEvent = event.id;
+        button = Ti.UI.createButton(buttonOptions);
+        button.addEventListener("click", function() {
+            var selectedEvent = null;
+            for (var i in eventList) if (eventList[i].id == this.idEvent) {
+                selectedEvent = eventList[i];
+                break;
+            }
+            data.set("event", selectedEvent);
+            loading.open();
+            piApi.getEventDetail(selectedEvent.id, function(eventData) {
+                loading.close();
+                data.set("eventData", eventData);
+                var win = Alloy.createController("event").getView();
+                win.open({
+                    animated: true
                 });
             });
-            $.eventsView.add(button);
-        }
+        });
+        var containerView = Ti.UI.createView({
+            width: "100%",
+            height: Ti.UI.SIZE,
+            backgroundColor: "white",
+            top: 0,
+            left: 0
+        });
+        containerView.add(button);
+        $.eventsView.add(containerView);
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "index";
@@ -99,10 +105,12 @@ function Controller() {
     var data = require("data");
     var loading = require("loadingWindow");
     var cachedImage = require("cachedImage");
+    var eventList = null;
     $.index.open();
     loading.open();
     piApi.loadEvents(function(events) {
         false === events && alert("Error de conexión");
+        eventList = events;
         if (!events.length) {
             var emptyLabel = Ti.UI.createLabel({
                 text: "No se encontraron eventos.",
@@ -117,40 +125,53 @@ function Controller() {
             $.eventsView.add(emptyLabel);
             return;
         }
-        var buttonOptions = null, relativeHeight = null, relativeWidth = null;
+        var buttonOptions = null, relativeHeight = null, relativeWidth = null, buttonData = null;
         if (1 == events.length) {
             $.index.remove($.logoContainer);
             $.index.remove($.congressTitle);
             $.eventsScrollView.setTop(0);
             relativeHeight = Math.round(Ti.Platform.displayCaps.platformWidth * events[0].image_full_info.height / events[0].image_full_info.width) + "px";
-            cachedImage.load(events[0].image_full, function(imagePath) {
+            buttonData = {
+                height: relativeHeight,
+                event: events[0]
+            };
+            cachedImage.load(events[0].image_full, function(imagePath, data) {
                 loading.close();
-                addButtons(events, {
+                addButton(data.event, {
                     backgroundImage: imagePath,
                     top: 0,
                     left: 0,
                     width: "100%",
-                    height: relativeHeight,
+                    height: data.height,
                     style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN
                 });
-            }, $.eventsScrollView);
+            }, $.eventsScrollView, buttonData);
         } else if (2 == events.length) {
             $.index.remove($.logoContainer);
             $.index.remove($.congressTitle);
             $.eventsScrollView.setTop(0);
-            relativeHeight = Math.round(Ti.Platform.displayCaps.platformHeight / 2);
-            relativeWidth = Math.round(relativeHeight * events[0].image_full_info.width / events[0].image_full_info.height) + "px";
-            relativeHeight += "px";
-            buttonOptions = {
-                backgroundImage: imagePath,
-                top: 0,
-                left: 0,
-                width: relativeWidth,
-                height: relativeHeight,
-                style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN
-            };
-        } else {
-            relativeHeight = Math.round(200 * Ti.Platform.displayCaps.platformWidth / 800) + "px";
+            for (var i = 0; events.length > i; i++) {
+                relativeHeight = Math.round(Ti.Platform.displayCaps.platformHeight / 2);
+                relativeWidth = Math.round(relativeHeight * events[i].image_half_info.width / events[i].image_half_info.height) + "px";
+                relativeHeight += "px";
+                buttonData = {
+                    height: relativeHeight,
+                    width: relativeWidth,
+                    event: events[i]
+                };
+                cachedImage.load(events[i].image_half, function(imagePath, data) {
+                    loading.close();
+                    addButton(data.event, {
+                        backgroundImage: imagePath,
+                        width: data.width,
+                        height: data.height,
+                        style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN
+                    });
+                }, $.eventsScrollView, buttonData);
+            }
+        } else for (var i = 0; events.length > i; i++) {
+            events[i].image_info.width = events[i].image_info.width;
+            relativeHeight = Math.round(Ti.Platform.displayCaps.platformWidth * events[i].image_info.height / events[i].image_info.width) + "px";
             buttonOptions = {
                 backgroundImage: events[i].image,
                 borderRadius: 15,

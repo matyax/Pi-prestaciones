@@ -1,7 +1,7 @@
-exports.load = function(imageUrl, callback, tempContainer) {
+exports.load = function(imageUrl, callback, tempContainer, callbackData) {
     function doRemote(imageUrl) {
         var file = Ti.Filesystem.getFile("cache/" + localFileName(imageUrl));
-        if (file.exists()) callback(file.nativePath); else {
+        if (file.exists()) callback(file.nativePath, callbackData); else {
             image = Ti.UI.createImageView({
                 visible: false
             });
@@ -12,7 +12,7 @@ exports.load = function(imageUrl, callback, tempContainer) {
     }
     function saveImageOnLoad() {
         tempContainer.remove(image);
-        callback(imageUrl);
+        callback(imageUrl, callbackData);
     }
     function localFileName(imageUrl) {
         hashedSource = Ti.Utils.md5HexDigest(imageUrl + "");
