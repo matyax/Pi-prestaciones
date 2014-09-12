@@ -181,6 +181,7 @@ function Controller() {
                 height: relativeHeight,
                 style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN
             };
+            addButton(events[i], buttonOptions);
         }
     });
     _.extend($, exports);
