@@ -129,7 +129,7 @@ function generateEventWindow(event) {
     }
     
     /* MAP */
-    if (event.map) {
+    if (event.map_label) {
         label = event.map_label || 'Ubicación';
         
         addEventMenuItem({
