@@ -55,7 +55,7 @@ function generateEventWindow(event) {
     /* PAGES */
     for (var j in event.pages) {
         addEventMenuItem({
-            icon: event.page_icon,
+            icon: event.pages[j].icon,
             label: event.pages[j].title,
             onClick: function(e) {
                 var page    = null,

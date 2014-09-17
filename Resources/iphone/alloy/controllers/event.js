@@ -39,7 +39,7 @@ function Controller() {
             }
         });
         for (var j in event.pages) addEventMenuItem({
-            icon: event.page_icon,
+            icon: event.pages[j].icon,
             label: event.pages[j].title,
             onClick: function(e) {
                 var page = null, title = e.source.getTitle();
@@ -88,7 +88,7 @@ function Controller() {
                 controller: "link"
             });
         }
-        if (event.map) {
+        if (event.map_label) {
             label = event.map_label || "Ubicación";
             addEventMenuItem({
                 icon: event.map_icon,
