@@ -142,7 +142,7 @@ function generateEventWindow(event) {
     /*
      * Favorites
      */
-    if (event.agenda) {
+    if (event.agenda_label) {
         label = event.favorites_label || 'Favoritos';
         
         addEventMenuItem({
@@ -155,8 +155,8 @@ function generateEventWindow(event) {
     /*
      * Accommodations
      */
-    if (event.accommodations) {
-        label = event.accommodations_label || 'Agenda';
+    if (event.accommodations_label) {
+        label = event.accommodations_label || 'Alojamientos';
         
         addEventMenuItem({
             icon: event.accommodations_icon,
