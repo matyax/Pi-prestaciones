@@ -1,6 +1,6 @@
 exports.toggle = toggleFavorite;
 
-function toggleFavorite(idEvent, item) {
+function toggleFavorite(idEvent, item, title) {
     var favorites   = Alloy.createCollection('favorite'),
         favorite    = null;
         
@@ -21,7 +21,13 @@ function toggleFavorite(idEvent, item) {
     });
 
     if (exists) {
-        alert('Removido de favoritos.');
+        var dialog = Ti.UI.createAlertDialog({
+            message: 'Actividad removida de ' + title,
+            ok: 'OK',
+            title: title
+        });
+        
+        dialog.show();
         
         return false;
     }
@@ -38,9 +44,13 @@ function toggleFavorite(idEvent, item) {
 
     favorite.save();
     
-    //console.log('Saved: ' + item.id);
-
-    alert('Agregado a favoritos.');
+    var dialog = Ti.UI.createAlertDialog({
+        message: 'Actividad agregada a ' + title,
+        ok: 'OK',
+        title: title
+    });
+    
+    dialog.show();
     
     return true;
 }

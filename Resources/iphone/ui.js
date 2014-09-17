@@ -13,7 +13,7 @@ exports.createSectionView = function(eventData, title) {
         },
         text: title,
         textAlign: "left",
-        top: 4,
+        top: 5,
         left: 10
     });
     sectionView.add(sectionLabel);

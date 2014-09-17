@@ -182,7 +182,6 @@ function Controller() {
     $.__views.eventView = Ti.UI.createView({
         height: Ti.UI.SIZE,
         layout: "vertical",
-        backgroundColor: "black",
         top: 0,
         id: "eventView"
     });

@@ -56,7 +56,7 @@ function Controller() {
         });
         favoriteButton.addEventListener("click", function() {
             var favorites = require("favorites");
-            favorites.toggle(eventData.id_event, item);
+            favorites.toggle(eventData.id_event, item, eventData.favorites_label);
         });
         shareView.add(favoriteButton);
         shareView.add(favoriteLabel);

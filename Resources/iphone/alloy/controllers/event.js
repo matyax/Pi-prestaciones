@@ -198,6 +198,11 @@ function Controller() {
         id: "eventView"
     });
     $.__views.eventScrollView.add($.__views.eventView);
+    $.__views.__alloyId0 = Ti.UI.createView({
+        height: 15,
+        id: "__alloyId0"
+    });
+    $.__views.eventScrollView.add($.__views.__alloyId0);
     $.__views.eventNavigationWindow = Ti.UI.iOS.createNavigationWindow({
         orientationModes: [ Ti.UI.PORTRAIT ],
         window: $.__views.eventWindow,

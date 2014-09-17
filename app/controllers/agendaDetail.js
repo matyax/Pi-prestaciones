@@ -129,7 +129,7 @@ function createAgendaShareView(item) {
     favoriteButton.addEventListener('click', function(e) {
         var favorites = require('favorites');
         
-        favorites.toggle(eventData.id_event, item);
+        favorites.toggle(eventData.id_event, item, eventData.favorites_label);
     });
     
     shareView.add(favoriteButton);
