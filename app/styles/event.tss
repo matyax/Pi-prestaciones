@@ -12,4 +12,7 @@
     height: Ti.UI.FILL,
     layout: 'vertical',
     width: '100%'
+},
+'.padding' : {
+    height: 15
 }

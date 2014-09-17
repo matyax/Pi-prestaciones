@@ -9,7 +9,7 @@ exports.createSectionView = function(eventData, title) {
     var sectionLabel = Ti.UI.createLabel({
         color: eventData.styles.button_foreground,
         font: {
-            fontSize: 14
+            fontSize: 15
         },
         text: title,
         textAlign: "left",

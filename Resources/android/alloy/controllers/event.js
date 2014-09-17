@@ -33,7 +33,7 @@ function Controller() {
             }
         });
         for (var j in event.pages) addEventMenuItem({
-            icon: event.page_icon,
+            icon: event.pages[j].icon,
             label: event.pages[j].title,
             onClick: function(e) {
                 var page = null, title = e.source.getTitle();
@@ -80,7 +80,7 @@ function Controller() {
                 controller: "link"
             });
         }
-        if (event.map) {
+        if (event.map_label) {
             label = event.map_label || "Ubicación";
             addEventMenuItem({
                 icon: event.map_icon,
@@ -88,7 +88,7 @@ function Controller() {
                 controller: "map"
             });
         }
-        if (event.agenda) {
+        if (event.agenda_label) {
             label = event.favorites_label || "Favoritos";
             addEventMenuItem({
                 icon: event.favorites_icon,
@@ -96,8 +96,8 @@ function Controller() {
                 controller: "favorite"
             });
         }
-        if (event.accommodations) {
-            label = event.accommodations_label || "Agenda";
+        if (event.accommodations_label) {
+            label = event.accommodations_label || "Alojamientos";
             addEventMenuItem({
                 icon: event.accommodations_icon,
                 label: label,
@@ -182,11 +182,13 @@ function Controller() {
     $.__views.eventView = Ti.UI.createView({
         height: Ti.UI.SIZE,
         layout: "vertical",
+        backgroundColor: "black",
         top: 0,
         id: "eventView"
     });
     $.__views.eventScrollView.add($.__views.eventView);
     $.__views.__alloyId0 = Ti.UI.createView({
+        height: 15,
         id: "__alloyId0"
     });
     $.__views.eventScrollView.add($.__views.__alloyId0);

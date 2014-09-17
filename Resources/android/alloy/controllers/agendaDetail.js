@@ -101,7 +101,7 @@ function Controller() {
     var titleLabel = Ti.UI.createLabel({
         color: item.style_foreground,
         font: {
-            fontSize: 12
+            fontSize: 14
         },
         text: item.title,
         textAlign: "left",
@@ -114,7 +114,7 @@ function Controller() {
     var timeLabel = Ti.UI.createLabel({
         color: item.style_foreground,
         font: {
-            fontSize: 12
+            fontSize: 14
         },
         text: timeText,
         left: 10,
@@ -124,7 +124,7 @@ function Controller() {
     var descriptionLabel = Ti.UI.createLabel({
         color: item.style_foreground,
         font: {
-            fontSize: 12
+            fontSize: 14
         },
         text: item.description,
         top: 10,
