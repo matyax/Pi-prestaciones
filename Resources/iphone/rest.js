@@ -4,7 +4,13 @@ exports.get = function(url, options) {
     });
     xhr.onload = function() {
         var response = this.responseText;
-        options.success(JSON.parse(response));
+        var parsedResponse = false;
+        try {
+            parsedResponse = JSON.parse(response);
+        } catch (e) {
+            parsedResponse = false;
+        }
+        options.success(parsedResponse);
     };
     xhr.onerror = function() {
         options.success(false);

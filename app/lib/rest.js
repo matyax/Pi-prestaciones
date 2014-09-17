@@ -5,8 +5,15 @@ exports.get = function (url, options) {
     
     xhr.onload = function (e) {
         var response = this.responseText;
+        var parsedResponse = false;
         
-        options.success(JSON.parse(response));
+        try {
+            parsedResponse = JSON.parse(response);
+        } catch (e) {
+            parsedResponse = false;
+        }
+        
+        options.success(parsedResponse);
     };
     
     xhr.onerror = function () {
