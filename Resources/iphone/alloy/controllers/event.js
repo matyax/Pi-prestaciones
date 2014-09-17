@@ -96,7 +96,7 @@ function Controller() {
                 controller: "map"
             });
         }
-        if (event.agenda) {
+        if (event.agenda_label) {
             label = event.favorites_label || "Favoritos";
             addEventMenuItem({
                 icon: event.favorites_icon,
@@ -104,8 +104,8 @@ function Controller() {
                 controller: "favorite"
             });
         }
-        if (event.accommodations) {
-            label = event.accommodations_label || "Agenda";
+        if (event.accommodations_label) {
+            label = event.accommodations_label || "Alojamientos";
             addEventMenuItem({
                 icon: event.accommodations_icon,
                 label: label,

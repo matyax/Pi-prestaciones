@@ -37,7 +37,7 @@ var sectionView = ui.createSectionView(
 /* Event title */
 var titleLabel = Ti.UI.createLabel({
     color: item.style_foreground,
-    font: { fontSize: 12 },
+    font: { fontSize: 14 },
     text: item.title,
     textAlign: 'left',
     top: 10,
@@ -49,7 +49,7 @@ var timeText = item.endTime ? 'De ' + item.startTime + ' a ' + item.endTime + ' 
 
 var timeLabel = Ti.UI.createLabel({
     color: item.style_foreground,
-    font: { fontSize: 12 },
+    font: { fontSize: 14 },
     text: timeText,
     left: 10,
     width: Ti.UI.SIZE, height: Ti.UI.SIZE
@@ -57,7 +57,7 @@ var timeLabel = Ti.UI.createLabel({
 
 var descriptionLabel = Ti.UI.createLabel({
     color: item.style_foreground,
-    font: { fontSize: 12 },
+    font: { fontSize: 14 },
     text: item.description,
     top: 10,
     left: 10,
