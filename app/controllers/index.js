@@ -37,7 +37,10 @@ piApi.loadEvents(function (events) {
     var  buttonOptions  = null,
          relativeHeight = null,
          relativeWidth  = null,
-         buttonData     = null;
+         buttonData     = null,
+         is169          = is169viewPort(),
+         image          = null,
+         imageInfo      = null;
     
     if (events.length == 1) {
         $.index.remove($.logoContainer);
@@ -45,10 +48,18 @@ piApi.loadEvents(function (events) {
         
         $.eventsScrollView.setTop(0);
         
-        if (Titanium.Platform.osname == 'android') {
-            relativeHeight = Math.round(Ti.Platform.displayCaps.platformWidth * events[0].image_full_info.height / events[0].image_full_info.width) + 'px';
+        if ((is169) && (events[0].image_full_hd)) {
+            image       = events[0].image_full_hd;
+            imageInfo   = events[0].image_full_hd_info;
         } else {
-            relativeHeight = Math.round(Ti.Platform.displayCaps.platformWidth * events[0].image_full_info.height / events[0].image_full_info.width);        
+            image       = events[0].image_full;
+            imageInfo   = events[0].image_full_info;
+        }
+        
+        if (Titanium.Platform.osname == 'android') {
+            relativeHeight = Math.round(Ti.Platform.displayCaps.platformWidth * imageInfo.height / imageInfo.width) + 'px';
+        } else {
+            relativeHeight = Math.round(Ti.Platform.displayCaps.platformWidth * imageInfo.height / imageInfo.width);        
         }
         
         buttonData = {
@@ -56,7 +67,7 @@ piApi.loadEvents(function (events) {
             event: events[0]
         }
         
-        cachedImage.load(events[0].image_full, function (imagePath, data) {
+        cachedImage.load(image, function (imagePath, data) {
             loading.close();
             
             addButton(data.event, {
@@ -77,18 +88,25 @@ piApi.loadEvents(function (events) {
         $.eventsScrollView.setTop(0);
         
         for (var i = 0; i < events.length; i++) {
+            
+            if ((is169) && (events[i].image_half_hd)) {
+                image       = events[i].image_half_hd;
+                imageInfo   = events[i].image_half_hd_info;
+            } else {
+                image       = events[i].image_half;
+                imageInfo   = events[i].image_half_info;;
+            }
+            
             if (Titanium.Platform.osname == 'android') {
                 relativeHeight = Math.round(Ti.Platform.displayCaps.platformHeight / 2);
                 
-                relativeWidth = Math.round(relativeHeight * events[i].image_half_info.width / events[i].image_half_info.height) + 'px';
-                
-                
+                relativeWidth = Math.round(relativeHeight * imageInfo.width / imageInfo.height) + 'px';
                 
                 relativeHeight = relativeHeight + 'px';
             } else {
                 relativeHeight = Math.round(Ti.Platform.displayCaps.platformHeight / 2);
                 
-                relativeWidth = Math.round(relativeHeight * events[i].image_half_info.width / events[i].image_half_info.height);        
+                relativeWidth = Math.round(relativeHeight * imageInfo.width / imageInfo.height);        
             }
             
             buttonData = {
@@ -97,7 +115,7 @@ piApi.loadEvents(function (events) {
                 event: events[i]
             }
             
-            cachedImage.load(events[i].image_half, function (imagePath, data) {
+            cachedImage.load(image, function (imagePath, data) {
                 loading.close();
                 
                 addButton(data.event, {
@@ -138,6 +156,20 @@ piApi.loadEvents(function (events) {
         }
     }
 });
+
+function is169viewPort() {
+    var computedHeight = Ti.Platform.displayCaps.platformWidth * 1024 / 768;
+    
+    if (computedHeight == Ti.Platform.displayCaps.platformWidth) {
+        return true;
+    }
+    
+    if (Ti.Platform.displayCaps.platformWidth == 1080) {
+        return true;
+    }
+    
+    return false;
+}
 
 function addButton(event, buttonOptions) {
     

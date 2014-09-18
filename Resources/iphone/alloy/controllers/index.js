@@ -8,6 +8,12 @@ function __processArg(obj, key) {
 }
 
 function Controller() {
+    function is169viewPort() {
+        var computedHeight = 1024 * Ti.Platform.displayCaps.platformWidth / 768;
+        if (computedHeight == Ti.Platform.displayCaps.platformWidth) return true;
+        if (1080 == Ti.Platform.displayCaps.platformWidth) return true;
+        return false;
+    }
     function addButton(event, buttonOptions) {
         var button = null;
         buttonOptions.idEvent = event.id;
@@ -125,17 +131,24 @@ function Controller() {
             $.eventsView.add(emptyLabel);
             return;
         }
-        var buttonOptions = null, relativeHeight = null, relativeWidth = null, buttonData = null;
+        var buttonOptions = null, relativeHeight = null, relativeWidth = null, buttonData = null, is169 = is169viewPort(), image = null, imageInfo = null;
         if (1 == events.length) {
             $.index.remove($.logoContainer);
             $.index.remove($.congressTitle);
             $.eventsScrollView.setTop(0);
-            relativeHeight = "android" == Titanium.Platform.osname ? Math.round(Ti.Platform.displayCaps.platformWidth * events[0].image_full_info.height / events[0].image_full_info.width) + "px" : Math.round(Ti.Platform.displayCaps.platformWidth * events[0].image_full_info.height / events[0].image_full_info.width);
+            if (is169 && events[0].image_full_hd) {
+                image = events[0].image_full_hd;
+                imageInfo = events[0].image_full_hd_info;
+            } else {
+                image = events[0].image_full;
+                imageInfo = events[0].image_full_info;
+            }
+            relativeHeight = "android" == Titanium.Platform.osname ? Math.round(Ti.Platform.displayCaps.platformWidth * imageInfo.height / imageInfo.width) + "px" : Math.round(Ti.Platform.displayCaps.platformWidth * imageInfo.height / imageInfo.width);
             buttonData = {
                 height: relativeHeight,
                 event: events[0]
             };
-            cachedImage.load(events[0].image_full, function(imagePath, data) {
+            cachedImage.load(image, function(imagePath, data) {
                 loading.close();
                 addButton(data.event, {
                     backgroundImage: imagePath,
@@ -151,20 +164,27 @@ function Controller() {
             $.index.remove($.congressTitle);
             $.eventsScrollView.setTop(0);
             for (var i = 0; events.length > i; i++) {
+                if (is169 && events[i].image_half_hd) {
+                    image = events[i].image_half_hd;
+                    imageInfo = events[i].image_half_hd_info;
+                } else {
+                    image = events[i].image_half;
+                    imageInfo = events[i].image_half_info;
+                }
                 if ("android" == Titanium.Platform.osname) {
                     relativeHeight = Math.round(Ti.Platform.displayCaps.platformHeight / 2);
-                    relativeWidth = Math.round(relativeHeight * events[i].image_half_info.width / events[i].image_half_info.height) + "px";
+                    relativeWidth = Math.round(relativeHeight * imageInfo.width / imageInfo.height) + "px";
                     relativeHeight += "px";
                 } else {
                     relativeHeight = Math.round(Ti.Platform.displayCaps.platformHeight / 2);
-                    relativeWidth = Math.round(relativeHeight * events[i].image_half_info.width / events[i].image_half_info.height);
+                    relativeWidth = Math.round(relativeHeight * imageInfo.width / imageInfo.height);
                 }
                 buttonData = {
                     height: relativeHeight,
                     width: relativeWidth,
                     event: events[i]
                 };
-                cachedImage.load(events[i].image_half, function(imagePath, data) {
+                cachedImage.load(image, function(imagePath, data) {
                     loading.close();
                     addButton(data.event, {
                         backgroundImage: imagePath,
