@@ -38,23 +38,16 @@ piApi.loadEvents(function (events) {
          relativeHeight = null,
          relativeWidth  = null,
          buttonData     = null,
-         is169          = is169viewPort(),
          image          = null,
          imageInfo      = null;
-    
+         
     if (events.length == 1) {
         $.index.remove($.logoContainer);
         $.index.remove($.congressTitle);
+        $.index.remove($.eventsScrollView);
         
-        $.eventsScrollView.setTop(0);
-        
-        if ((is169) && (events[0].image_full_hd)) {
-            image       = events[0].image_full_hd;
-            imageInfo   = events[0].image_full_hd_info;
-        } else {
-            image       = events[0].image_full;
-            imageInfo   = events[0].image_full_info;
-        }
+        image       = events[0].image_full;
+        imageInfo   = events[0].image_full_info;
         
         if (Titanium.Platform.osname == 'android') {
             relativeHeight = Math.round(Ti.Platform.displayCaps.platformWidth * imageInfo.height / imageInfo.width) + 'px';
@@ -77,25 +70,18 @@ piApi.loadEvents(function (events) {
                 width: '100%',
                 height: data.height,
                 style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN,        
-            });
+            }, $.index);
             
-        }, $.eventsScrollView, buttonData);
+        }, $.index, buttonData);
     }
     else if (events.length == 2) {
         $.index.remove($.logoContainer);
         $.index.remove($.congressTitle);
-        
-        $.eventsScrollView.setTop(0);
+        $.index.remove($.eventsScrollView);
         
         for (var i = 0; i < events.length; i++) {
-            
-            if ((is169) && (events[i].image_half_hd)) {
-                image       = events[i].image_half_hd;
-                imageInfo   = events[i].image_half_hd_info;
-            } else {
-                image       = events[i].image_half;
-                imageInfo   = events[i].image_half_info;;
-            }
+            image       = events[i].image_half;
+            imageInfo   = events[i].image_half_info;;
             
             if (Titanium.Platform.osname == 'android') {
                 relativeHeight = Math.round(Ti.Platform.displayCaps.platformHeight / 2);
@@ -116,6 +102,7 @@ piApi.loadEvents(function (events) {
             }
             
             cachedImage.load(image, function (imagePath, data) {
+                
                 loading.close();
                 
                 addButton(data.event, {
@@ -123,9 +110,9 @@ piApi.loadEvents(function (events) {
                     width: data.width,
                     height: data.height,
                     style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN,        
-                });
+                }, $.index);
                     
-            }, $.eventsScrollView, buttonData);
+            }, $.index, buttonData);
             
         }
         
@@ -133,8 +120,6 @@ piApi.loadEvents(function (events) {
     else {
         
         for (var i = 0; i < events.length; i++) {
-            
-            events[i].image_info.width = events[i].image_info.width
             
             if (Titanium.Platform.osname == 'android') {
                 relativeHeight = Math.round(Ti.Platform.displayCaps.platformWidth * events[i].image_info.height / events[i].image_info.width) + 'px';
@@ -157,21 +142,7 @@ piApi.loadEvents(function (events) {
     }
 });
 
-function is169viewPort() {
-    var computedHeight = Ti.Platform.displayCaps.platformWidth * 1024 / 768;
-    
-    if (computedHeight == Ti.Platform.displayCaps.platformWidth) {
-        return true;
-    }
-    
-    if (Ti.Platform.displayCaps.platformWidth == 1080) {
-        return true;
-    }
-    
-    return false;
-}
-
-function addButton(event, buttonOptions) {
+function addButton(event, buttonOptions, appendTo) {
     
     var button = null;
     
@@ -217,6 +188,10 @@ function addButton(event, buttonOptions) {
     
     containerView.add(button);
     
-    $.eventsView.add(containerView);
+    if (typeof appendTo != 'undefined') {
+        appendTo.add(containerView);
+    } else {
+        $.eventsView.add(containerView);
+    }
 }
 
