@@ -8,7 +8,7 @@ function __processArg(obj, key) {
 }
 
 function Controller() {
-    function addButton(event, buttonOptions, appendTo) {
+    function addButton(event, buttonOptions) {
         var button = null;
         buttonOptions.idEvent = event.id;
         button = Ti.UI.createButton(buttonOptions);
@@ -37,7 +37,7 @@ function Controller() {
             left: 0
         });
         containerView.add(button);
-        "undefined" != typeof appendTo ? appendTo.add(containerView) : $.eventsView.add(containerView);
+        $.eventsView.add(containerView);
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "index";
@@ -52,7 +52,6 @@ function Controller() {
         layout: "vertical",
         orientationModes: [ Ti.UI.PORTRAIT ],
         backgroundColor: "white",
-        navBarHidden: true,
         id: "index",
         title: "",
         fullscreen: "true",
@@ -126,19 +125,17 @@ function Controller() {
             $.eventsView.add(emptyLabel);
             return;
         }
-        var buttonOptions = null, relativeHeight = null, relativeWidth = null, buttonData = null, image = null, imageInfo = null;
+        var buttonOptions = null, relativeHeight = null, relativeWidth = null, buttonData = null;
         if (1 == events.length) {
             $.index.remove($.logoContainer);
             $.index.remove($.congressTitle);
-            $.index.remove($.eventsScrollView);
-            image = events[0].image_full;
-            imageInfo = events[0].image_full_info;
-            relativeHeight = Math.round(Ti.Platform.displayCaps.platformWidth * imageInfo.height / imageInfo.width) + "px";
+            $.eventsScrollView.setTop(0);
+            relativeHeight = Math.round(Ti.Platform.displayCaps.platformWidth * events[0].image_full_info.height / events[0].image_full_info.width) + "px";
             buttonData = {
                 height: relativeHeight,
                 event: events[0]
             };
-            cachedImage.load(image, function(imagePath, data) {
+            cachedImage.load(events[0].image_full, function(imagePath, data) {
                 loading.close();
                 addButton(data.event, {
                     backgroundImage: imagePath,
@@ -147,34 +144,33 @@ function Controller() {
                     width: "100%",
                     height: data.height,
                     style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN
-                }, $.index);
-            }, $.index, buttonData);
+                });
+            }, $.eventsScrollView, buttonData);
         } else if (2 == events.length) {
             $.index.remove($.logoContainer);
             $.index.remove($.congressTitle);
-            $.index.remove($.eventsScrollView);
+            $.eventsScrollView.setTop(0);
             for (var i = 0; events.length > i; i++) {
-                image = events[i].image_half;
-                imageInfo = events[i].image_half_info;
                 relativeHeight = Math.round(Ti.Platform.displayCaps.platformHeight / 2);
-                relativeWidth = Math.round(relativeHeight * imageInfo.width / imageInfo.height) + "px";
+                relativeWidth = Math.round(relativeHeight * events[i].image_half_info.width / events[i].image_half_info.height) + "px";
                 relativeHeight += "px";
                 buttonData = {
                     height: relativeHeight,
                     width: relativeWidth,
                     event: events[i]
                 };
-                cachedImage.load(image, function(imagePath, data) {
+                cachedImage.load(events[i].image_half, function(imagePath, data) {
                     loading.close();
                     addButton(data.event, {
                         backgroundImage: imagePath,
                         width: data.width,
                         height: data.height,
                         style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN
-                    }, $.index);
-                }, $.index, buttonData);
+                    });
+                }, $.eventsScrollView, buttonData);
             }
         } else for (var i = 0; events.length > i; i++) {
+            events[i].image_info.width = events[i].image_info.width;
             relativeHeight = Math.round(Ti.Platform.displayCaps.platformWidth * events[i].image_info.height / events[i].image_info.width) + "px";
             buttonOptions = {
                 backgroundImage: events[i].image,

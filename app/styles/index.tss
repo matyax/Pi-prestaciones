@@ -3,8 +3,7 @@
 	orientationModes: [
         Ti.UI.PORTRAIT
     ],
-    backgroundColor: 'white',
-    navBarHidden: true
+    backgroundColor: 'white'
 },
 '.logoContainer': {
     top: 25,
