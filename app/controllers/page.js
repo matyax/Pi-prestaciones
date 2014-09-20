@@ -28,6 +28,15 @@ for (var i in page.items) {
 }
 
 function createParagraph(item) {
+    
+    var textAlign = Ti.UI.TEXT_ALIGNMENT_LEFT; 
+    
+    if (item.style_align == 'right') {
+        textAlign = Ti.UI.TEXT_ALIGNMENT_RIGHT;
+    } else if (item.style_align == 'center') {
+        textAlign = Ti.UI.TEXT_ALIGNMENT_CENTER;
+    }
+    
     return Ti.UI.createLabel({
         text: item.value,
         color: item.style_foreground,
@@ -36,11 +45,20 @@ function createParagraph(item) {
         },
         width: '95%',
         top: 10,
-        left: 10
+        left: 10,
+        textAlign: textAlign
     });
 }
 
 function createTitle(item) {
+    var textAlign = Ti.UI.TEXT_ALIGNMENT_LEFT; 
+    
+    if (item.style_align == 'right') {
+        textAlign = Ti.UI.TEXT_ALIGNMENT_RIGHT;
+    } else if (item.style_align == 'center') {
+        textAlign = Ti.UI.TEXT_ALIGNMENT_CENTER;
+    }
+    
     var view = Ti.UI.createView({
         layout: 'vertical',
         backgroundColor: item.style_background,
@@ -54,6 +72,11 @@ function createTitle(item) {
         height: 5
     }));
     
+    var labelWidth = Ti.Platform.displayCaps.platformWidth - 40;
+    if (Ti.Platform.osname == 'android') {
+        labelWidth = labelWidth + 'px';
+    }
+    
     view.add(Ti.UI.createLabel({
         text: item.value,
         color: item.style_foreground,
@@ -61,7 +84,9 @@ function createTitle(item) {
             fontSize: item.style_font_size
         },
         top: 0,
-        left: 20
+        left: 20,
+        textAlign: textAlign,
+        width: labelWidth
     }));
     
     view.add(Ti.UI.createView({

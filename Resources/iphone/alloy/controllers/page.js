@@ -9,6 +9,8 @@ function __processArg(obj, key) {
 
 function Controller() {
     function createParagraph(item) {
+        var textAlign = Ti.UI.TEXT_ALIGNMENT_LEFT;
+        "right" == item.style_align ? textAlign = Ti.UI.TEXT_ALIGNMENT_RIGHT : "center" == item.style_align && (textAlign = Ti.UI.TEXT_ALIGNMENT_CENTER);
         return Ti.UI.createLabel({
             text: item.value,
             color: item.style_foreground,
@@ -17,10 +19,13 @@ function Controller() {
             },
             width: "95%",
             top: 10,
-            left: 10
+            left: 10,
+            textAlign: textAlign
         });
     }
     function createTitle(item) {
+        var textAlign = Ti.UI.TEXT_ALIGNMENT_LEFT;
+        "right" == item.style_align ? textAlign = Ti.UI.TEXT_ALIGNMENT_RIGHT : "center" == item.style_align && (textAlign = Ti.UI.TEXT_ALIGNMENT_CENTER);
         var view = Ti.UI.createView({
             layout: "vertical",
             backgroundColor: item.style_background,
@@ -32,6 +37,8 @@ function Controller() {
             width: "100%",
             height: 5
         }));
+        var labelWidth = Ti.Platform.displayCaps.platformWidth - 40;
+        "android" == Ti.Platform.osname && (labelWidth += "px");
         view.add(Ti.UI.createLabel({
             text: item.value,
             color: item.style_foreground,
@@ -39,7 +46,9 @@ function Controller() {
                 fontSize: item.style_font_size
             },
             top: 0,
-            left: 20
+            left: 20,
+            textAlign: textAlign,
+            width: labelWidth
         }));
         view.add(Ti.UI.createView({
             width: "100%",
