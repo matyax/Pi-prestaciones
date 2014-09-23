@@ -74,7 +74,10 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
         }
         
         var listView = Ti.UI.createListView({
-            backgroundColor: eventData.styles.button_background
+            backgroundColor: eventData.styles.button_background,
+            font: {
+                fontSize: 15
+            }
         });
         var sections = [];
         
@@ -113,7 +116,10 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
                     title: title, 
                     id: itemId,
                     color: eventData.styles.button_foreground,
-                    backgroundColor: eventData.styles.button_background
+                    backgroundColor: eventData.styles.button_background,
+                    font: {
+                        fontSize: 15
+                    }
                 } 
             });
         }
@@ -181,10 +187,12 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
         var sections = [];
         
         var section = null;
-        var dataSet = [];
+        var dataSet;
     
         for (var title in items) {
             section = Ti.UI.createListSection({ headerTitle: title });
+            
+            dataSet = [];
             
             for (var i in items[title]) {
                 dataSet.push({ 
@@ -229,6 +237,8 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
             
             timeItems[timeLabel].push(items[i]);
         }
+        
+        console.log(timeItems);
         
         return timeItems;
     }
