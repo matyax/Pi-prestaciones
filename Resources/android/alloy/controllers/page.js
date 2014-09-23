@@ -11,13 +11,14 @@ function Controller() {
     function createParagraph(item) {
         var textAlign = Ti.UI.TEXT_ALIGNMENT_LEFT;
         "right" == item.style_align ? textAlign = Ti.UI.TEXT_ALIGNMENT_RIGHT : "center" == item.style_align && (textAlign = Ti.UI.TEXT_ALIGNMENT_CENTER);
+        var width = Ti.Platform.displayCaps.platformWidth - 40;
         return Ti.UI.createLabel({
             text: item.value,
             color: item.style_foreground,
             font: {
                 fontSize: item.style_font_size
             },
-            width: "95%",
+            width: width + "px",
             top: 10,
             left: 10,
             textAlign: textAlign

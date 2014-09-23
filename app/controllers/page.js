@@ -37,13 +37,19 @@ function createParagraph(item) {
         textAlign = Ti.UI.TEXT_ALIGNMENT_CENTER;
     }
     
+    var width = Ti.Platform.displayCaps.platformWidth - 40;
+    
+    if (Titanium.Platform.osname == 'android') {
+        width = width + 'px';
+    }
+    
     return Ti.UI.createLabel({
         text: item.value,
         color: item.style_foreground,
         font: {
             fontSize: item.style_font_size
         },
-        width: '95%',
+        width: width,
         top: 10,
         left: 10,
         textAlign: textAlign

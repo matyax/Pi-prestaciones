@@ -104,11 +104,12 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
         });
         var sections = [];
         var section = null;
-        var dataSet = [];
+        var dataSet;
         for (var title in items) {
             section = Ti.UI.createListSection({
                 headerTitle: title
             });
+            dataSet = [];
             for (var i in items[title]) dataSet.push({
                 properties: {
                     title: items[title][i].title,
