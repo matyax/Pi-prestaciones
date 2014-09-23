@@ -125,7 +125,7 @@ function Controller() {
             left: 5
         });
         var icon = Ti.UI.createImageView({
-            image: "/icons/" + item.icon,
+            image: "/icons" + item.icon,
             width: 30,
             height: 30,
             left: 15,
