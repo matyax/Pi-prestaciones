@@ -44,7 +44,7 @@ function generateEventWindow(event) {
     var label = '';
     
     for (var item in event.order) {
-        switch ($item) {
+        switch (event.order[item]) {
             case "home":
             
             addEventMenuItem({
