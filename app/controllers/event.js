@@ -43,126 +43,137 @@ function generateEventWindow(event) {
     
     var label = '';
     
-    /* HOME BUTTON */
-    addEventMenuItem({
-        icon: event.home_icon,
-        label: 'Inicio',
-        onClick: function () {
-            $.eventNavigationWindow.close();
-        }
-    });
-    
-    /* PAGES */
-    for (var j in event.pages) {
-        addEventMenuItem({
-            icon: event.pages[j].icon,
-            label: event.pages[j].title,
-            onClick: function(e) {
-                var page    = null,
-                    title   = e.source.getTitle();
+    for (var item in event.order) {
+        switch ($item) {
+            case "home":
+            
+            addEventMenuItem({
+                icon: event.home_icon,
+                label: 'Inicio',
+                onClick: function () {
+                    $.eventNavigationWindow.close();
+                }
+            });
+            
+            break;
+            
+            case "form":
+                if (event.form) {
+                    label = event.form_label || 'Inscripción online';
                     
-                for (var i in eventData.pages) {
-                    if (eventData.pages[i].title == title) {
-                        page = eventData.pages[i];
-                        
-                        break;
-                    }
-                }
-                
-                data.set('page', page);
-                
-                var window = Alloy.createController('page').getView();
-                
-                if (Titanium.Platform.osname == 'android') {
-                    window.open({
-                        modal: true
+                    addEventMenuItem({
+                        icon: event.form_icon,
+                        label: label,
+                        controller: 'form'
                     });
-                } else {
-                    $.eventNavigationWindow.openWindow(window, { animated:true });
                 }
-            }
-        });
-    }
-    
-    /* AGENDA */
-    if (event.agenda) {
-        label = event.agenda_label || 'Agenda';
-        
-        addEventMenuItem({
-            icon: event.agenda_icon,
-            label: label,
-            controller: 'agenda'
-        });
-    }
-    
-    /* FORM */
-    if (event.form) {
-        label = event.form_label || 'Inscripción online';
-        
-        addEventMenuItem({
-            icon: event.form_icon,
-            label: label,
-            controller: 'form'
-        });
-    }
-    
-    /* CERTIFICATE */
-    if (event.certificate) {
-        label = event.certificate_label || 'Certificación web';
-        
-        addEventMenuItem({
-            icon: event.certificate_icon,
-            label: label,
-            'controller': 'certificate'
-        });
-    }
-    
-    /* LINK */
-    if (event.link_url) {
-        label = event.link_label || 'Link';
-        
-        addEventMenuItem({
-            icon: event.link_icon,
-            label: label,
-            'controller': 'link'
-        });
-    }
-    
-    /* MAP */
-    if (event.map_label) {
-        label = event.map_label || 'Ubicación';
-        
-        addEventMenuItem({
-            icon: event.map_icon,
-            label: label,
-            controller: 'map'
-        });
-    }
-    
-    /*
-     * Favorites
-     */
-    if (event.agenda_label) {
-        label = event.favorites_label || 'Favoritos';
-        
-        addEventMenuItem({
-            icon: event.favorites_icon,
-            label: label,
-            controller: 'favorite'
-        });
-    }
-    
-    /*
-     * Accommodations
-     */
-    if (event.accommodations_label) {
-        label = event.accommodations_label || 'Alojamientos';
-        
-        addEventMenuItem({
-            icon: event.accommodations_icon,
-            label: label,
-            controller: 'accommodations'
-        });
+            break;
+            
+            case "certificate":
+                if (event.certificate) {
+                    label = event.certificate_label || 'Certificación web';
+                    
+                    addEventMenuItem({
+                        icon: event.certificate_icon,
+                        label: label,
+                        'controller': 'certificate'
+                    });
+                }
+            break;
+            
+            case "favorites":
+                if (event.agenda_label) {
+                    label = event.favorites_label || 'Favoritos';
+                    
+                    addEventMenuItem({
+                        icon: event.favorites_icon,
+                        label: label,
+                        controller: 'favorite'
+                    });
+                }
+            break;
+            
+            case "link":
+                if (event.link_url) {
+                    label = event.link_label || 'Link';
+                    
+                    addEventMenuItem({
+                        icon: event.link_icon,
+                        label: label,
+                        'controller': 'link'
+                    });
+                }
+            break;
+            
+            case "accommodations":
+                if (event.accommodations_label) {
+                    label = event.accommodations_label || 'Alojamientos';
+                    
+                    addEventMenuItem({
+                        icon: event.accommodations_icon,
+                        label: label,
+                        controller: 'accommodations'
+                    });
+                }
+            break;
+            
+            case "map":
+                if (event.map_label) {
+                    label = event.map_label || 'Ubicación';
+                    
+                    addEventMenuItem({
+                        icon: event.map_icon,
+                        label: label,
+                        controller: 'map'
+                    });
+                }
+            break;
+            
+            case "pages":
+                for (var j in event.pages) {
+                    addEventMenuItem({
+                        icon: event.pages[j].icon,
+                        label: event.pages[j].title,
+                        onClick: function(e) {
+                            var page    = null,
+                                title   = e.source.getTitle();
+                                
+                            for (var i in eventData.pages) {
+                                if (eventData.pages[i].title == title) {
+                                    page = eventData.pages[i];
+                                    
+                                    break;
+                                }
+                            }
+                            
+                            data.set('page', page);
+                            
+                            var window = Alloy.createController('page').getView();
+                            
+                            if (Titanium.Platform.osname == 'android') {
+                                window.open({
+                                    modal: true
+                                });
+                            } else {
+                                $.eventNavigationWindow.openWindow(window, { animated:true });
+                            }
+                        }
+                    });
+                }
+            break;
+            
+            case "agenda":
+                if (event.agenda) {
+                    label = event.agenda_label || 'Agenda';
+                    
+                    addEventMenuItem({
+                        icon: event.agenda_icon,
+                        label: label,
+                        controller: 'agenda'
+                    });
+                }
+            break;
+        }
     }
     
     $.eventView.add(Ti.UI.createView({
