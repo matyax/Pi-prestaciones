@@ -4,7 +4,9 @@ var data = require('data'),
     page = data.get('page'),
     eventData = data.get('eventData');
 
-$.pageView.setBackgroundColor(page.background_color);
+if (page.background_color) {
+	$.pageView.setBackgroundColor(page.background_color);
+}
 
 for (var i in page.items) {
     
@@ -43,9 +45,11 @@ function createParagraph(item) {
         width = width + 'px';
     }
     
+    var foreColor = item.style_foreground || 'black';
+    
     return Ti.UI.createLabel({
         text: item.value,
-        color: item.style_foreground,
+        color: foreColor,
         font: {
             fontSize: item.style_font_size
         },
