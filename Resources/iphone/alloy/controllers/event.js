@@ -135,7 +135,7 @@ function Controller() {
                 break;
 
               case "agenda":
-                if (event.agenda) {
+                if (event.agenda_label) {
                     label = event.agenda_label || "Agenda";
                     addEventMenuItem({
                         icon: event.agenda_icon,

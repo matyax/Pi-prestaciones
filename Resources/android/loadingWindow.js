@@ -1,4 +1,17 @@
-Ti.UI.backgroundColor = "white";
+function openWindow() {
+    windowStatus && closeWindow();
+    loadingWindow.open();
+    windowStatus = true;
+}
+
+function closeWindow() {
+    if (false == windowStatus) return;
+    loadingWindow.close();
+    activityIndicator.hide();
+    windowStatus = false;
+}
+
+var windowStatus = false;
 
 var loadingWindow = Ti.UI.createWindow({
     backgroundColor: "black",
@@ -22,11 +35,6 @@ loadingWindow.addEventListener("open", function() {
     activityIndicator.show();
 });
 
-exports.open = function() {
-    loadingWindow.open();
-};
+exports.open = openWindow;
 
-exports.close = function() {
-    loadingWindow.close();
-    activityIndicator.hide();
-};
+exports.close = closeWindow;

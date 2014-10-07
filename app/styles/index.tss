@@ -1,4 +1,4 @@
-".container": {
+"#index": {
 	layout: 'vertical',
 	orientationModes: [
         Ti.UI.PORTRAIT

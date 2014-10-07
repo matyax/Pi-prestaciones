@@ -99,7 +99,7 @@ piApi.loadEvents(function (events) {
                 height: relativeHeight,
                 width: relativeWidth,
                 event: events[i]
-            }
+            };
             
             cachedImage.load(image, function (imagePath, data) {
                 
