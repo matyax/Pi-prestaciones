@@ -13,9 +13,10 @@ function Controller() {
         "right" == item.style_align ? textAlign = Ti.UI.TEXT_ALIGNMENT_RIGHT : "center" == item.style_align && (textAlign = Ti.UI.TEXT_ALIGNMENT_CENTER);
         var width = Ti.Platform.displayCaps.platformWidth - 40;
         "android" == Titanium.Platform.osname && (width += "px");
+        var foreColor = item.style_foreground || "black";
         return Ti.UI.createLabel({
             text: item.value,
-            color: item.style_foreground,
+            color: foreColor,
             font: {
                 fontSize: item.style_font_size
             },
@@ -103,7 +104,7 @@ function Controller() {
     arguments[0] || {};
     var data = require("data"), page = data.get("page");
     data.get("eventData");
-    $.pageView.setBackgroundColor(page.background_color);
+    page.background_color && $.pageView.setBackgroundColor(page.background_color);
     for (var i in page.items) "paragraph" == page.items[i].type ? $.pageScrollView.add(createParagraph(page.items[i])) : "title" == page.items[i].type ? $.pageScrollView.add(createTitle(page.items[i])) : "image" == page.items[i].type && $.pageScrollView.add(createImage(page.items[i]));
     _.extend($, exports);
 }
