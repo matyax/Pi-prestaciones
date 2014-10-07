@@ -169,8 +169,12 @@ function Controller() {
                     width: relativeWidth,
                     event: events[i]
                 };
-                cachedImage.load(image, function(imagePath, data) {
+                var sorete = function() {
                     loading.close();
+                };
+                cachedImage.load(image, function(imagePath, data) {
+                    sorete();
+                    sorete = function() {};
                     addButton(data.event, {
                         backgroundImage: imagePath,
                         width: data.width,
