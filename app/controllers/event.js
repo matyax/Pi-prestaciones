@@ -18,7 +18,7 @@ function generateEventWindow(event) {
     
     var windowReference = null;
     
-    /* General styles */
+    // General styles
     if (Titanium.Platform.osname == 'android') {
         $.eventNavigationWindow.setTitle(event.title);
         $.eventNavigationWindow.setBackgroundColor(event.styles.background);
@@ -32,7 +32,7 @@ function generateEventWindow(event) {
     
     data.set('windowReference', windowReference);
    
-    /* LOGO */
+    // LOGO
     var image = Ti.UI.createImageView({
        image: event.image,
        width: '100%',
@@ -261,7 +261,7 @@ function addEventMenuItem(item) {
     $.eventView.add(view);
 }
 
-/* Event UI reusable functions */
+// Event UI reusable functions
 function createEventWindow(title, backgroundColor) {
     return Titanium.UI.createWindow({
         backgroundColor: backgroundColor,
