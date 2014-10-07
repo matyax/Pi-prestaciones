@@ -41,19 +41,62 @@ function generateEventWindow(event) {
     
     $.eventView.add(image);
     
-    var label = '';
+    var label 	= '';
+    	pageId 	= 0,
+    	j 		= null;
     
     for (var item in event.order) {
+    	if (event.order[item].substring(0, 5) == 'page_') {
+    		pageId = event.order[item].match('[0-9]+')[0];
+    		
+    		for (j in event.pages) {
+    			
+    			if (event.pages[j].id != pageId) {
+    				continue;
+    			}
+    			
+                addEventMenuItem({
+                    icon: event.pages[j].icon,
+                    label: event.pages[j].title,
+                    onClick: function(e) {
+                        var page    = null,
+                            title   = e.source.getTitle();
+                            
+                        for (var i in eventData.pages) {
+                            if (eventData.pages[i].title == title) {
+                                page = eventData.pages[i];
+                                
+                                break;
+                            }
+                        }
+                        
+                        data.set('page', page);
+                        
+                        var window = Alloy.createController('page').getView();
+                        
+                        if (Titanium.Platform.osname == 'android') {
+                            window.open({
+                                modal: true
+                            });
+                        } else {
+                            $.eventNavigationWindow.openWindow(window, { animated:true });
+                        }
+                    }
+                });
+                
+            }
+    	}
+    	
         switch (event.order[item]) {
             case "home":
             
-            addEventMenuItem({
-                icon: event.home_icon,
-                label: 'Inicio',
-                onClick: function () {
-                    $.eventNavigationWindow.close();
-                }
-            });
+	            addEventMenuItem({
+	                icon: event.home_icon,
+	                label: 'Inicio',
+	                onClick: function () {
+	                    $.eventNavigationWindow.close();
+	                }
+	            });
             
             break;
             
@@ -125,39 +168,6 @@ function generateEventWindow(event) {
                         icon: event.map_icon,
                         label: label,
                         controller: 'map'
-                    });
-                }
-            break;
-            
-            case "pages":
-                for (var j in event.pages) {
-                    addEventMenuItem({
-                        icon: event.pages[j].icon,
-                        label: event.pages[j].title,
-                        onClick: function(e) {
-                            var page    = null,
-                                title   = e.source.getTitle();
-                                
-                            for (var i in eventData.pages) {
-                                if (eventData.pages[i].title == title) {
-                                    page = eventData.pages[i];
-                                    
-                                    break;
-                                }
-                            }
-                            
-                            data.set('page', page);
-                            
-                            var window = Alloy.createController('page').getView();
-                            
-                            if (Titanium.Platform.osname == 'android') {
-                                window.open({
-                                    modal: true
-                                });
-                            } else {
-                                $.eventNavigationWindow.openWindow(window, { animated:true });
-                            }
-                        }
                     });
                 }
             break;
