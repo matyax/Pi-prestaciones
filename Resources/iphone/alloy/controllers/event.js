@@ -208,9 +208,15 @@ function Controller() {
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "event";
     if (arguments[0]) {
-        __processArg(arguments[0], "__parentSymbol");
-        __processArg(arguments[0], "$model");
-        __processArg(arguments[0], "__itemTemplate");
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
     }
     var $ = this;
     var exports = {};
@@ -245,10 +251,14 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     arguments[0] || {};
-    var data = (require("pi"), require("data"));
-    require("ui");
-    var eventData = data.get("eventData");
-    data.get("event");
+    {
+        var data = (require("pi"), require("data"));
+        require("ui");
+    }
+    {
+        var eventData = data.get("eventData");
+        data.get("event");
+    }
     generateEventWindow(eventData);
     _.extend($, exports);
 }

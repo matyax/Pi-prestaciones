@@ -42,9 +42,15 @@ function Controller() {
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "index";
     if (arguments[0]) {
-        __processArg(arguments[0], "__parentSymbol");
-        __processArg(arguments[0], "$model");
-        __processArg(arguments[0], "__itemTemplate");
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
     }
     var $ = this;
     var exports = {};
@@ -153,7 +159,7 @@ function Controller() {
             $.index.remove($.logoContainer);
             $.index.remove($.congressTitle);
             $.index.remove($.eventsScrollView);
-            for (var i = 0; events.length > i; i++) {
+            for (var i = 0; i < events.length; i++) {
                 image = events[i].image_half;
                 imageInfo = events[i].image_half_info;
                 relativeHeight = Math.round(Ti.Platform.displayCaps.platformHeight / 2);
@@ -174,7 +180,7 @@ function Controller() {
                     }, $.index);
                 }, $.index, buttonData);
             }
-        } else for (var i = 0; events.length > i; i++) {
+        } else for (var i = 0; i < events.length; i++) {
             relativeHeight = Math.round(Ti.Platform.displayCaps.platformWidth * events[i].image_info.height / events[i].image_info.width) + "px";
             buttonOptions = {
                 backgroundImage: events[i].image,

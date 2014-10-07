@@ -1,6 +1,6 @@
 function openWindow() {
     windowStatus && closeWindow();
-    loadingWindow = Ti.UI.createWindow({
+    loadingWin = Ti.UI.createWindow({
         backgroundColor: "black",
         opacity: .8,
         fullscreen: true
@@ -12,23 +12,23 @@ function openWindow() {
         height: Ti.UI.SIZE,
         width: Ti.UI.SIZE
     });
-    loadingWindow.add(activityIndicator);
-    loadingWindow.addEventListener("open", function() {
+    loadingWin.add(activityIndicator);
+    loadingWin.addEventListener("open", function() {
         activityIndicator.show();
     });
-    loadingWindow.open();
+    loadingWin.open();
     windowStatus = true;
 }
 
 function closeWindow() {
     if (false == windowStatus) return;
-    loadingWindow.close();
+    loadingWin.close();
     windowStatus = false;
 }
 
 var windowStatus = false;
 
-var loadingWindow = null;
+var loadingWin = null;
 
 exports.open = openWindow;
 
