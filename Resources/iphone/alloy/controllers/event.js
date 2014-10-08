@@ -17,19 +17,18 @@ function Controller() {
         var windowReference = null;
         if ("android" == Titanium.Platform.osname) {
             $.eventNavigationWindow.setTitle(event.title);
-            $.eventNavigationWindow.setBackgroundColor(event.styles.background);
+            $.eventScrollView.setBackgroundColor(event.styles.background);
         } else {
             $.eventWindow.setTitle(event.title);
-            $.eventWindow.setBackgroundColor(event.styles.background);
+            $.eventScrollView.setBackgroundColor(event.styles.background);
             windowReference = $.eventNavigationWindow;
         }
         data.set("windowReference", windowReference);
         var image = Ti.UI.createImageView({
             image: event.image,
-            width: "100%",
-            top: "0dp"
+            width: "100%"
         });
-        $.eventView.add(image);
+        $.logoContainer.add(image);
         var label = "";
         pageId = 0, j = null;
         for (var item in event.order) {
@@ -163,25 +162,25 @@ function Controller() {
             borderWidth: 0,
             color: eventData.styles.button_foreground,
             top: 0,
-            left: 5
+            left: 0
         });
         var icon = Ti.UI.createImageView({
             image: "/icons" + item.icon,
             width: 30,
             height: 30,
-            left: 15,
+            left: 10,
             top: 5
         });
-        var viewWidth = Titanium.Platform.displayCaps.platformWidth - 20;
-        viewLeft = 10;
+        var viewWidth = Titanium.Platform.displayCaps.platformWidth - 40, viewLeft = 20;
         if ("android" == Titanium.Platform.osname) {
             viewWidth += "px";
             viewLeft += "px";
         }
+        var topPosition = firstButton ? 20 : 10;
         var view = Titanium.UI.createView({
-            borderRadius: 15,
+            borderRadius: 5,
             layout: "horizontal",
-            top: 10,
+            top: topPosition,
             left: viewLeft,
             width: viewWidth,
             height: 40,
@@ -221,9 +220,26 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.eventWindow = Ti.UI.createWindow({
+        backgroundColor: "white",
+        orientationModes: [ Ti.UI.PORTRAIT ],
+        layout: "vertical",
+        top: 0,
+        width: "100%",
+        height: Ti.UI.FILL,
         id: "eventWindow"
     });
+    $.__views.logoContainer = Ti.UI.createView({
+        top: 20,
+        left: 0,
+        backgroundColor: "white",
+        width: "100%",
+        height: Ti.UI.SIZE,
+        id: "logoContainer"
+    });
+    $.__views.eventWindow.add($.__views.logoContainer);
     $.__views.eventScrollView = Ti.UI.createScrollView({
+        top: 20,
+        left: 0,
         height: Ti.UI.FILL,
         layout: "vertical",
         width: "100%",
@@ -243,7 +259,12 @@ function Controller() {
     });
     $.__views.eventScrollView.add($.__views.__alloyId0);
     $.__views.eventNavigationWindow = Ti.UI.iOS.createNavigationWindow({
+        backgroundColor: "white",
         orientationModes: [ Ti.UI.PORTRAIT ],
+        layout: "vertical",
+        top: 0,
+        width: "100%",
+        height: Ti.UI.FILL,
         window: $.__views.eventWindow,
         id: "eventNavigationWindow"
     });
@@ -260,6 +281,7 @@ function Controller() {
         data.get("event");
     }
     generateEventWindow(eventData);
+    var firstButton = false;
     _.extend($, exports);
 }
 

@@ -16,14 +16,13 @@ function Controller() {
         eventData = event;
         var windowReference = null;
         $.eventNavigationWindow.setTitle(event.title);
-        $.eventNavigationWindow.setBackgroundColor(event.styles.background);
+        $.eventScrollView.setBackgroundColor(event.styles.background);
         data.set("windowReference", windowReference);
         var image = Ti.UI.createImageView({
             image: event.image,
-            width: "100%",
-            top: "0dp"
+            width: "100%"
         });
-        $.eventView.add(image);
+        $.logoContainer.add(image);
         var label = "";
         pageId = 0, j = null;
         for (var item in event.order) {
@@ -207,11 +206,27 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.eventNavigationWindow = Ti.UI.createWindow({
+        backgroundColor: "white",
         orientationModes: [ Ti.UI.PORTRAIT ],
+        layout: "vertical",
+        top: 0,
+        width: "100%",
+        height: Ti.UI.FILL,
         id: "eventNavigationWindow"
     });
     $.__views.eventNavigationWindow && $.addTopLevelView($.__views.eventNavigationWindow);
+    $.__views.logoContainer = Ti.UI.createView({
+        top: 20,
+        left: 0,
+        backgroundColor: "white",
+        width: "100%",
+        height: Ti.UI.SIZE,
+        id: "logoContainer"
+    });
+    $.__views.eventNavigationWindow.add($.__views.logoContainer);
     $.__views.eventScrollView = Ti.UI.createScrollView({
+        top: 20,
+        left: 0,
         height: Ti.UI.FILL,
         layout: "vertical",
         width: "100%",
