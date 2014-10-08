@@ -21,11 +21,11 @@ function generateEventWindow(event) {
     // General styles
     if (Titanium.Platform.osname == 'android') {
         $.eventNavigationWindow.setTitle(event.title);
-        $.eventNavigationWindow.setBackgroundColor(event.styles.background);
+        $.eventScrollView.setBackgroundColor(event.styles.background);
                 
     } else {
         $.eventWindow.setTitle(event.title);
-        $.eventWindow.setBackgroundColor(event.styles.background);
+        $.eventScrollView.setBackgroundColor(event.styles.background);
         
         windowReference = $.eventNavigationWindow;
     }
@@ -35,13 +35,12 @@ function generateEventWindow(event) {
     // LOGO
     var image = Ti.UI.createImageView({
        image: event.image,
-       width: '100%',
-       top: '0dp'
+       width: '100%'
     });
     
-    $.eventView.add(image);
+    $.logoContainer.add(image);
     
-    var label 	= '';
+   var label 	= '';
     	pageId 	= 0,
     	j 		= null;
     
@@ -192,10 +191,11 @@ function generateEventWindow(event) {
         left: 0,
         top: 0
     }));
-};
+}
 
 generateEventWindow(eventData);
 
+var firstButton = false;
 function addEventMenuItem(item) {
     var button = Titanium.UI.createButton({
         title: item.label,
@@ -207,19 +207,19 @@ function addEventMenuItem(item) {
         borderWidth: 0,
         color: eventData.styles.button_foreground,
         top: 0,
-        left: 5
+        left: 0
     });
     
     var icon = Ti.UI.createImageView({
         image: '/icons' + item.icon,
         width: 30,
         height: 30,
-        left: 15,
+        left: 10,
         top: 5
     });
     
-    var viewWidth   = Titanium.Platform.displayCaps.platformWidth - 20
-        viewLeft    = 10;
+    var viewWidth   = Titanium.Platform.displayCaps.platformWidth - 40,
+        viewLeft    = 20;
     
     if (Titanium.Platform.osname == 'android') {
         viewWidth = viewWidth + 'px'
@@ -227,14 +227,16 @@ function addEventMenuItem(item) {
         viewLeft = viewLeft + 'px' 
     }
     
+    var topPosition = firstButton ? 20 : 10;
+    
     var view = Titanium.UI.createView({
-        borderRadius: 15,
+        borderRadius: 5,
         layout: 'horizontal',
-        top: 10,
+        top: topPosition,
         left: viewLeft,
         width: viewWidth,
         height: 40,
-        backgroundColor: eventData.styles.button_background,   
+        backgroundColor: eventData.styles.button_background
     });
     
     view.add(icon);
