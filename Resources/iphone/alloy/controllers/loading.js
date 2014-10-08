@@ -27,7 +27,8 @@ function Controller() {
         backgroundColor: "black",
         opacity: .8,
         fullscreen: true,
-        id: "loadingWindow"
+        id: "loadingWindow",
+        exitOnClose: "false"
     });
     $.__views.loadingWindow && $.addTopLevelView($.__views.loadingWindow);
     exports.destroy = function() {};

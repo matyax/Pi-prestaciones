@@ -4,5 +4,5 @@ iosLaunchConfigurationAttributes/ATTR_PROJECT_NAME=Pi Prestaciones
 iosLaunchConfigurationAttributes/appid=org.pizzapixel.pi
 iosLaunchConfigurationAttributes/certificate=Matyas Chomicki (D7HS7Z7G58)
 iosLaunchConfigurationAttributes/keychain=
-iosLaunchConfigurationAttributes/sdk_version=7.1
+iosLaunchConfigurationAttributes/sdk_version=8.0
 iosLaunchConfigurationAttributes/uuid=db20b290-d16b-40f1-a342-147d9816e2e4
