@@ -172,10 +172,7 @@ function Controller() {
             top: 5
         });
         var viewWidth = Titanium.Platform.displayCaps.platformWidth - 40, viewLeft = 20;
-        if ("android" == Titanium.Platform.osname) {
-            viewWidth += "px";
-            viewLeft += "px";
-        }
+        "android" == Titanium.Platform.osname && (viewWidth = Titanium.Platform.displayCaps.platformWidth / (Titanium.Platform.displayCaps.dpi / 160) - 40);
         var topPosition = firstButton ? 20 : 10;
         var view = Titanium.UI.createView({
             borderRadius: 5,
