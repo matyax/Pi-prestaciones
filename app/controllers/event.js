@@ -222,9 +222,7 @@ function addEventMenuItem(item) {
         viewLeft    = 20;
     
     if (Titanium.Platform.osname == 'android') {
-        viewWidth = viewWidth + 'px'
-        
-        viewLeft = viewLeft + 'px' 
+        viewWidth = (Titanium.Platform.displayCaps.platformWidth / (Titanium.Platform.displayCaps.dpi / 160)) - 40;
     }
     
     var topPosition = firstButton ? 20 : 10;

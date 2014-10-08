@@ -154,23 +154,22 @@ function Controller() {
             borderWidth: 0,
             color: eventData.styles.button_foreground,
             top: 0,
-            left: 5
+            left: 0
         });
         var icon = Ti.UI.createImageView({
             image: "/icons" + item.icon,
             width: 30,
             height: 30,
-            left: 15,
+            left: 10,
             top: 5
         });
-        var viewWidth = Titanium.Platform.displayCaps.platformWidth - 20;
-        viewLeft = 10;
-        viewWidth += "px";
-        viewLeft += "px";
+        var viewWidth = Titanium.Platform.displayCaps.platformWidth - 40, viewLeft = 20;
+        viewWidth = Titanium.Platform.displayCaps.platformWidth / (Titanium.Platform.displayCaps.dpi / 160) - 40;
+        var topPosition = firstButton ? 20 : 10;
         var view = Titanium.UI.createView({
-            borderRadius: 15,
+            borderRadius: 5,
             layout: "horizontal",
-            top: 10,
+            top: topPosition,
             left: viewLeft,
             width: viewWidth,
             height: 40,
@@ -257,6 +256,7 @@ function Controller() {
         data.get("event");
     }
     generateEventWindow(eventData);
+    var firstButton = false;
     _.extend($, exports);
 }
 
