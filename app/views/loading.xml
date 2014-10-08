@@ -1,0 +1,5 @@
+<Alloy>
+	<Window id="loadingWindow" exitOnClose="false">
+        
+    </Window>
+</Alloy>

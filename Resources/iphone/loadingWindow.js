@@ -1,34 +1,19 @@
 function openWindow() {
     windowStatus && closeWindow();
-    loadingWin = Ti.UI.createWindow({
-        backgroundColor: "black",
-        opacity: .8,
-        fullscreen: true
-    });
-    var style;
-    style = Ti.UI.iPhone.ActivityIndicatorStyle.BIG;
-    var activityIndicator = Ti.UI.createActivityIndicator({
-        style: style,
-        height: Ti.UI.SIZE,
-        width: Ti.UI.SIZE
-    });
-    loadingWin.add(activityIndicator);
-    loadingWin.addEventListener("open", function() {
-        activityIndicator.show();
-    });
-    loadingWin.open();
+    loadingWindow = Alloy.createController("loading").getView();
+    loadingWindow.open();
     windowStatus = true;
 }
 
 function closeWindow() {
     if (false == windowStatus) return;
-    loadingWin.close();
+    loadingWindow.close();
     windowStatus = false;
 }
 
 var windowStatus = false;
 
-var loadingWin = null;
+var loadingWindow = null;
 
 exports.open = openWindow;
 

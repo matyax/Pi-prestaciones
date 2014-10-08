@@ -1,0 +1,1 @@
+module.exports = [{"isId":true,"priority":100000.002,"key":"loadingWindow","style":{backgroundColor:"black",opacity:0.8,fullscreen:true,}}];
