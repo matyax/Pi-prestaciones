@@ -29,6 +29,8 @@ function Controller() {
             width: "100%"
         });
         $.logoContainer.add(image);
+        eventData.logoImageView = image;
+        image.addEventListener("load", initEventLayout);
         var label = "";
         pageId = 0, j = null;
         for (var item in event.order) {
@@ -70,7 +72,7 @@ function Controller() {
               case "form":
                 if (event.form) {
                     label = event.form_label || "Inscripción online";
-                    addEventMenuItem({
+                    addEventTabItem({
                         icon: event.form_icon,
                         label: label,
                         controller: "form"
@@ -92,7 +94,7 @@ function Controller() {
               case "favorites":
                 if (event.agenda_label) {
                     label = event.favorites_label || "Favoritos";
-                    addEventMenuItem({
+                    addEventTabItem({
                         icon: event.favorites_icon,
                         label: label,
                         controller: "favorite"
@@ -136,7 +138,7 @@ function Controller() {
               case "agenda":
                 if (event.agenda_label) {
                     label = event.agenda_label || "Agenda";
-                    addEventMenuItem({
+                    addEventTabItem({
                         icon: event.agenda_icon,
                         label: label,
                         controller: "agenda"
@@ -201,6 +203,26 @@ function Controller() {
         });
         $.eventView.add(view);
     }
+    function initEventLayout() {
+        var event = eventData, height = toDP(Ti.Platform.displayCaps.platformHeight), logoHeight = (toDP(Ti.Platform.displayCaps.platformWidth), 
+        0), blob = null;
+        blob = eventData.logoImageView.toBlob();
+        blob && (logoHeight = blob.height);
+        console.log("alto: " + logoHeight);
+        if (event.favorites_label || event.form || event.agenda_label) {
+            $.tabContainer.setHeight(toDP(80));
+            $.eventScrollView.setHeight(toDP(height - logoHeight - 80));
+            return;
+        }
+        $.eventScrollView.setHeight(toDP(height - logoHeight));
+        $.tabContainer.hide();
+        $.eventScrollView.setTop(toDP(logoHeight + 20));
+    }
+    function addEventTabItem() {}
+    function toDP(dp) {
+        if (Titanium.Platform.displayCaps.dpi > 160) return dp;
+        return dp * (Titanium.Platform.displayCaps.dpi / 160);
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "event";
     if (arguments[0]) {
@@ -219,8 +241,9 @@ function Controller() {
     $.__views.eventWindow = Ti.UI.createWindow({
         backgroundColor: "white",
         orientationModes: [ Ti.UI.PORTRAIT ],
-        layout: "vertical",
+        layout: "composite",
         top: 0,
+        left: 0,
         width: "100%",
         height: Ti.UI.FILL,
         id: "eventWindow"
@@ -235,9 +258,6 @@ function Controller() {
     });
     $.__views.eventWindow.add($.__views.logoContainer);
     $.__views.eventScrollView = Ti.UI.createScrollView({
-        top: 20,
-        left: 0,
-        height: Ti.UI.FILL,
         layout: "vertical",
         width: "100%",
         id: "eventScrollView"
@@ -255,10 +275,20 @@ function Controller() {
         id: "__alloyId0"
     });
     $.__views.eventScrollView.add($.__views.__alloyId0);
+    $.__views.tabContainer = Ti.UI.createView({
+        left: 0,
+        bottom: 0,
+        width: "100%",
+        height: 80,
+        backgroundColor: "blue",
+        layout: "horizontal",
+        id: "tabContainer"
+    });
+    $.__views.eventWindow.add($.__views.tabContainer);
     $.__views.eventNavigationWindow = Ti.UI.iOS.createNavigationWindow({
         backgroundColor: "white",
         orientationModes: [ Ti.UI.PORTRAIT ],
-        layout: "vertical",
+        layout: "composite",
         top: 0,
         width: "100%",
         height: Ti.UI.FILL,

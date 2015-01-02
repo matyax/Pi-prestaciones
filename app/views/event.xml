@@ -8,6 +8,7 @@
                 
                 <View class="padding"></View>                
             </ScrollView>
+            <View id="tabContainer"></View>
         </Window>
     </NavigationWindow>
     
@@ -17,7 +18,8 @@
             <View id="eventView"></View>
             
             <View class="padding"></View>
-        </ScrollView>    
+        </ScrollView>
+        <View id="tabContainer"></View>    
     </Window>
     
 </Alloy>

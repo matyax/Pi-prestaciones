@@ -31,8 +31,7 @@ function generateEventWindow(event) {
     }
     
     data.set('windowReference', windowReference);
-   
-    // LOGO
+    
     var image = Ti.UI.createImageView({
        image: event.image,
        width: '100%'
@@ -40,7 +39,11 @@ function generateEventWindow(event) {
     
     $.logoContainer.add(image);
     
-   var label 	= '';
+    eventData.logoImageView = image;
+    
+    image.addEventListener("load", initEventLayout);
+    
+    var label 	= '';
     	pageId 	= 0,
     	j 		= null;
     
@@ -103,7 +106,7 @@ function generateEventWindow(event) {
                 if (event.form) {
                     label = event.form_label || 'Inscripción online';
                     
-                    addEventMenuItem({
+                    addEventTabItem({
                         icon: event.form_icon,
                         label: label,
                         controller: 'form'
@@ -127,7 +130,7 @@ function generateEventWindow(event) {
                 if (event.agenda_label) {
                     label = event.favorites_label || 'Favoritos';
                     
-                    addEventMenuItem({
+                    addEventTabItem({
                         icon: event.favorites_icon,
                         label: label,
                         controller: 'favorite'
@@ -175,7 +178,7 @@ function generateEventWindow(event) {
                 if (event.agenda_label) {
                     label = event.agenda_label || 'Agenda';
                     
-                    addEventMenuItem({
+                    addEventTabItem({
                         icon: event.agenda_icon,
                         label: label,
                         controller: 'agenda'
@@ -270,6 +273,50 @@ function addEventMenuItem(item) {
     
     $.eventView.add(view);
 }
+
+function initEventLayout() {
+	var event 		= eventData,
+		height 		= toDP(Ti.Platform.displayCaps.platformHeight),
+		width 		= toDP(Ti.Platform.displayCaps.platformWidth),
+		logoHeight	= 0,
+		blob 		= null;
+	
+	blob = eventData.logoImageView.toBlob();
+    if (blob) {
+        logoHeight = blob.height;
+    }
+	
+	if ((event.favorites_label) || (event.form) || (event.agenda_label)) {
+		$.tabContainer.setHeight( toDP(80) );
+		
+		$.eventScrollView.setHeight(
+			toDP(height - logoHeight - 80)
+		);
+		
+		return;	
+	} else {
+		$.eventScrollView.setHeight(
+			toDP(height - logoHeight)
+		);
+		
+		$.tabContainer.hide();	
+	}
+	
+	$.eventScrollView.setTop( toDP(logoHeight + 20) );
+}
+
+function addEventTabItem(item) {
+	
+}
+
+function toDP(dp) {
+    if ( Titanium.Platform.displayCaps.dpi > 160 ) {
+        return dp;
+    }
+    
+	return (dp * (Titanium.Platform.displayCaps.dpi / 160));   
+}
+
 
 // Event UI reusable functions
 function createEventWindow(title, backgroundColor) {
