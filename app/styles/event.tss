@@ -5,6 +5,7 @@
     ],
     layout: 'composite',
     top: 0,
+    left: 0,
     width: '100%',
     height: Ti.UI.FILL
 },
@@ -26,7 +27,8 @@
 },
 '#eventScrollView' : {
     layout: 'vertical',
-    width: '100%'
+    width: '100%',
+    left: 0
 },
 '.padding' : {
     height: 15

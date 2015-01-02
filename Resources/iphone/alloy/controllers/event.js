@@ -173,8 +173,7 @@ function Controller() {
             left: 10,
             top: 5
         });
-        var viewWidth = Titanium.Platform.displayCaps.platformWidth - 40, viewLeft = 20;
-        "android" == Titanium.Platform.osname && (viewWidth = Titanium.Platform.displayCaps.platformWidth / (Titanium.Platform.displayCaps.dpi / 160) - 40);
+        var viewWidth = toDP(Titanium.Platform.displayCaps.platformWidth) - 40, viewLeft = 20;
         var topPosition = firstButton ? 20 : 10;
         var view = Titanium.UI.createView({
             borderRadius: 5,
@@ -207,17 +206,15 @@ function Controller() {
         var event = eventData, height = toDP(Ti.Platform.displayCaps.platformHeight), width = toDP(Ti.Platform.displayCaps.platformWidth), logoHeight = 0, blob = null;
         blob = eventData.logoImageView.toBlob();
         if (blob) {
-            logoHeight = blob.height;
-            eventData.logoImageView.setWidth(toDP(width - 40));
+            logoHeight = (width - 40) * pxToDP(blob.height) / pxToDP(blob.width);
+            eventData.logoImageView.setWidth(width - 40);
+            eventData.logoImageView.setHeight(logoHeight);
         }
-        if (event.favorites_label || event.form || event.agenda_label) {
-            $.tabContainer.setHeight(toDP(80));
-            $.eventScrollView.setHeight(toDP(height - logoHeight - 80));
-            return;
+        if (event.favorites_label || event.form || event.agenda_label) $.eventScrollView.setHeight(height - logoHeight - 120); else {
+            $.eventScrollView.setHeight(height - logoHeight - 40);
+            $.tabContainer.hide();
         }
-        $.eventScrollView.setHeight(toDP(height - logoHeight));
-        $.tabContainer.hide();
-        $.eventScrollView.setTop(toDP(logoHeight + 20));
+        $.eventScrollView.setTop(logoHeight + 40);
     }
     function addEventTabItem(item) {
         var button = Titanium.UI.createView({
@@ -241,7 +238,6 @@ function Controller() {
             height: Ti.UI.SIZE,
             backgroundColor: "transparent"
         });
-        console.log(item.label);
         var label = Ti.UI.createLabel({
             text: item.label,
             width: "100%",
@@ -272,8 +268,11 @@ function Controller() {
         $.tabContainer.add(button);
     }
     function toDP(dp) {
-        if (Titanium.Platform.displayCaps.dpi > 160) return dp;
-        return dp * (Titanium.Platform.displayCaps.dpi / 160);
+        if ("android" == Titanium.Platform.osname) return pxToDp(dp);
+        return dp;
+    }
+    function pxToDP(px) {
+        return px / (Titanium.Platform.displayCaps.dpi / 160);
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "event";
@@ -312,6 +311,7 @@ function Controller() {
     $.__views.eventScrollView = Ti.UI.createScrollView({
         layout: "vertical",
         width: "100%",
+        left: 0,
         id: "eventScrollView"
     });
     $.__views.eventWindow.add($.__views.eventScrollView);
@@ -342,6 +342,7 @@ function Controller() {
         orientationModes: [ Ti.UI.PORTRAIT ],
         layout: "composite",
         top: 0,
+        left: 0,
         width: "100%",
         height: Ti.UI.FILL,
         window: $.__views.eventWindow,

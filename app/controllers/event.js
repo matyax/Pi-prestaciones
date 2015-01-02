@@ -221,12 +221,8 @@ function addEventMenuItem(item) {
         top: 5
     });
     
-    var viewWidth   = Titanium.Platform.displayCaps.platformWidth - 40,
+    var viewWidth   = toDP(Titanium.Platform.displayCaps.platformWidth) - 40,
         viewLeft    = 20;
-    
-    if (Titanium.Platform.osname == 'android') {
-        viewWidth = (Titanium.Platform.displayCaps.platformWidth / (Titanium.Platform.displayCaps.dpi / 160)) - 40;
-    }
     
     var topPosition = firstButton ? 20 : 10;
     
@@ -283,28 +279,26 @@ function initEventLayout() {
 	
 	blob = eventData.logoImageView.toBlob();
     if (blob) {
-        logoHeight = blob.height;
+    	
+    	logoHeight = (width - 40) * pxToDP(blob.height) / pxToDP(blob.width);
         
-        eventData.logoImageView.setWidth( toDP(width - 40) );
+        eventData.logoImageView.setWidth( width - 40);
+        eventData.logoImageView.setHeight( logoHeight);
     }
 	
 	if ((event.favorites_label) || (event.form) || (event.agenda_label)) {
-		$.tabContainer.setHeight( toDP(80) );
-		
 		$.eventScrollView.setHeight(
-			toDP(height - logoHeight - 80)
-		);
-		
-		return;	
+			height - logoHeight - 120
+		);	
 	} else {
 		$.eventScrollView.setHeight(
-			toDP(height - logoHeight)
+			height - logoHeight - 40
 		);
 		
 		$.tabContainer.hide();	
 	}
 	
-	$.eventScrollView.setTop( toDP(logoHeight + 20) );
+	$.eventScrollView.setTop( logoHeight + 40 );
 }
 
 function addEventTabItem(item) {
@@ -331,8 +325,6 @@ function addEventTabItem(item) {
         height: Ti.UI.SIZE,
         backgroundColor: 'transparent'
     });
-    
-    console.log(item.label);
     
     var label = Ti.UI.createLabel({
     	text: item.label,
@@ -382,11 +374,15 @@ function addEventTabItem(item) {
 }
 
 function toDP(dp) {
-    if ( Titanium.Platform.displayCaps.dpi > 160 ) {
-        return dp;
+    if (Titanium.Platform.osname == 'android') {
+        return pxToDP(dp);
     }
     
-	return (dp * (Titanium.Platform.displayCaps.dpi / 160));   
+    return dp;   
+}
+
+function pxToDP(px) {
+    return (px / (Titanium.Platform.displayCaps.dpi / 160));
 }
 
 
