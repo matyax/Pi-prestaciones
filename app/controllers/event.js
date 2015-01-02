@@ -284,6 +284,8 @@ function initEventLayout() {
 	blob = eventData.logoImageView.toBlob();
     if (blob) {
         logoHeight = blob.height;
+        
+        eventData.logoImageView.setWidth( toDP(width - 40) );
     }
 	
 	if ((event.favorites_label) || (event.form) || (event.agenda_label)) {
@@ -306,7 +308,77 @@ function initEventLayout() {
 }
 
 function addEventTabItem(item) {
-	
+	var button = Titanium.UI.createView({
+		layout: 'vertical',
+        width: '33%',
+        height: 80,
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
+        borderWidth: 0,
+    });
+    
+    var icon = Ti.UI.createImageView({
+        image: '/icons' + item.icon,
+        width: 30,
+        height: 30,
+        top: 15
+    });
+    
+    var view = Titanium.UI.createView({
+        layout: 'composite',
+        top: 0,
+        width: '100%',
+        height: Ti.UI.SIZE,
+        backgroundColor: 'transparent'
+    });
+    
+    console.log(item.label);
+    
+    var label = Ti.UI.createLabel({
+    	text: item.label,
+    	width: '100%',
+    	textAlign: 'center',
+    	color: eventData.styles.button_foreground,
+    	top: 5,
+    	font: {
+    		fontSize: 12
+    	} 
+    });
+    
+    view.add(icon);
+    
+    button.add(view);
+    button.add(label);
+    
+    if (item.controller) {
+        button.addEventListener('click', function () {
+            var window = Alloy.createController(item.controller).getView();
+            
+            if (Titanium.Platform.osname == 'android') {
+                window.open({
+                    modal: true
+                });
+            } else {
+                $.eventNavigationWindow.openWindow(window, { animated:true });
+            }
+        });
+    }    
+    else if (item.onClick) {
+        button.addEventListener('click', item.onClick);
+    } else if (item.window) {
+        button.addEventListener('click', function () {
+            
+            if (Titanium.Platform.osname == 'android') {
+                item.window.open({
+                    modal: true
+                });
+            } else {
+                $.eventNavigationWindow.openWindow(item.window, { animated:true });
+            }
+        });
+    }
+    
+    $.tabContainer.add(button);
 }
 
 function toDP(dp) {
