@@ -318,8 +318,9 @@ function initEventLayout() {
 	$.eventScrollView.setTop( logoHeight + 40 );
 }
 
+var fistButtonAdded = false;
+
 function addEventTabItem(item, buttonQuantity) {
-	
 	var width = Math.floor(toDP(Ti.Platform.displayCaps.platformWidth) /  buttonQuantity) - (buttonQuantity - 1);
 	
 	var button = Titanium.UI.createView({
@@ -390,7 +391,7 @@ function addEventTabItem(item, buttonQuantity) {
         });
     }
     
-    if (buttonQuantity > 1) {
+    if (fistButtonAdded) {
     	var line = Titanium.UI.createView({
 			layout: 'vertical',
 	        width: 1,
@@ -401,6 +402,8 @@ function addEventTabItem(item, buttonQuantity) {
 	    
 	    $.tabContainer.add(line);
     }
+    
+    fistButtonAdded = true;
     
     $.tabContainer.add(button);
 }
