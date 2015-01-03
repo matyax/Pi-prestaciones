@@ -273,7 +273,7 @@ function Controller() {
                 animated: true
             });
         });
-        if (buttonQuantity > 1) {
+        if (fistButtonAdded) {
             var line = Titanium.UI.createView({
                 layout: "vertical",
                 width: 1,
@@ -283,6 +283,7 @@ function Controller() {
             });
             $.tabContainer.add(line);
         }
+        fistButtonAdded = true;
         $.tabContainer.add(button);
     }
     function toDP(dp) {
@@ -350,7 +351,7 @@ function Controller() {
         bottom: 0,
         width: "100%",
         height: 80,
-        backgroundColor: "blue",
+        backgroundColor: "transparent",
         layout: "horizontal",
         id: "tabContainer"
     });
@@ -380,6 +381,7 @@ function Controller() {
     }
     generateEventWindow(eventData);
     var firstButton = false;
+    var fistButtonAdded = false;
     _.extend($, exports);
 }
 
