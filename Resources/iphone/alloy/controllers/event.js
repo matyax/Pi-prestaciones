@@ -33,6 +33,10 @@ function Controller() {
         image.addEventListener("load", initEventLayout);
         var label = "";
         pageId = 0, j = null;
+        var buttonQuantity = 0;
+        event.favorites_label && buttonQuantity++;
+        event.form && buttonQuantity++;
+        event.agenda_label && buttonQuantity++;
         for (var item in event.order) {
             if ("page_" == event.order[item].substring(0, 5)) {
                 pageId = event.order[item].match("[0-9]+")[0];
@@ -76,7 +80,7 @@ function Controller() {
                         icon: event.form_icon,
                         label: label,
                         controller: "form"
-                    });
+                    }, buttonQuantity);
                 }
                 break;
 
@@ -98,7 +102,7 @@ function Controller() {
                         icon: event.favorites_icon,
                         label: label,
                         controller: "favorite"
-                    });
+                    }, buttonQuantity);
                 }
                 break;
 
@@ -142,7 +146,7 @@ function Controller() {
                         icon: event.agenda_icon,
                         label: label,
                         controller: "agenda"
-                    });
+                    }, buttonQuantity);
                 }
             }
         }
@@ -210,16 +214,20 @@ function Controller() {
             eventData.logoImageView.setWidth(width - 40);
             eventData.logoImageView.setHeight(logoHeight);
         }
-        if (event.favorites_label || event.form || event.agenda_label) $.eventScrollView.setHeight(height - logoHeight - 120); else {
+        if (event.favorites_label || event.form || event.agenda_label) {
+            $.eventScrollView.setHeight(height - logoHeight - 120);
+            $.tabContainer.setBackgroundColor(event.styles.tab_background);
+        } else {
             $.eventScrollView.setHeight(height - logoHeight - 40);
             $.tabContainer.hide();
         }
         $.eventScrollView.setTop(logoHeight + 40);
     }
-    function addEventTabItem(item) {
+    function addEventTabItem(item, buttonQuantity) {
+        var width = Math.floor(toDP(Ti.Platform.displayCaps.platformWidth) / buttonQuantity) - (buttonQuantity - 1);
         var button = Titanium.UI.createView({
             layout: "vertical",
-            width: "33%",
+            width: width,
             height: 80,
             backgroundColor: "transparent",
             borderColor: "transparent",
@@ -242,7 +250,7 @@ function Controller() {
             text: item.label,
             width: "100%",
             textAlign: "center",
-            color: eventData.styles.button_foreground,
+            color: eventData.styles.tab_forecolor,
             top: 5,
             font: {
                 fontSize: 12
@@ -265,10 +273,20 @@ function Controller() {
                 animated: true
             });
         });
+        if (buttonQuantity > 1) {
+            var line = Titanium.UI.createView({
+                layout: "vertical",
+                width: 1,
+                top: 5,
+                height: 70,
+                backgroundColor: "#eeeeee"
+            });
+            $.tabContainer.add(line);
+        }
         $.tabContainer.add(button);
     }
     function toDP(dp) {
-        if ("android" == Titanium.Platform.osname) return pxToDp(dp);
+        if ("android" == Titanium.Platform.osname) return pxToDP(dp);
         return dp;
     }
     function pxToDP(px) {

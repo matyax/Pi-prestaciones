@@ -19,9 +19,10 @@ function Controller() {
                 break;
             }
             data.set("event", selectedEvent);
-            loading.open();
+            false == eventDetailLoaded && loading.open();
             piApi.getEventDetail(selectedEvent.id, function(eventData) {
-                loading.close();
+                false == eventDetailLoaded && loading.close();
+                eventDetailLoaded = true;
                 data.set("eventData", eventData);
                 var win = Alloy.createController("event").getView();
                 win.open({
@@ -194,6 +195,7 @@ function Controller() {
             addButton(events[i], buttonOptions);
         }
     });
+    var eventDetailLoaded = false;
     _.extend($, exports);
 }
 

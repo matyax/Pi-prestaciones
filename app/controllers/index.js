@@ -163,10 +163,16 @@ function addButton(event, buttonOptions, appendTo) {
         
         data.set('event', selectedEvent);
         
-        loading.open();
+        if (eventDetailLoaded == false) {
+    		loading.open();
+    	}
         
         piApi.getEventDetail(selectedEvent.id, function (eventData) {
-            loading.close();
+        	if (eventDetailLoaded == false) {
+        		loading.close();
+        	}
+            
+            eventDetailLoaded = true;
             
             data.set('eventData', eventData);
             
@@ -194,4 +200,6 @@ function addButton(event, buttonOptions, appendTo) {
         $.eventsView.add(containerView);
     }
 }
+
+var eventDetailLoaded = false;
 
