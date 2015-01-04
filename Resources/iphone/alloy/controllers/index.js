@@ -40,6 +40,9 @@ function Controller() {
         containerView.add(button);
         "undefined" != typeof appendTo ? appendTo.add(containerView) : $.eventsView.add(containerView);
     }
+    function pxToDP(px) {
+        return px / (Titanium.Platform.displayCaps.dpi / 160);
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "index";
     if (arguments[0]) {
@@ -114,6 +117,12 @@ function Controller() {
     var loading = require("loadingWindow");
     var cachedImage = require("cachedImage");
     var eventList = null;
+    var screenWidth = Ti.Platform.displayCaps.platformWidth;
+    var screenHeight = Ti.Platform.displayCaps.platformHeight;
+    if ("android" == Titanium.Platform.osname) {
+        screenWidth = pxToDP(screenWidth);
+        screenHeight = pxToDP(screenHeight);
+    }
     $.index.open();
     loading.open();
     piApi.loadEvents(function(events) {
@@ -163,13 +172,11 @@ function Controller() {
             for (var i = 0; i < events.length; i++) {
                 image = events[i].image_half;
                 imageInfo = events[i].image_half_info;
-                if ("android" == Titanium.Platform.osname) {
-                    relativeHeight = Math.round(Ti.Platform.displayCaps.platformHeight / 2);
-                    relativeWidth = Math.round(relativeHeight * imageInfo.width / imageInfo.height) + "px";
-                    relativeHeight += "px";
-                } else {
-                    relativeHeight = Math.round(Ti.Platform.displayCaps.platformHeight / 2);
-                    relativeWidth = Math.round(relativeHeight * imageInfo.width / imageInfo.height);
+                relativeHeight = Math.round(screenHeight / 2);
+                relativeWidth = Math.round(relativeHeight * pxToDP(imageInfo.width) / pxToDP(imageInfo.height));
+                if (relativeWidth > screenWidth) {
+                    relativeWidth = screenWidth;
+                    relativeHeight = Math.round(relativeWidth * pxToDP(imageInfo.height) / pxToDP(imageInfo.width));
                 }
                 buttonData = {
                     height: relativeHeight,

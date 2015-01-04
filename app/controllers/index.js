@@ -4,6 +4,14 @@ var loading     = require('loadingWindow');
 var cachedImage = require('cachedImage');
 var eventList   = null;
 
+var screenWidth 	= Ti.Platform.displayCaps.platformWidth; 
+var screenHeight	= Ti.Platform.displayCaps.platformHeight;
+
+if (Titanium.Platform.osname == 'android') {
+    screenWidth 	= pxToDP(screenWidth);
+    screenHeight 	= pxToDP(screenHeight);
+}
+
 $.index.open();
 
 loading.open();
@@ -83,17 +91,13 @@ piApi.loadEvents(function (events) {
             image       = events[i].image_half;
             imageInfo   = events[i].image_half_info;;
             
-            if (Titanium.Platform.osname == 'android') {
-                relativeHeight = Math.round(Ti.Platform.displayCaps.platformHeight / 2);
-                
-                relativeWidth = Math.round(relativeHeight * imageInfo.width / imageInfo.height) + 'px';
-                
-                relativeHeight = relativeHeight + 'px';
-            } else {
-                relativeHeight = Math.round(Ti.Platform.displayCaps.platformHeight / 2);
-                
-                relativeWidth = Math.round(relativeHeight * imageInfo.width / imageInfo.height);        
-            }
+            relativeHeight 	= Math.round(screenHeight / 2);
+			relativeWidth	= Math.round(relativeHeight * pxToDP(imageInfo.width) / pxToDP(imageInfo.height));
+			
+			if (relativeWidth > screenWidth) {
+				relativeWidth 	= screenWidth;
+				relativeHeight	= Math.round(relativeWidth * pxToDP(imageInfo.height) / pxToDP(imageInfo.width));
+			}        
             
             buttonData = {
                 height: relativeHeight,
@@ -203,3 +207,6 @@ function addButton(event, buttonOptions, appendTo) {
 
 var eventDetailLoaded = false;
 
+function pxToDP(px) {
+    return (px / (Titanium.Platform.displayCaps.dpi / 160));
+}
