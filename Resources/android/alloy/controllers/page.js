@@ -33,7 +33,7 @@ function Controller() {
             backgroundColor: item.style_background,
             width: "100%",
             height: Ti.UI.SIZE,
-            top: 10
+            top: 20
         });
         view.add(Ti.UI.createView({
             width: "100%",

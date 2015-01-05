@@ -178,7 +178,8 @@ function Controller() {
             top: 5
         });
         var viewWidth = toDP(Titanium.Platform.displayCaps.platformWidth) - 40, viewLeft = 20;
-        var topPosition = firstButton ? 20 : 10;
+        var topPosition = true == isFirstButton ? 20 : 10;
+        isFirstButton = false;
         var view = Titanium.UI.createView({
             borderRadius: 5,
             layout: "horizontal",
@@ -208,6 +209,7 @@ function Controller() {
     }
     function initEventLayout() {
         var event = eventData, height = toDP(Ti.Platform.displayCaps.platformHeight), width = toDP(Ti.Platform.displayCaps.platformWidth), logoHeight = 0, blob = null;
+        var headerHeight = 60;
         blob = eventData.logoImageView.toBlob();
         if (blob) {
             logoHeight = (width - 40) * pxToDP(blob.height) / pxToDP(blob.width);
@@ -215,10 +217,11 @@ function Controller() {
             eventData.logoImageView.setHeight(logoHeight);
         }
         if (event.favorites_label || event.form || event.agenda_label) {
-            $.eventScrollView.setHeight(height - logoHeight - 120);
+            $.eventScrollView.setHeight(height - logoHeight - 120 - headerHeight);
+            $.eventScrollView.setBackgroundColor("red");
             $.tabContainer.setBackgroundColor(event.styles.tab_background);
         } else {
-            $.eventScrollView.setHeight(height - logoHeight - 40);
+            $.eventScrollView.setHeight(height - logoHeight - 40 - headerHeight);
             $.tabContainer.hide();
         }
         $.eventScrollView.setTop(logoHeight + 40);
@@ -331,6 +334,7 @@ function Controller() {
         layout: "vertical",
         width: "100%",
         left: 0,
+        zIndex: 1,
         id: "eventScrollView"
     });
     $.__views.eventWindow.add($.__views.eventScrollView);
@@ -353,6 +357,7 @@ function Controller() {
         height: 80,
         backgroundColor: "transparent",
         layout: "horizontal",
+        zIndex: 10,
         id: "tabContainer"
     });
     $.__views.eventWindow.add($.__views.tabContainer);
@@ -379,8 +384,8 @@ function Controller() {
         var eventData = data.get("eventData");
         data.get("event");
     }
+    var isFirstButton = true;
     generateEventWindow(eventData);
-    var firstButton = false;
     var fistButtonAdded = false;
     _.extend($, exports);
 }

@@ -211,9 +211,10 @@ function generateEventWindow(event) {
     }));
 }
 
+var isFirstButton = true;
+
 generateEventWindow(eventData);
 
-var firstButton = false;
 function addEventMenuItem(item) {
     var button = Titanium.UI.createButton({
         title: item.label,
@@ -239,7 +240,9 @@ function addEventMenuItem(item) {
     var viewWidth   = toDP(Titanium.Platform.displayCaps.platformWidth) - 40,
         viewLeft    = 20;
     
-    var topPosition = firstButton ? 20 : 10;
+    var topPosition = (isFirstButton == true) ? 20 : 10;
+    
+    isFirstButton = false;
     
     var view = Titanium.UI.createView({
         borderRadius: 5,
@@ -291,6 +294,8 @@ function initEventLayout() {
 		width 		= toDP(Ti.Platform.displayCaps.platformWidth),
 		logoHeight	= 0,
 		blob 		= null;
+		
+	var headerHeight = 60;
 	
 	blob = eventData.logoImageView.toBlob();
     if (blob) {
@@ -303,13 +308,13 @@ function initEventLayout() {
 	
 	if ((event.favorites_label) || (event.form) || (event.agenda_label)) {
 		$.eventScrollView.setHeight(
-			height - logoHeight - 120
-		);	
+			height - logoHeight - 120 - headerHeight
+		);
 		
 		$.tabContainer.setBackgroundColor(event.styles.tab_background);
 	} else {
 		$.eventScrollView.setHeight(
-			height - logoHeight - 40
+			height - logoHeight - 40 - headerHeight
 		);
 		
 		$.tabContainer.hide();	

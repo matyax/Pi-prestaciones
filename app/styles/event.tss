@@ -28,7 +28,8 @@
 '#eventScrollView' : {
     layout: 'vertical',
     width: '100%',
-    left: 0
+    left: 0,
+    zIndex: 1
 },
 '.padding' : {
     height: 15
@@ -46,5 +47,6 @@
 	width: '100%',
 	height: 80,
 	backgroundColor: 'transparent',
-	layout: 'horizontal'
+	layout: 'horizontal',
+	zIndex: 10
 }
