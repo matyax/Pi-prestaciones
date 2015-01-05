@@ -11,8 +11,7 @@ function Controller() {
     function createParagraph(item) {
         var textAlign = Ti.UI.TEXT_ALIGNMENT_LEFT;
         "right" == item.style_align ? textAlign = Ti.UI.TEXT_ALIGNMENT_RIGHT : "center" == item.style_align && (textAlign = Ti.UI.TEXT_ALIGNMENT_CENTER);
-        var width = Ti.Platform.displayCaps.platformWidth - 40;
-        width += "px";
+        var width = screenWidth - 40;
         var foreColor = item.style_foreground || "black";
         return Ti.UI.createLabel({
             text: item.value,
@@ -21,8 +20,8 @@ function Controller() {
                 fontSize: item.style_font_size
             },
             width: width,
-            top: 10,
-            left: 10,
+            top: 20,
+            left: 20,
             textAlign: textAlign
         });
     }
@@ -63,12 +62,15 @@ function Controller() {
         var view = Ti.UI.createView({
             width: "100%",
             height: Ti.UI.SIZE,
-            top: 10
+            top: 20
         });
         view.add(Ti.UI.createImageView({
             image: item.value
         }));
         return view;
+    }
+    function pxToDP(px) {
+        return px / (Titanium.Platform.displayCaps.dpi / 160);
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "page";
@@ -112,6 +114,9 @@ function Controller() {
         var data = require("data"), page = data.get("page");
         data.get("eventData");
     }
+    var screenWidth = Ti.Platform.displayCaps.platformWidth;
+    screenWidth = pxToDP(screenWidth);
+    $.pageWindow.setTitle(page.title);
     page.background_color && $.pageView.setBackgroundColor(page.background_color);
     for (var i in page.items) "paragraph" == page.items[i].type ? $.pageScrollView.add(createParagraph(page.items[i])) : "title" == page.items[i].type ? $.pageScrollView.add(createTitle(page.items[i])) : "image" == page.items[i].type && $.pageScrollView.add(createImage(page.items[i]));
     _.extend($, exports);

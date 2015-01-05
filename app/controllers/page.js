@@ -3,6 +3,14 @@ var args = arguments[0] || {};
 var data = require('data'),
     page = data.get('page'),
     eventData = data.get('eventData');
+    
+var screenWidth = Ti.Platform.displayCaps.platformWidth;
+
+if (Titanium.Platform.osname == 'android') {
+    screenWidth	= pxToDP(screenWidth);
+}
+    
+$.pageWindow.setTitle(page.title);
 
 if (page.background_color) {
 	$.pageView.setBackgroundColor(page.background_color);
@@ -39,11 +47,7 @@ function createParagraph(item) {
         textAlign = Ti.UI.TEXT_ALIGNMENT_CENTER;
     }
     
-    var width = Ti.Platform.displayCaps.platformWidth - 40;
-    
-    if (Titanium.Platform.osname == 'android') {
-        width = width + 'px';
-    }
+    var width = screenWidth - 40;
     
     var foreColor = item.style_foreground || 'black';
     
@@ -54,8 +58,8 @@ function createParagraph(item) {
             fontSize: item.style_font_size
         },
         width: width,
-        top: 10,
-        left: 10,
+        top: 20,
+        left: 20,
         textAlign: textAlign
     });
 }
@@ -74,7 +78,7 @@ function createTitle(item) {
         backgroundColor: item.style_background,
         width: '100%',
         height: Ti.UI.SIZE,
-        top: 10
+        top: 20
     });
     
     view.add(Ti.UI.createView({
@@ -112,7 +116,7 @@ function createImage(item) {
     var view = Ti.UI.createView({
         width: '100%',
         height: Ti.UI.SIZE,
-        top: 10
+        top: 20
     });
     
     view.add(Ti.UI.createImageView({
@@ -120,4 +124,8 @@ function createImage(item) {
     }));
     
     return view;
+}
+
+function pxToDP(px) {
+    return (px / (Titanium.Platform.displayCaps.dpi / 160));
 }
