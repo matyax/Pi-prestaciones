@@ -8,6 +8,9 @@ function __processArg(obj, key) {
 }
 
 function Controller() {
+    function pxToDP(px) {
+        return px / (Titanium.Platform.displayCaps.dpi / 160);
+    }
     function createAgendaShareView(item) {
         var shareView = Ti.UI.createView({
             layout: "horizontal",
@@ -104,6 +107,9 @@ function Controller() {
     });
     window.add(createAgendaShareView(item));
     var sectionView = ui.createSectionView(eventData, eventData.agenda_label + " " + item.date + " " + item.startTime);
+    var paragraphWidth = Ti.Platform.displayCaps.platformWidth;
+    "android" == Titanium.Platform.osname && (paragraphWidth = pxToDP(paragraphWidth));
+    paragraphWidth -= 40;
     var titleLabel = Ti.UI.createLabel({
         color: item.style_foreground,
         font: {
@@ -111,9 +117,9 @@ function Controller() {
         },
         text: item.title,
         textAlign: "left",
-        top: 10,
-        left: 10,
-        width: Titanium.Platform.displayCaps.platformWidth,
+        top: 20,
+        left: 20,
+        width: paragraphWidth,
         height: Ti.UI.SIZE
     });
     var timeText = item.endTime ? "De " + item.startTime + " a " + item.endTime + " horas" : item.startTime + " horas";
@@ -133,9 +139,9 @@ function Controller() {
             fontSize: 15
         },
         text: item.description,
-        top: 10,
-        left: 10,
-        width: "95%",
+        top: 20,
+        left: 20,
+        width: paragraphWidth,
         height: Ti.UI.SIZE
     });
     scrollView.add(sectionView);

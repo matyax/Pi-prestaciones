@@ -34,15 +34,28 @@ var sectionView = ui.createSectionView(
     eventData.agenda_label + ' ' + item.date + ' ' + item.startTime
 );
 
+var paragraphWidth 	= Ti.Platform.displayCaps.platformWidth;
+
+if (Titanium.Platform.osname == 'android') {
+    paragraphWidth = pxToDP(paragraphWidth);
+}
+
+paragraphWidth -= 40;
+
+function pxToDP(px) {
+    return (px / (Titanium.Platform.displayCaps.dpi / 160));
+}
+
 /* Event title */
 var titleLabel = Ti.UI.createLabel({
     color: item.style_foreground,
     font: { fontSize: 15 },
     text: item.title,
     textAlign: 'left',
-    top: 10,
-    left: 10,
-    width: Titanium.Platform.displayCaps.platformWidth, height: Ti.UI.SIZE
+    top: 20,
+    left: 20,
+    width: paragraphWidth,
+    height: Ti.UI.SIZE
 });
 
 var timeText = item.endTime ? 'De ' + item.startTime + ' a ' + item.endTime + ' horas' : item.startTime + ' horas';
@@ -51,7 +64,7 @@ var timeLabel = Ti.UI.createLabel({
     color: item.style_foreground,
     font: { fontSize: 15 },
     text: timeText,
-    left: 10,
+    left: 20,
     width: Ti.UI.SIZE, height: Ti.UI.SIZE
 });
 
@@ -59,9 +72,10 @@ var descriptionLabel = Ti.UI.createLabel({
     color: item.style_foreground,
     font: { fontSize: 15 },
     text: item.description,
-    top: 10,
-    left: 10,
-    width: '95%', height: Ti.UI.SIZE
+    top: 20,
+    left: 20,
+    width: paragraphWidth,
+    height: Ti.UI.SIZE
 });
 
 scrollView.add(sectionView);
