@@ -238,8 +238,6 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
             timeItems[timeLabel].push(items[i]);
         }
         
-        console.log(timeItems);
-        
         return timeItems;
     }
     
