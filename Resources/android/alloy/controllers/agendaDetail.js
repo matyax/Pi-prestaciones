@@ -19,14 +19,14 @@ function Controller() {
             zIndex: 2
         });
         var favoriteButton = Titanium.UI.createButton({
-            backgroundImage: "/icons/favorite.png",
+            backgroundImage: "/dark/1410146719_f099-128.png",
             width: "64px",
             height: "64px",
             top: "5px",
             left: 10
         });
         var favoriteLabel = Titanium.UI.createLabel({
-            text: "Favoritos",
+            text: eventData.favorites_label,
             color: eventData.styles.share_foreground,
             font: {
                 fontSize: 12
@@ -35,7 +35,7 @@ function Controller() {
             left: 10
         });
         var tweet = Ti.UI.createImageView({
-            image: "/icons/twitter.png",
+            image: eventData.favorites_icon,
             width: "64px",
             height: "64px",
             top: "5px",

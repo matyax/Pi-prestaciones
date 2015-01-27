@@ -85,7 +85,7 @@ function createAgendaShareView(item) {
     });
     
     var favoriteButton = Titanium.UI.createButton({
-        backgroundImage: '/icons/favorite.png',
+        backgroundImage: '/icons' + eventData.favorites_icon,
         width: '64px',
         height: '64px',
         top: '5px',
@@ -93,7 +93,7 @@ function createAgendaShareView(item) {
     });
     
     var favoriteLabel = Titanium.UI.createLabel({
-        text: 'Favoritos',
+        text: eventData.favorites_label,
         color: eventData.styles.share_foreground,        
         font: {
             fontSize: 12
@@ -103,8 +103,8 @@ function createAgendaShareView(item) {
     });
     
     var tweet = Ti.UI.createImageView({
-        image: '/icons/twitter.png',
-        width: '64px',
+        image: '/icons/dark/1410146719_f099-128.png',
+        width: '49px',
         height: '64px',
         top: '5px',
         left: 40

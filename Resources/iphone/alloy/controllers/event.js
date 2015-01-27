@@ -218,7 +218,6 @@ function Controller() {
         }
         if (event.favorites_label || event.form || event.agenda_label) {
             $.eventScrollView.setHeight(height - logoHeight - 120 - headerHeight);
-            $.eventScrollView.setBackgroundColor("red");
             $.tabContainer.setBackgroundColor(event.styles.tab_background);
         } else {
             $.eventScrollView.setHeight(height - logoHeight - 40 - headerHeight);
