@@ -123,7 +123,7 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
         }
         listView.setSections(sections);
         listView.addEventListener("itemclick", function(e) {
-            var item = section.getItemAt(e.itemIndex);
+            var item = e.section.getItemAt(e.itemIndex);
             var id = item.properties.id;
             var title = item.properties.title;
             onClick(id, title);
@@ -137,7 +137,6 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
             "undefined" == typeof timeItems[timeLabel] && (timeItems[timeLabel] = []);
             timeItems[timeLabel].push(items[i]);
         }
-        console.log(timeItems);
         return timeItems;
     }
     return init(label, items, onClick, navigationWindow, openerWindow);
