@@ -19,7 +19,7 @@ function Controller() {
             zIndex: 2
         });
         var favoriteButton = Titanium.UI.createButton({
-            backgroundImage: "/dark/1410146719_f099-128.png",
+            backgroundImage: "/icons" + eventData.favorites_icon,
             width: "64px",
             height: "64px",
             top: "5px",
@@ -35,8 +35,8 @@ function Controller() {
             left: 10
         });
         var tweet = Ti.UI.createImageView({
-            image: eventData.favorites_icon,
-            width: "64px",
+            image: "/icons/dark/1410146719_f099-128.png",
+            width: "49px",
             height: "64px",
             top: "5px",
             left: 40
