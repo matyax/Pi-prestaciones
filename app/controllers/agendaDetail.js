@@ -11,13 +11,24 @@ var window = $.agendaDetail;
 
 window.setBackgroundColor(item.style_background);
 window.setTitle(item.title);
+
+var paragraphWidth 		= Ti.Platform.displayCaps.platformWidth;
+var scrollViewHieght	= Ti.Platform.displayCaps.platformHeight;
+
+if (Titanium.Platform.osname == 'android') {
+    paragraphWidth 		= pxToDP(paragraphWidth);
+    scrollViewHieght 	= pxToDP(scrollViewHieght);
+}
+
+paragraphWidth 		-= 40;
+scrollViewHieght	-= 75;
     
 var scrollView =  Ti.UI.createScrollView({
     contentWidth: 'auto',
     contentHeight: 'auto',
     layout: 'vertical',
     showVerticalScrollIndicator: true,
-    height: Ti.UI.FILL,
+    height: scrollViewHieght,
     width: '100%',
     top: 0,
     left: 0,
@@ -33,14 +44,6 @@ var sectionView = ui.createSectionView(
     eventData,
     eventData.agenda_label + ' ' + item.date + ' ' + item.startTime
 );
-
-var paragraphWidth 	= Ti.Platform.displayCaps.platformWidth;
-
-if (Titanium.Platform.osname == 'android') {
-    paragraphWidth = pxToDP(paragraphWidth);
-}
-
-paragraphWidth -= 40;
 
 function pxToDP(px) {
     return (px / (Titanium.Platform.displayCaps.dpi / 160));

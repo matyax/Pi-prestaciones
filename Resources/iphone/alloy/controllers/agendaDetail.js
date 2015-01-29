@@ -94,12 +94,20 @@ function Controller() {
     var window = $.agendaDetail;
     window.setBackgroundColor(item.style_background);
     window.setTitle(item.title);
+    var paragraphWidth = Ti.Platform.displayCaps.platformWidth;
+    var scrollViewHieght = Ti.Platform.displayCaps.platformHeight;
+    if ("android" == Titanium.Platform.osname) {
+        paragraphWidth = pxToDP(paragraphWidth);
+        scrollViewHieght = pxToDP(scrollViewHieght);
+    }
+    paragraphWidth -= 40;
+    scrollViewHieght -= 75;
     var scrollView = Ti.UI.createScrollView({
         contentWidth: "auto",
         contentHeight: "auto",
         layout: "vertical",
         showVerticalScrollIndicator: true,
-        height: Ti.UI.FILL,
+        height: scrollViewHieght,
         width: "100%",
         top: 0,
         left: 0,
@@ -107,9 +115,6 @@ function Controller() {
     });
     window.add(createAgendaShareView(item));
     var sectionView = ui.createSectionView(eventData, eventData.agenda_label + " " + item.date + " " + item.startTime);
-    var paragraphWidth = Ti.Platform.displayCaps.platformWidth;
-    "android" == Titanium.Platform.osname && (paragraphWidth = pxToDP(paragraphWidth));
-    paragraphWidth -= 40;
     var titleLabel = Ti.UI.createLabel({
         color: item.style_foreground,
         font: {
