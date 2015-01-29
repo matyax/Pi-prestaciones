@@ -92,7 +92,7 @@ function createAgendaShareView(item) {
         layout: 'horizontal',
         backgroundColor: eventData.styles.share_background,
         width: '100%',
-        height: '74px',
+        height: 35,
         left: 0,
         bottom: 0,
         zIndex: 2
@@ -100,10 +100,10 @@ function createAgendaShareView(item) {
     
     var favoriteButton = Titanium.UI.createButton({
         backgroundImage: '/icons' + eventData.favorites_icon,
-        width: '64px',
-        height: '64px',
-        top: '5px',
-        left: 10
+        width: 25,
+        height: 25,
+        top: 5,
+        left: 20
     });
     
     var favoriteLabel = Titanium.UI.createLabel({
@@ -112,16 +112,16 @@ function createAgendaShareView(item) {
         font: {
             fontSize: 12
         },
-        top: 11,
+        top: 9,
         left: 10
     });
     
     var tweet = Ti.UI.createImageView({
         image: '/icons/dark/1410146719_f099-128.png',
-        width: '49px',
-        height: '64px',
-        top: '5px',
-        left: 40
+        width: 19,
+        height: 25,
+        top: 5,
+        left: 70
     });
     
     var tweetLabel = Titanium.UI.createLabel({
@@ -130,7 +130,7 @@ function createAgendaShareView(item) {
         font: {
             fontSize: 12
         },
-        top: 11,
+        top: 9,
         left: 10
     });
     
