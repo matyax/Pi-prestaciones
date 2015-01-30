@@ -16,17 +16,17 @@ function Controller() {
             layout: "horizontal",
             backgroundColor: eventData.styles.share_background,
             width: "100%",
-            height: "74px",
+            height: 35,
             left: 0,
             bottom: 0,
             zIndex: 2
         });
         var favoriteButton = Titanium.UI.createButton({
             backgroundImage: "/icons" + eventData.favorites_icon,
-            width: "64px",
-            height: "64px",
-            top: "5px",
-            left: 10
+            width: 25,
+            height: 25,
+            top: 5,
+            left: 20
         });
         var favoriteLabel = Titanium.UI.createLabel({
             text: eventData.favorites_label,
@@ -34,15 +34,15 @@ function Controller() {
             font: {
                 fontSize: 12
             },
-            top: 11,
+            top: 9,
             left: 10
         });
         var tweet = Ti.UI.createImageView({
             image: "/icons/dark/1410146719_f099-128.png",
-            width: "49px",
-            height: "64px",
-            top: "5px",
-            left: 40
+            width: 19,
+            height: 25,
+            top: 5,
+            left: 70
         });
         var tweetLabel = Titanium.UI.createLabel({
             text: "Twittear",
@@ -50,7 +50,7 @@ function Controller() {
             font: {
                 fontSize: 12
             },
-            top: 11,
+            top: 9,
             left: 10
         });
         tweet.addEventListener("click", function() {
@@ -94,12 +94,18 @@ function Controller() {
     var window = $.agendaDetail;
     window.setBackgroundColor(item.style_background);
     window.setTitle(item.title);
+    var paragraphWidth = Ti.Platform.displayCaps.platformWidth;
+    var scrollViewHieght = Ti.Platform.displayCaps.platformHeight;
+    paragraphWidth = pxToDP(paragraphWidth);
+    scrollViewHieght = pxToDP(scrollViewHieght);
+    paragraphWidth -= 40;
+    scrollViewHieght -= 75;
     var scrollView = Ti.UI.createScrollView({
         contentWidth: "auto",
         contentHeight: "auto",
         layout: "vertical",
         showVerticalScrollIndicator: true,
-        height: Ti.UI.FILL,
+        height: scrollViewHieght,
         width: "100%",
         top: 0,
         left: 0,
@@ -107,9 +113,6 @@ function Controller() {
     });
     window.add(createAgendaShareView(item));
     var sectionView = ui.createSectionView(eventData, eventData.agenda_label + " " + item.date + " " + item.startTime);
-    var paragraphWidth = Ti.Platform.displayCaps.platformWidth;
-    paragraphWidth = pxToDP(paragraphWidth);
-    paragraphWidth -= 40;
     var titleLabel = Ti.UI.createLabel({
         color: item.style_foreground,
         font: {
