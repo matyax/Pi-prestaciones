@@ -143,7 +143,19 @@ function createAgendaShareView(item) {
         social.tweet(eventData, item);        
     });
     
+    tweetLabel.addEventListener('click', function (e) {
+        var social = require('social');
+        
+        social.tweet(eventData, item);        
+    });
+    
     favoriteButton.addEventListener('click', function(e) {
+        var favorites = require('favorites');
+        
+        favorites.toggle(eventData.id_event, item, eventData.favorites_label);
+    });
+    
+    favoriteLabel.addEventListener('click', function(e) {
         var favorites = require('favorites');
         
         favorites.toggle(eventData.id_event, item, eventData.favorites_label);
