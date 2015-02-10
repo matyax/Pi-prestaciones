@@ -329,7 +329,7 @@ function Controller() {
             eventData.logoImageView.setWidth(width - 40);
             eventData.logoImageView.setHeight(logoHeight);
         }
-        if (event.favorites_label || event.form || event.agenda_label) {
+        if (event.tabs_order.length > 0) {
             $.eventScrollView.setHeight(height - logoHeight - 120 - headerHeight);
             $.tabContainer.setBackgroundColor(event.styles.tab_background);
         } else {
