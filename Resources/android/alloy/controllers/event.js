@@ -68,7 +68,7 @@ function Controller() {
               case "form":
                 if (event.form) {
                     label = event.form_label || "Inscripción online";
-                    addEventTabItem({
+                    addEventMenuItem({
                         icon: event.form_icon,
                         label: label,
                         controller: "form"
@@ -90,7 +90,7 @@ function Controller() {
               case "favorites":
                 if (event.agenda_label) {
                     label = event.favorites_label || "Favoritos";
-                    addEventTabItem({
+                    addEventMenuItem({
                         icon: event.favorites_icon,
                         label: label,
                         controller: "favorite"
@@ -124,6 +124,117 @@ function Controller() {
                 if (event.map_label) {
                     label = event.map_label || "Ubicación";
                     addEventMenuItem({
+                        icon: event.map_icon,
+                        label: label,
+                        controller: "map"
+                    });
+                }
+                break;
+
+              case "agenda":
+                if (event.agenda_label) {
+                    label = event.agenda_label || "Agenda";
+                    addEventMenuItem({
+                        icon: event.agenda_icon,
+                        label: label,
+                        controller: "agenda"
+                    }, buttonQuantity);
+                }
+            }
+        }
+        for (var item in event.tabs_order) {
+            if ("page_" == event.tabs_order[item].substring(0, 5)) {
+                pageId = event.tabs_order[item].match("[0-9]+")[0];
+                for (j in event.pages) {
+                    if (event.pages[j].id != pageId) continue;
+                    addEventTabItem({
+                        icon: event.pages[j].icon,
+                        label: event.pages[j].title,
+                        onClick: function(e) {
+                            var page = null, title = e.source.getTitle();
+                            for (var i in eventData.pages) if (eventData.pages[i].title == title) {
+                                page = eventData.pages[i];
+                                break;
+                            }
+                            data.set("page", page);
+                            var window = Alloy.createController("page").getView();
+                            window.open({
+                                modal: true
+                            });
+                        }
+                    });
+                }
+            }
+            switch (event.tabs_order[item]) {
+              case "home":
+                addEventTabItem({
+                    icon: event.home_icon,
+                    label: "Inicio",
+                    onClick: function() {
+                        $.eventNavigationWindow.close();
+                    }
+                });
+                break;
+
+              case "form":
+                if (event.form) {
+                    label = event.form_label || "Inscripción online";
+                    addEventTabItem({
+                        icon: event.form_icon,
+                        label: label,
+                        controller: "form"
+                    }, buttonQuantity);
+                }
+                break;
+
+              case "certificate":
+                if (event.certificate) {
+                    label = event.certificate_label || "Certificación web";
+                    addEventTabItem({
+                        icon: event.certificate_icon,
+                        label: label,
+                        controller: "certificate"
+                    });
+                }
+                break;
+
+              case "favorites":
+                if (event.agenda_label) {
+                    label = event.favorites_label || "Favoritos";
+                    addEventTabItem({
+                        icon: event.favorites_icon,
+                        label: label,
+                        controller: "favorite"
+                    }, buttonQuantity);
+                }
+                break;
+
+              case "link":
+                if (event.link_url) {
+                    label = event.link_label || "Link";
+                    addEventTabItem({
+                        icon: event.link_icon,
+                        label: label,
+                        controller: "link"
+                    });
+                }
+                break;
+
+              case "accommodations":
+                if (event.accommodations_label) {
+                    label = event.accommodations_label || "Alojamientos";
+                    addEventTabItem({
+                        icon: event.accommodations_icon,
+                        label: label,
+                        controller: "accommodations"
+                    });
+                }
+                break;
+
+              case "map":
+                if (event.map_label) {
+                    label = event.map_label || "Ubicación";
+                    addEventTabItem({
                         icon: event.map_icon,
                         label: label,
                         controller: "map"
@@ -204,7 +315,7 @@ function Controller() {
             eventData.logoImageView.setWidth(width - 40);
             eventData.logoImageView.setHeight(logoHeight);
         }
-        if (event.favorites_label || event.form || event.agenda_label) {
+        if (event.tabs_order.length > 0) {
             $.eventScrollView.setHeight(height - logoHeight - 120 - headerHeight);
             $.tabContainer.setBackgroundColor(event.styles.tab_background);
         } else {
