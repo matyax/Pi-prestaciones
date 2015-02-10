@@ -57,7 +57,15 @@ function Controller() {
             var social = require("social");
             social.tweet(eventData, item);
         });
+        tweetLabel.addEventListener("click", function() {
+            var social = require("social");
+            social.tweet(eventData, item);
+        });
         favoriteButton.addEventListener("click", function() {
+            var favorites = require("favorites");
+            favorites.toggle(eventData.id_event, item, eventData.favorites_label);
+        });
+        favoriteLabel.addEventListener("click", function() {
             var favorites = require("favorites");
             favorites.toggle(eventData.id_event, item, eventData.favorites_label);
         });

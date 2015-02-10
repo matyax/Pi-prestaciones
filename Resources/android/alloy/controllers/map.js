@@ -37,14 +37,14 @@ function Controller() {
     $.mapWindow.setBackgroundColor(eventData.styles.background);
     eventData.map.lat = parseFloat(eventData.map.lat);
     eventData.map.lng = parseFloat(eventData.map.lng);
-    console.log(eventData.map);
     var marker = MapModule.createAnnotation({
         latitude: eventData.map.lat,
         longitude: eventData.map.lng,
         title: eventData.title,
         subtitle: eventData.address,
         pincolor: MapModule.ANNOTATION_RED,
-        myid: 1
+        myid: 1,
+        leftButton: Ti.UI.iPhone.SystemButton.INFO_DARK
     });
     var map = MapModule.createView({
         userLocation: true,
