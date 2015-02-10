@@ -11,11 +11,12 @@ eventData.map.lat = parseFloat(eventData.map.lat);
 eventData.map.lng = parseFloat(eventData.map.lng);
 
 var marker = MapModule.createAnnotation({
-    latitude:   eventData.map.lat,
-    longitude:  eventData.map.lng,
-    pincolor:   MapModule.ANNOTATION_PURPLE,   
-    title:      eventData.title,
-    subtitle:   eventData.address,
+    latitude: eventData.map.lat,
+    longitude: eventData.map.lng,
+    title: eventData.title,
+    subtitle: eventData.address,
+    pincolor:MapModule.ANNOTATION_RED,
+    myid: 1,
     leftButton: Ti.UI.iPhone.SystemButton.INFO_DARK
 });
 

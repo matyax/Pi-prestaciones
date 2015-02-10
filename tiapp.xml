@@ -59,7 +59,7 @@
             <application>
                 <!-- Replace "PASTE YOUR GOOGLE MAPS API KEY HERE" with the Google API key you obtained -->
                 <meta-data
-                    android:name="com.google.android.maps.v2.API_KEY" android:value="nJ5h_jnY6MqfPgU1wMof6_VfRDVsOV4"/>
+                    android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyBLTrtyVi81bJ5yBRaUI3HeJ-1XaeraTlk"/>
             </application>
         </manifest>
     </android>
