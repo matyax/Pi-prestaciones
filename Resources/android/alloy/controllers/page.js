@@ -8,70 +8,6 @@ function __processArg(obj, key) {
 }
 
 function Controller() {
-    function createParagraph(item) {
-        var textAlign = Ti.UI.TEXT_ALIGNMENT_LEFT;
-        "right" == item.style_align ? textAlign = Ti.UI.TEXT_ALIGNMENT_RIGHT : "center" == item.style_align && (textAlign = Ti.UI.TEXT_ALIGNMENT_CENTER);
-        var width = screenWidth - 40;
-        var foreColor = item.style_foreground || "black";
-        return Ti.UI.createLabel({
-            text: item.value,
-            color: foreColor,
-            font: {
-                fontSize: item.style_font_size
-            },
-            width: width,
-            top: 20,
-            left: 20,
-            textAlign: textAlign
-        });
-    }
-    function createTitle(item) {
-        var textAlign = Ti.UI.TEXT_ALIGNMENT_LEFT;
-        "right" == item.style_align ? textAlign = Ti.UI.TEXT_ALIGNMENT_RIGHT : "center" == item.style_align && (textAlign = Ti.UI.TEXT_ALIGNMENT_CENTER);
-        var view = Ti.UI.createView({
-            layout: "vertical",
-            backgroundColor: item.style_background,
-            width: "100%",
-            height: Ti.UI.SIZE,
-            top: 20
-        });
-        view.add(Ti.UI.createView({
-            width: "100%",
-            height: 5
-        }));
-        var labelWidth = Ti.Platform.displayCaps.platformWidth - 40;
-        labelWidth += "px";
-        view.add(Ti.UI.createLabel({
-            text: item.value,
-            color: item.style_foreground,
-            font: {
-                fontSize: item.style_font_size
-            },
-            top: 0,
-            left: 20,
-            textAlign: textAlign,
-            width: labelWidth
-        }));
-        view.add(Ti.UI.createView({
-            width: "100%",
-            height: 5
-        }));
-        return view;
-    }
-    function createImage(item) {
-        var view = Ti.UI.createView({
-            width: "100%",
-            height: Ti.UI.SIZE,
-            top: 20
-        });
-        view.add(Ti.UI.createImageView({
-            image: item.value
-        }));
-        return view;
-    }
-    function pxToDP(px) {
-        return px / (Titanium.Platform.displayCaps.dpi / 160);
-    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "page";
     if (arguments[0]) {
@@ -110,15 +46,11 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     arguments[0] || {};
-    {
-        var data = require("data"), page = data.get("page");
-        data.get("eventData");
-    }
-    var screenWidth = Ti.Platform.displayCaps.platformWidth;
-    screenWidth = pxToDP(screenWidth);
+    var data = require("data"), page = data.get("page"), pageWindow = (data.get("eventData"), 
+    require("pageWindow"));
     $.pageWindow.setTitle(page.title);
     page.background_color && $.pageView.setBackgroundColor(page.background_color);
-    for (var i in page.items) "paragraph" == page.items[i].type ? $.pageScrollView.add(createParagraph(page.items[i])) : "title" == page.items[i].type ? $.pageScrollView.add(createTitle(page.items[i])) : "image" == page.items[i].type && $.pageScrollView.add(createImage(page.items[i]));
+    for (var i in page.items) "paragraph" == page.items[i].type ? $.pageScrollView.add(pageWindow.createParagraph(page.items[i])) : "title" == page.items[i].type ? $.pageScrollView.add(pageWindow.createTitle(page.items[i])) : "image" == page.items[i].type && $.pageScrollView.add(pageWindow.createImage(page.items[i]));
     _.extend($, exports);
 }
 

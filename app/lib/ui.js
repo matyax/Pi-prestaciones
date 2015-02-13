@@ -34,3 +34,11 @@ exports.screenWidth = function () {
 	
 	return Ti.Platform.displayCaps.platformWidth;
 };
+
+exports.screenHeight = function () {
+	if (Titanium.Platform.osname == 'android') {
+	    return pxToDP(Ti.Platform.displayCaps.platformHeight);
+	}
+	
+	return Ti.Platform.displayCaps.platformHeight;
+};

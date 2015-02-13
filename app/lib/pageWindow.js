@@ -87,3 +87,82 @@ exports.createImage = function (item) {
     
     return view;
 };
+
+exports.createAgendaShareView = function (item, eventData) {
+    var shareView = Ti.UI.createView({
+        layout: 'horizontal',
+        backgroundColor: eventData.styles.share_background,
+        width: '100%',
+        height: 35,
+        left: 0,
+        bottom: 0,
+        zIndex: 2
+    });
+    
+    var favoriteButton = Titanium.UI.createButton({
+        backgroundImage: '/icons' + eventData.favorites_icon,
+        width: 25,
+        height: 25,
+        top: 5,
+        left: 20
+    });
+    
+    var favoriteLabel = Titanium.UI.createLabel({
+        text: eventData.favorites_label,
+        color: eventData.styles.share_foreground,        
+        font: {
+            fontSize: 12
+        },
+        top: 9,
+        left: 10
+    });
+    
+    var tweet = Ti.UI.createImageView({
+        image: '/icons/dark/1410146719_f099-128.png',
+        width: 19,
+        height: 25,
+        top: 5,
+        left: 70
+    });
+    
+    var tweetLabel = Titanium.UI.createLabel({
+        text: 'Twittear',
+        color: eventData.styles.share_foreground,
+        font: {
+            fontSize: 12
+        },
+        top: 9,
+        left: 10
+    });
+    
+    tweet.addEventListener('click', function (e) {
+        var social = require('social');
+        
+        social.tweet(eventData, item);        
+    });
+    
+    tweetLabel.addEventListener('click', function (e) {
+        var social = require('social');
+        
+        social.tweet(eventData, item);        
+    });
+    
+    favoriteButton.addEventListener('click', function(e) {
+        var favorites = require('favorites');
+        
+        favorites.toggle(eventData.id_event, item, eventData.favorites_label);
+    });
+    
+    favoriteLabel.addEventListener('click', function(e) {
+        var favorites = require('favorites');
+        
+        favorites.toggle(eventData.id_event, item, eventData.favorites_label);
+    });
+    
+    shareView.add(favoriteButton);
+    shareView.add(favoriteLabel);
+    shareView.add(tweet);
+    shareView.add(tweetLabel);
+    
+    return shareView;
+};
