@@ -1,43 +1,8 @@
-var args = arguments[0] || {};
+var ui = require('ui');
 
-var data = require('data'),
-    page = data.get('page'),
-    eventData = data.get('eventData');
-    
-var screenWidth = Ti.Platform.displayCaps.platformWidth;
+var screenWidth = ui.screenWidth();
 
-if (Titanium.Platform.osname == 'android') {
-    screenWidth	= pxToDP(screenWidth);
-}
-    
-$.pageWindow.setTitle(page.title);
-
-if (page.background_color) {
-	$.pageView.setBackgroundColor(page.background_color);
-}
-
-for (var i in page.items) {
-    
-    if (page.items[i].type == 'paragraph') {
-        
-        $.pageScrollView.add(
-            createParagraph(page.items[i])
-        );
-        
-    } else if (page.items[i].type == 'title') {
-        
-        $.pageScrollView.add(
-            createTitle(page.items[i])
-        );
-        
-    } else if (page.items[i].type == 'image') {
-        $.pageScrollView.add(
-            createImage(page.items[i])
-        );
-    }
-}
-
-function createParagraph(item) {
+exports.createParagraph = function (item) {
     
     var textAlign = Ti.UI.TEXT_ALIGNMENT_LEFT; 
     
@@ -62,9 +27,9 @@ function createParagraph(item) {
         left: 20,
         textAlign: textAlign
     });
-}
+};
 
-function createTitle(item) {
+exports.createTitle = function (item) {
     var textAlign = Ti.UI.TEXT_ALIGNMENT_LEFT; 
     
     if (item.style_align == 'right') {
@@ -86,10 +51,7 @@ function createTitle(item) {
         height: 5
     }));
     
-    var labelWidth = Ti.Platform.displayCaps.platformWidth - 40;
-    if (Ti.Platform.osname == 'android') {
-        labelWidth = labelWidth + 'px';
-    }
+    var labelWidth = screenWidth - 40;
     
     view.add(Ti.UI.createLabel({
         text: item.value,
@@ -109,9 +71,9 @@ function createTitle(item) {
     }));
     
     return view;
-}
+};
 
-function createImage(item) {
+exports.createImage = function (item) {
     
     var view = Ti.UI.createView({
         width: '100%',
@@ -124,8 +86,4 @@ function createImage(item) {
     }));
     
     return view;
-}
-
-function pxToDP(px) {
-    return (px / (Titanium.Platform.displayCaps.dpi / 160));
-}
+};

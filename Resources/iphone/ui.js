@@ -1,3 +1,7 @@
+function pxToDP(px) {
+    return px / (Titanium.Platform.displayCaps.dpi / 160);
+}
+
 exports.createSectionView = function(eventData, title) {
     var sectionView = Ti.UI.createView({
         backgroundColor: eventData.styles.button_background,
@@ -18,4 +22,11 @@ exports.createSectionView = function(eventData, title) {
     });
     sectionView.add(sectionLabel);
     return sectionView;
+};
+
+exports.pxToDP = pxToDP;
+
+exports.screenWidth = function() {
+    if ("android" == Titanium.Platform.osname) return pxToDP(Ti.Platform.displayCaps.platformWidth);
+    return Ti.Platform.displayCaps.platformWidth;
 };

@@ -20,3 +20,17 @@ exports.createSectionView = function (eventData, title) {
     
     return sectionView;
 };
+
+exports.pxToDP = pxToDP;
+
+function pxToDP (px) {
+    return (px / (Titanium.Platform.displayCaps.dpi / 160));
+};
+
+exports.screenWidth = function () {
+	if (Titanium.Platform.osname == 'android') {
+	    return pxToDP(Ti.Platform.displayCaps.platformWidth);
+	}
+	
+	return Ti.Platform.displayCaps.platformWidth;
+};
