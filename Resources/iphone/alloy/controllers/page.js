@@ -46,9 +46,8 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     arguments[0] || {};
-    var data = require("data"), page = data.get("page"), ui = (data.get("eventData"), 
-    data.get("ui")), pageWindow = data.get("pageWindow");
-    ui.screenWidth();
+    var data = require("data"), page = data.get("page"), pageWindow = (data.get("eventData"), 
+    require("pageWindow"));
     $.pageWindow.setTitle(page.title);
     page.background_color && $.pageView.setBackgroundColor(page.background_color);
     for (var i in page.items) "paragraph" == page.items[i].type ? $.pageScrollView.add(pageWindow.createParagraph(page.items[i])) : "title" == page.items[i].type ? $.pageScrollView.add(pageWindow.createTitle(page.items[i])) : "image" == page.items[i].type && $.pageScrollView.add(pageWindow.createImage(page.items[i]));

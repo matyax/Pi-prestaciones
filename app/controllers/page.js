@@ -3,10 +3,7 @@ var args = arguments[0] || {};
 var data 		= require('data'),
     page 		= data.get('page'),
     eventData 	= data.get('eventData'),
-    ui 			= data.get('ui'),
-    pageWindow 	= data.get('pageWindow');
-    
-var screenWidth = ui.screenWidth();
+    pageWindow 	= require('pageWindow');
     
 $.pageWindow.setTitle(page.title);
 
