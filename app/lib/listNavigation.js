@@ -1,5 +1,8 @@
 var data        = require('data'),
-    eventData   = data.get('eventData');
+    eventData   = data.get('eventData'),
+    ui			= require('ui');
+    
+var listHeight = ui.screenHeight() - 110;
 
 exports.add = function (label, items, onClick, navigationWindow, backgroundColor, openerWindow) {
 
@@ -51,7 +54,9 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
            layout: 'vertical',
            backgroundColor: backgroundColor,
            width: '100%',
-           height: Ti.UI.FILL
+           left: 0,
+           top: 20,
+           height: ui.screenHeight() - 40
         });
 
         view.add(viewChildren);
@@ -77,7 +82,8 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
             backgroundColor: eventData.styles.button_background,
             font: {
                 fontSize: 15
-            }
+            },
+            height: listHeight
         });
         var sections = [];
 
@@ -181,7 +187,8 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
     function createMultipleTitleListView(items, onClick, navigationWindow)
     {
         var listView = Ti.UI.createListView({
-            backgroundColor: eventData.styles.button_background
+            backgroundColor: eventData.styles.button_background,
+            height: listHeight
         });
 
         var sections = [];

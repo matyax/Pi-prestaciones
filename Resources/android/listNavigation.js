@@ -1,4 +1,6 @@
-var data = require("data"), eventData = data.get("eventData");
+var data = require("data"), eventData = data.get("eventData"), ui = require("ui");
+
+var listHeight = ui.screenHeight() - 120;
 
 exports.add = function(label, items, onClick, navigationWindow, backgroundColor, openerWindow) {
     function init(label, items, onClick, navigationWindow, openerWindow) {
@@ -25,8 +27,10 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
         var view = Titanium.UI.createView({
             layout: "vertical",
             backgroundColor: backgroundColor,
-            width: "100%",
-            height: Ti.UI.FILL
+            width: ui.screenWidth() - 40,
+            left: 20,
+            top: 20,
+            height: ui.screenHeight() - 40
         });
         view.add(viewChildren);
         window.add(view);
@@ -42,7 +46,8 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
             backgroundColor: eventData.styles.button_background,
             font: {
                 fontSize: 15
-            }
+            },
+            height: listHeight
         });
         var sections = [];
         var section = Ti.UI.createListSection(sectionParameters);
@@ -100,7 +105,8 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
     }
     function createMultipleTitleListView(items, onClick) {
         var listView = Ti.UI.createListView({
-            backgroundColor: eventData.styles.button_background
+            backgroundColor: eventData.styles.button_background,
+            height: listHeight
         });
         var sections = [];
         var section = null;
