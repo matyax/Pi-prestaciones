@@ -48,19 +48,7 @@ function generateEventWindow(event) {
     	j 		= null;
     	
     	
-    var buttonQuantity = 0;
-    
-    if (event.favorites_label) {
-    	buttonQuantity++;
-    } 
-    
-    if (event.form) {
-    	buttonQuantity++;
-    }
-    
-    if (event.agenda_label) {
-    	buttonQuantity++;
-    }
+    var tabButtonQuantity = event.tabs_order.length;
     
     /* Menu */
     
@@ -127,7 +115,7 @@ function generateEventWindow(event) {
                         icon: event.form_icon,
                         label: label,
                         controller: 'form'
-                    }, buttonQuantity);
+                    }, tabButtonQuantity);
                 }
             break;
             
@@ -151,7 +139,7 @@ function generateEventWindow(event) {
                         icon: event.favorites_icon,
                         label: label,
                         controller: 'favorite'
-                    }, buttonQuantity);
+                    }, tabButtonQuantity);
                 }
             break;
             
@@ -199,7 +187,7 @@ function generateEventWindow(event) {
                         icon: event.agenda_icon,
                         label: label,
                         controller: 'agenda'
-                    }, buttonQuantity);
+                    }, tabButtonQuantity);
                 }
             break;
         }
@@ -270,7 +258,7 @@ function generateEventWindow(event) {
                         icon: event.form_icon,
                         label: label,
                         controller: 'form'
-                    }, buttonQuantity);
+                    }, tabButtonQuantity);
                 }
             break;
             
@@ -294,7 +282,7 @@ function generateEventWindow(event) {
                         icon: event.favorites_icon,
                         label: label,
                         controller: 'favorite'
-                    }, buttonQuantity);
+                    }, tabButtonQuantity);
                 }
             break;
             
@@ -342,7 +330,7 @@ function generateEventWindow(event) {
                         icon: event.agenda_icon,
                         label: label,
                         controller: 'agenda'
-                    }, buttonQuantity);
+                    }, tabButtonQuantity);
                 }
             break;
         }
@@ -470,8 +458,8 @@ function initEventLayout() {
 
 var fistButtonAdded = false;
 
-function addEventTabItem(item, buttonQuantity) {
-	var width = Math.floor(toDP(Ti.Platform.displayCaps.platformWidth) /  buttonQuantity) - (buttonQuantity - 1);
+function addEventTabItem(item, tabButtonQuantity) {
+	var width = Math.floor(toDP(Ti.Platform.displayCaps.platformWidth) /  tabButtonQuantity) - (tabButtonQuantity - 1);
 	
 	var button = Titanium.UI.createView({
 		layout: 'vertical',

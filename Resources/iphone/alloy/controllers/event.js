@@ -33,10 +33,7 @@ function Controller() {
         image.addEventListener("load", initEventLayout);
         var label = "";
         pageId = 0, j = null;
-        var buttonQuantity = 0;
-        event.favorites_label && buttonQuantity++;
-        event.form && buttonQuantity++;
-        event.agenda_label && buttonQuantity++;
+        var tabButtonQuantity = event.tabs_order.length;
         for (var item in event.order) {
             if ("page_" == event.order[item].substring(0, 5)) {
                 pageId = event.order[item].match("[0-9]+")[0];
@@ -80,7 +77,7 @@ function Controller() {
                         icon: event.form_icon,
                         label: label,
                         controller: "form"
-                    }, buttonQuantity);
+                    }, tabButtonQuantity);
                 }
                 break;
 
@@ -96,13 +93,13 @@ function Controller() {
                 break;
 
               case "favorites":
-                if (event.agenda_label) {
+                if (event.favorites_label) {
                     label = event.favorites_label || "Favoritos";
                     addEventMenuItem({
                         icon: event.favorites_icon,
                         label: label,
                         controller: "favorite"
-                    }, buttonQuantity);
+                    }, tabButtonQuantity);
                 }
                 break;
 
@@ -146,7 +143,7 @@ function Controller() {
                         icon: event.agenda_icon,
                         label: label,
                         controller: "agenda"
-                    }, buttonQuantity);
+                    }, tabButtonQuantity);
                 }
             }
         }
@@ -193,7 +190,7 @@ function Controller() {
                         icon: event.form_icon,
                         label: label,
                         controller: "form"
-                    }, buttonQuantity);
+                    }, tabButtonQuantity);
                 }
                 break;
 
@@ -215,7 +212,7 @@ function Controller() {
                         icon: event.favorites_icon,
                         label: label,
                         controller: "favorite"
-                    }, buttonQuantity);
+                    }, tabButtonQuantity);
                 }
                 break;
 
@@ -259,7 +256,7 @@ function Controller() {
                         icon: event.agenda_icon,
                         label: label,
                         controller: "agenda"
-                    }, buttonQuantity);
+                    }, tabButtonQuantity);
                 }
             }
         }
@@ -338,8 +335,8 @@ function Controller() {
         }
         $.eventScrollView.setTop(logoHeight + 40);
     }
-    function addEventTabItem(item, buttonQuantity) {
-        var width = Math.floor(toDP(Ti.Platform.displayCaps.platformWidth) / buttonQuantity) - (buttonQuantity - 1);
+    function addEventTabItem(item, tabButtonQuantity) {
+        var width = Math.floor(toDP(Ti.Platform.displayCaps.platformWidth) / tabButtonQuantity) - (tabButtonQuantity - 1);
         var button = Titanium.UI.createView({
             layout: "vertical",
             width: width,
