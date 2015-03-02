@@ -144,7 +144,7 @@ function generateEventWindow(event) {
             break;
             
             case "favorites":
-                if (event.agenda_label) {
+                if (event.favorites_label) {
                     label = event.favorites_label || 'Favoritos';
                     
                     addEventMenuItem({

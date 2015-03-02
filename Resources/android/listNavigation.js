@@ -1,6 +1,6 @@
 var data = require("data"), eventData = data.get("eventData"), ui = require("ui");
 
-var listHeight = ui.screenHeight() - 120;
+var listHeight = ui.screenHeight() - 110;
 
 exports.add = function(label, items, onClick, navigationWindow, backgroundColor, openerWindow) {
     function init(label, items, onClick, navigationWindow, openerWindow) {
@@ -27,8 +27,8 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
         var view = Titanium.UI.createView({
             layout: "vertical",
             backgroundColor: backgroundColor,
-            width: ui.screenWidth() - 40,
-            left: 20,
+            width: "100%",
+            left: 0,
             top: 20,
             height: ui.screenHeight() - 40
         });
