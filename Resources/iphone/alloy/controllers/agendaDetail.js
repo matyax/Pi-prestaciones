@@ -47,7 +47,7 @@ function Controller() {
         left: 0,
         zIndex: 1
     });
-    for (var i in item.items) "paragraph" == item.items[i].type ? scrollView.add(pageWindow.createParagraph(page.items[i])) : "title" == item.items[i].type ? scrollViewadd(pageWindow.createTitle(page.items[i])) : "image" == item.items[i].type && scrollView.add(pageWindow.createImage(page.items[i]));
+    for (var i in item.items) "paragraph" == item.items[i].type ? scrollView.add(pageWindow.createParagraph(item.items[i])) : "title" == item.items[i].type ? scrollView.add(pageWindow.createTitle(item.items[i])) : "image" == item.items[i].type && scrollView.add(pageWindow.createImage(item.items[i]));
     window.add(pageWindow.createAgendaShareView(item, eventData));
     window.add(scrollView);
     _.extend($, exports);

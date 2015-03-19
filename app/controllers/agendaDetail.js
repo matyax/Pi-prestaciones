@@ -32,18 +32,18 @@ for (var i in item.items) {
     if (item.items[i].type == 'paragraph') {
         
         scrollView.add(
-            pageWindow.createParagraph(page.items[i])
+            pageWindow.createParagraph(item.items[i])
         );
         
     } else if (item.items[i].type == 'title') {
         
-        scrollViewadd(
-            pageWindow.createTitle(page.items[i])
+        scrollView.add(
+            pageWindow.createTitle(item.items[i])
         );
         
     } else if (item.items[i].type == 'image') {
         scrollView.add(
-            pageWindow.createImage(page.items[i])
+            pageWindow.createImage(item.items[i])
         );
     }
 }
