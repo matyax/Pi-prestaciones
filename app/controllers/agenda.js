@@ -5,7 +5,13 @@ var data            = require('data'),
     windowReference = data.get('windowReference');
         
 var agendaOnclick = function (id, title) {
-    data.set('agendaItem', searchItem(eventData.agenda, id));
+    var item = eventData.agenda_details[id];
+    
+    if ((! item) || (! item.items)) {
+        return;
+    }
+    
+    data.set('agendaItem', item);
     
     var detailWindow = Alloy.createController('agendaDetail').getView();
     
@@ -28,25 +34,3 @@ listNavigation.add(
     eventData.styles.button_background,
     $.agenda
 );
-
-function searchItem(items, id) {
-    var item = null;
-    
-    for (var i in items) {
-        if (typeof items[i] != 'object') {
-            continue;
-        } else if (isNaN(parseInt(i))) {
-            item = searchItem(items[i], id);
-            
-            if (item) {
-                return item;
-            }
-        } else {
-            if ((items[i].id) && (items[i].id == id)) {
-                return items[i];
-            }
-        }
-    }
-    
-    return null;
-}

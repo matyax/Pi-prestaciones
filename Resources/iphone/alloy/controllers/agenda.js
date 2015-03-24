@@ -8,17 +8,6 @@ function __processArg(obj, key) {
 }
 
 function Controller() {
-    function searchItem(items, id) {
-        var item = null;
-        for (var i in items) {
-            if ("object" != typeof items[i]) continue;
-            if (isNaN(parseInt(i))) {
-                item = searchItem(items[i], id);
-                if (item) return item;
-            } else if (items[i].id && items[i].id == id) return items[i];
-        }
-        return null;
-    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "agenda";
     if (arguments[0]) {
@@ -44,7 +33,9 @@ function Controller() {
     arguments[0] || {};
     var data = require("data"), eventData = data.get("eventData"), windowReference = data.get("windowReference");
     var agendaOnclick = function(id) {
-        data.set("agendaItem", searchItem(eventData.agenda, id));
+        var item = eventData.agenda_details[id];
+        if (!item || !item.items) return;
+        data.set("agendaItem", item);
         var detailWindow = Alloy.createController("agendaDetail").getView();
         "android" == Titanium.Platform.osname ? detailWindow.open({
             modal: true

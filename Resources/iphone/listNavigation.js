@@ -37,11 +37,37 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
         return window;
     }
     function createListView(items, onClick, navigationWindow) {
-        var isFinalList = false;
-        var sectionParameters = {};
-        items.headerTitle ? sectionParameters = {
-            headerTitle: items.headerTitle
-        } : isFinalList = true;
+        function addItemsToListView(items) {
+            items.headerTitle ? sectionParameters = {
+                headerTitle: items.headerTitle
+            } : isFinalList = true;
+            section = Ti.UI.createListSection(sectionParameters);
+            dataSet = [];
+            title = "";
+            hasChildren = true;
+            itemId = null;
+            for (var i in items) {
+                if ("headerTitle" === i) continue;
+                title = isNaN(parseInt(i)) ? i : items[i].title;
+                "undefined" != typeof items[i][0] && (hasChildren = false);
+                itemId = "undefined" != typeof items[i].id ? items[i].id : i;
+                dataSet.push({
+                    properties: {
+                        title: title,
+                        id: itemId,
+                        subItems: items[i],
+                        color: eventData.styles.button_foreground,
+                        backgroundColor: eventData.styles.button_background,
+                        font: {
+                            fontSize: 15
+                        }
+                    }
+                });
+            }
+            section.setItems(dataSet);
+            return section;
+        }
+        var isFinalList = false, sectionParameters = {}, sections = [], section = null, dataSet = [], title = "", hasChildren = false, itemId = null;
         var listView = Ti.UI.createListView({
             backgroundColor: eventData.styles.button_background,
             font: {
@@ -49,52 +75,28 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
             },
             height: listHeight
         });
-        var sections = [];
-        var section = Ti.UI.createListSection(sectionParameters);
-        var dataSet = [];
-        var title = "";
-        var hasChildren = true;
-        var itemId = null;
-        for (var i in items) {
-            if ("headerTitle" === i) continue;
-            title = isNaN(parseInt(i)) ? i : items[i].title;
-            "undefined" != typeof items[i][0] && (hasChildren = false);
-            itemId = "undefined" != typeof items[i].id ? items[i].id : i;
-            dataSet.push({
-                properties: {
-                    title: title,
-                    id: itemId,
-                    color: eventData.styles.button_foreground,
-                    backgroundColor: eventData.styles.button_background,
-                    font: {
-                        fontSize: 15
-                    }
-                }
-            });
-        }
-        section.setItems(dataSet);
-        sections.push(section);
+        for (var j in items) sections.push(false === isNaN(parseInt(j)) && items[j].headerTitle ? addItemsToListView(items[j]) : addItemsToListView(items));
         listView.setSections(sections);
         isFinalList ? listView.addEventListener("itemclick", function(e) {
-            var item = section.getItemAt(e.itemIndex);
+            var item = e.section.getItemAt(e.itemIndex);
             var id = item.properties.id;
             var title = item.properties.title;
             onClick(id, title);
         }) : hasChildren ? listView.addEventListener("itemclick", function(e) {
-            var item = section.getItemAt(e.itemIndex);
-            var id = item.properties.id;
+            var item = e.section.getItemAt(e.itemIndex);
+            item.properties.id;
             var title = item.properties.title;
-            var subWindow = addCalendar(title, items[id], onClick, navigationWindow);
+            var subWindow = addCalendar(title, item.properties.subItems, onClick, navigationWindow);
             null == navigationWindow ? subWindow.open({
                 modal: true
             }) : navigationWindow.openWindow(subWindow, {
                 animated: true
             });
         }) : listView.addEventListener("itemclick", function(e) {
-            var item = section.getItemAt(e.itemIndex);
-            var id = item.properties.id;
+            var item = e.section.getItemAt(e.itemIndex);
+            item.properties.id;
             var title = item.properties.title;
-            var subWindow = addCalendarTime(title, items[id], onClick, navigationWindow);
+            var subWindow = addCalendarTime(title, item.properties.subItems, onClick, navigationWindow);
             null == navigationWindow ? subWindow.open({
                 modal: true
             }) : navigationWindow.openWindow(subWindow, {

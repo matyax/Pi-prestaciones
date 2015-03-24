@@ -1,6 +1,6 @@
 var data        = require('data'),
     eventData   = data.get('eventData'),
-    ui			= require('ui');
+    ui          = require('ui');
     
 var listHeight = ui.screenHeight() - 110;
 
@@ -68,16 +68,15 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
 
     function createListView(items, onClick, navigationWindow)
     {
-        var isFinalList = false;
-
-        var sectionParameters = {};
-
-        if (items.headerTitle) {
-            sectionParameters = { headerTitle: items.headerTitle};
-        } else {
-            isFinalList = true;
-        }
-
+        var isFinalList         = false,
+            sectionParameters   = {},
+            sections            = [],
+            section             = null,
+            dataSet             = [],
+            title               = '',
+            hasChildren         = false,
+            itemId              = null;
+            
         var listView = Ti.UI.createListView({
             backgroundColor: eventData.styles.button_background,
             font: {
@@ -85,59 +84,77 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
             },
             height: listHeight
         });
-        var sections = [];
-
-        var section = Ti.UI.createListSection(sectionParameters);
-        var dataSet = [];
-
-        var title = '';
-
-        var hasChildren = true;
-
-        var itemId = null;
-
-        for (var i in items) {
-            if (i === 'headerTitle') {
-                continue;
-            }
-
-            if (! isNaN(parseInt(i))) {
-                title = items[i].title;
-            } else {
-                title = i;
-            }
-
-            if (typeof items[i][0] != 'undefined'){
-                hasChildren = false;
-            }
-
-            if (typeof items[i].id != 'undefined') {
-                itemId = items[i].id;
+        
+        for (var j in items) {
+            if ((isNaN(parseInt(j)) === false) && (items[j].headerTitle)) {
+                sections.push(
+                    addItemsToListView(items[j])
+                );
             } else {
-                itemId = i;
+                sections.push(
+                    addItemsToListView(items)
+                );
             }
-
-            dataSet.push({
-                properties: {
-                    title: title,
-                    id: itemId,
-                    color: eventData.styles.button_foreground,
-                    backgroundColor: eventData.styles.button_background,
-                    font: {
-                        fontSize: 15
-                    }
-                }
-            });
         }
-
-        section.setItems(dataSet);
-        sections.push(section);
-
+        
         listView.setSections(sections);
+
+        function addItemsToListView(items) {
+            if (items.headerTitle) {
+                sectionParameters = { headerTitle: items.headerTitle};
+            } else {
+                isFinalList = true;
+            }
+    
+            section = Ti.UI.createListSection(sectionParameters);
+            dataSet = [];
+            title = '';
+            hasChildren = true;
+            itemId = null;
+    
+            for (var i in items) {
+                if (i === 'headerTitle') {
+                    continue;
+                }
+    
+                if (! isNaN(parseInt(i))) {
+                    title = items[i].title;
+                } else {
+                    title = i;
+                }
+    
+                if (typeof items[i][0] != 'undefined'){
+                    hasChildren = false;
+                }
+    
+                if (typeof items[i].id != 'undefined') {
+                    itemId = items[i].id;
+                } else {
+                    itemId = i;
+                }
+    
+                dataSet.push({
+                    properties: {
+                        title: title,
+                        id: itemId,
+                        subItems: items[i],
+                        color: eventData.styles.button_foreground,
+                        backgroundColor: eventData.styles.button_background,
+                        font: {
+                            fontSize: 15
+                        }
+                    }
+                });
+            }
+    
+            section.setItems(dataSet);
+            
+            return section;
+        };
 
         if (isFinalList) {
             listView.addEventListener('itemclick', function (e) {
-                var item = section.getItemAt(e.itemIndex);
+                var item = e.section.getItemAt(e.itemIndex);
 
                 var id      = item.properties.id;
                 var title   = item.properties.title;
@@ -147,12 +164,12 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
         }
         else if (hasChildren) {
             listView.addEventListener('itemclick', function (e) {
-                var item = section.getItemAt(e.itemIndex);
+                var item = e.section.getItemAt(e.itemIndex);
 
                 var id      = item.properties.id;
                 var title   = item.properties.title;
-
-                var subWindow = addCalendar(title, items[id], onClick, navigationWindow);
+                
+                var subWindow = addCalendar(title, item.properties.subItems, onClick, navigationWindow);
 
                 if (navigationWindow == null) {
                     subWindow.open({
@@ -164,12 +181,12 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
             });
         } else {
             listView.addEventListener('itemclick', function (e) {
-                var item = section.getItemAt(e.itemIndex);
+                var item = e.section.getItemAt(e.itemIndex);
 
                 var id      = item.properties.id;
                 var title   = item.properties.title;
-
-                var subWindow = addCalendarTime(title, items[id], onClick, navigationWindow);
+                
+                var subWindow = addCalendarTime(title, item.properties.subItems, onClick, navigationWindow);
 
                 if (navigationWindow == null) {
                     subWindow.open({
