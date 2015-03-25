@@ -82,7 +82,8 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
             font: {
                 fontSize: 15
             },
-            height: listHeight
+            height: listHeight,
+            width: '100%'
         });
         
         for (var j in items) {
@@ -205,7 +206,8 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
     {
         var listView = Ti.UI.createListView({
             backgroundColor: eventData.styles.button_background,
-            height: listHeight
+            height: listHeight,
+            width: '100%'
         });
 
         var sections = [];

@@ -73,7 +73,8 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
             font: {
                 fontSize: 15
             },
-            height: listHeight
+            height: listHeight,
+            width: "100%"
         });
         for (var j in items) sections.push(false === isNaN(parseInt(j)) && items[j].headerTitle ? addItemsToListView(items[j]) : addItemsToListView(items));
         listView.setSections(sections);
@@ -108,7 +109,8 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
     function createMultipleTitleListView(items, onClick) {
         var listView = Ti.UI.createListView({
             backgroundColor: eventData.styles.button_background,
-            height: listHeight
+            height: listHeight,
+            width: "100%"
         });
         var sections = [];
         var section = null;
