@@ -60,6 +60,14 @@ function Controller() {
                 }
             }
             switch (event.order[item]) {
+              case "news":
+                event.news_label && addEventMenuItem({
+                    icon: event.news_icon,
+                    label: event.news_label,
+                    controller: "news"
+                });
+                break;
+
               case "home":
                 addEventMenuItem({
                     icon: event.home_icon,
@@ -77,7 +85,7 @@ function Controller() {
                         icon: event.form_icon,
                         label: label,
                         controller: "form"
-                    }, tabButtonQuantity);
+                    });
                 }
                 break;
 
@@ -169,10 +177,18 @@ function Controller() {
                                 animated: true
                             });
                         }
-                    });
+                    }, tabButtonQuantity);
                 }
             }
             switch (event.tabs_order[item]) {
+              case "form":
+                event.news_label && addEventTabItem({
+                    icon: event.news_icon,
+                    label: event.news_label,
+                    controller: "news"
+                }, tabButtonQuantity);
+                break;
+
               case "home":
                 addEventTabItem({
                     icon: event.home_icon,
@@ -180,7 +196,7 @@ function Controller() {
                     onClick: function() {
                         $.eventNavigationWindow.close();
                     }
-                });
+                }, tabButtonQuantity);
                 break;
 
               case "form":
@@ -201,7 +217,7 @@ function Controller() {
                         icon: event.certificate_icon,
                         label: label,
                         controller: "certificate"
-                    });
+                    }, tabButtonQuantity);
                 }
                 break;
 
@@ -223,7 +239,7 @@ function Controller() {
                         icon: event.link_icon,
                         label: label,
                         controller: "link"
-                    });
+                    }, tabButtonQuantity);
                 }
                 break;
 
@@ -234,7 +250,7 @@ function Controller() {
                         icon: event.accommodations_icon,
                         label: label,
                         controller: "accommodations"
-                    });
+                    }, tabButtonQuantity);
                 }
                 break;
 
@@ -245,7 +261,7 @@ function Controller() {
                         icon: event.map_icon,
                         label: label,
                         controller: "map"
-                    });
+                    }, tabButtonQuantity);
                 }
                 break;
 

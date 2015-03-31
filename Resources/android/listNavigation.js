@@ -1,6 +1,6 @@
 var data = require("data"), eventData = data.get("eventData"), ui = require("ui");
 
-var listHeight = ui.screenHeight() - 110;
+var listHeight = ui.screenHeight() - 110, listItemWidth = ui.screenWidth() - 20;
 
 exports.add = function(label, items, onClick, navigationWindow, backgroundColor, openerWindow) {
     function init(label, items, onClick, navigationWindow, openerWindow) {
@@ -52,15 +52,13 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
                 "undefined" != typeof items[i][0] && (hasChildren = false);
                 itemId = "undefined" != typeof items[i].id ? items[i].id : i;
                 dataSet.push({
+                    info: {
+                        text: title
+                    },
                     properties: {
-                        title: title,
                         id: itemId,
                         subItems: items[i],
-                        color: eventData.styles.button_foreground,
-                        backgroundColor: eventData.styles.button_background,
-                        font: {
-                            fontSize: 15
-                        }
+                        backgroundColor: eventData.styles.button_background
                     }
                 });
             }
@@ -70,9 +68,10 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
         var isFinalList = false, sectionParameters = {}, sections = [], section = null, dataSet = [], title = "", hasChildren = false, itemId = null;
         var listView = Ti.UI.createListView({
             backgroundColor: eventData.styles.button_background,
-            font: {
-                fontSize: 15
+            templates: {
+                template: listTemplate
             },
+            defaultItemTemplate: "template",
             height: listHeight,
             width: "100%"
         });
@@ -108,6 +107,10 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
     }
     function createMultipleTitleListView(items, onClick) {
         var listView = Ti.UI.createListView({
+            templates: {
+                template: listTemplate
+            },
+            defaultItemTemplate: "template",
             backgroundColor: eventData.styles.button_background,
             height: listHeight,
             width: "100%"
@@ -121,10 +124,11 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
             });
             dataSet = [];
             for (var i in items[title]) dataSet.push({
+                info: {
+                    text: items[title][i].title
+                },
                 properties: {
-                    title: items[title][i].title,
                     id: items[title][i].id,
-                    color: eventData.styles.button_foreground,
                     backgroundColor: eventData.styles.button_background
                 }
             });
@@ -149,5 +153,22 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
         }
         return timeItems;
     }
+    var listTemplate = {
+        childTemplates: [ {
+            type: "Ti.UI.Label",
+            bindId: "info",
+            properties: {
+                borderWidth: 0,
+                backgroundColor: eventData.styles.button_background,
+                color: eventData.styles.button_foreground,
+                left: 10,
+                font: {
+                    fontSize: 18
+                },
+                height: Ti.UI.FILL,
+                width: listItemWidth
+            }
+        } ]
+    };
     return init(label, items, onClick, navigationWindow, openerWindow);
 };
