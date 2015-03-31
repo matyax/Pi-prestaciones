@@ -94,9 +94,19 @@ function generateEventWindow(event) {
             }
     	}
     	
+    	//************************************** MENU ITEMS  **************************************
         switch (event.order[item]) {
-            case "home":
+            case "news":
+                if (event.news_label) {
+                    addEventMenuItem({
+                        icon: event.news_icon,
+                        label: event.news_label,
+                        controller: 'news'
+                    });
+                }
+            break;
             
+            case "home":
 	            addEventMenuItem({
 	                icon: event.home_icon,
 	                label: 'Inicio',
@@ -104,7 +114,6 @@ function generateEventWindow(event) {
 	                    $.eventNavigationWindow.close();
 	                }
 	            });
-            
             break;
             
             case "form":
@@ -115,7 +124,7 @@ function generateEventWindow(event) {
                         icon: event.form_icon,
                         label: label,
                         controller: 'form'
-                    }, tabButtonQuantity);
+                    });
                 }
             break;
             
@@ -193,8 +202,7 @@ function generateEventWindow(event) {
         }
     }
     
-    /* Tabs */
-    
+    //************************************** TAB ITEMS  **************************************
     for (var item in event.tabs_order) {
     	if (event.tabs_order[item].substring(0, 5) == 'page_') {
     		pageId = event.tabs_order[item].match('[0-9]+')[0];
@@ -232,22 +240,30 @@ function generateEventWindow(event) {
                             $.eventNavigationWindow.openWindow(window, { animated:true });
                         }
                     }
-                });
+                }, tabButtonQuantity);
                 
             }
     	}
     	
         switch (event.tabs_order[item]) {
-            case "home":
+            case "form":
+                if (event.news_label) {
+                    addEventTabItem({
+                        icon: event.news_icon,
+                        label: event.news_label,
+                        controller: 'news'
+                    }, tabButtonQuantity);
+                }
+            break;
             
+            case "home":
 	            addEventTabItem({
 	                icon: event.home_icon,
 	                label: 'Inicio',
 	                onClick: function () {
 	                    $.eventNavigationWindow.close();
 	                }
-	            });
-            
+	            }, tabButtonQuantity);
             break;
             
             case "form":
@@ -270,7 +286,7 @@ function generateEventWindow(event) {
                         icon: event.certificate_icon,
                         label: label,
                         'controller': 'certificate'
-                    });
+                    }, tabButtonQuantity);
                 }
             break;
             
@@ -294,7 +310,7 @@ function generateEventWindow(event) {
                         icon: event.link_icon,
                         label: label,
                         'controller': 'link'
-                    });
+                    }, tabButtonQuantity);
                 }
             break;
             
@@ -306,7 +322,7 @@ function generateEventWindow(event) {
                         icon: event.accommodations_icon,
                         label: label,
                         controller: 'accommodations'
-                    });
+                    }, tabButtonQuantity);
                 }
             break;
             
@@ -318,7 +334,7 @@ function generateEventWindow(event) {
                         icon: event.map_icon,
                         label: label,
                         controller: 'map'
-                    });
+                    }, tabButtonQuantity);
                 }
             break;
             
