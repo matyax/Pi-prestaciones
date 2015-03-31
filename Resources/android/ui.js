@@ -33,3 +33,12 @@ exports.screenWidth = function() {
 exports.screenHeight = function() {
     return pxToDP(Ti.Platform.displayCaps.platformHeight);
 };
+
+exports.processItemConfig = function(item, eventData) {
+    if ("news" == item.controller && 0 == eventData.news.length) {
+        item.label += " (0)";
+        null == item.controller;
+        item.onClick = function() {};
+    }
+    return item;
+};

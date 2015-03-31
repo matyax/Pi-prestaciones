@@ -42,3 +42,16 @@ exports.screenHeight = function () {
 	
 	return Ti.Platform.displayCaps.platformHeight;
 };
+
+exports.processItemConfig = function(item, eventData) {
+    if (item.controller == 'news') {
+        if (eventData.news.length == 0) {
+            item.label += ' (0)';
+            
+            item.controller == null;
+            item.onClick = function () {};
+        }
+    }
+    
+    return item;
+};

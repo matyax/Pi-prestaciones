@@ -52,6 +52,14 @@ function Controller() {
                 }
             }
             switch (event.order[item]) {
+              case "news":
+                event.news_label && addEventMenuItem({
+                    icon: event.news_icon,
+                    label: event.news_label,
+                    controller: "news"
+                });
+                break;
+
               case "home":
                 addEventMenuItem({
                     icon: event.home_icon,
@@ -69,7 +77,7 @@ function Controller() {
                         icon: event.form_icon,
                         label: label,
                         controller: "form"
-                    }, tabButtonQuantity);
+                    });
                 }
                 break;
 
@@ -159,10 +167,18 @@ function Controller() {
                                 modal: true
                             });
                         }
-                    });
+                    }, tabButtonQuantity);
                 }
             }
             switch (event.tabs_order[item]) {
+              case "form":
+                event.news_label && addEventTabItem({
+                    icon: event.news_icon,
+                    label: event.news_label,
+                    controller: "news"
+                }, tabButtonQuantity);
+                break;
+
               case "home":
                 addEventTabItem({
                     icon: event.home_icon,
@@ -170,7 +186,7 @@ function Controller() {
                     onClick: function() {
                         $.eventNavigationWindow.close();
                     }
-                });
+                }, tabButtonQuantity);
                 break;
 
               case "form":
@@ -191,7 +207,7 @@ function Controller() {
                         icon: event.certificate_icon,
                         label: label,
                         controller: "certificate"
-                    });
+                    }, tabButtonQuantity);
                 }
                 break;
 
@@ -213,7 +229,7 @@ function Controller() {
                         icon: event.link_icon,
                         label: label,
                         controller: "link"
-                    });
+                    }, tabButtonQuantity);
                 }
                 break;
 
@@ -224,7 +240,7 @@ function Controller() {
                         icon: event.accommodations_icon,
                         label: label,
                         controller: "accommodations"
-                    });
+                    }, tabButtonQuantity);
                 }
                 break;
 
@@ -235,7 +251,7 @@ function Controller() {
                         icon: event.map_icon,
                         label: label,
                         controller: "map"
-                    });
+                    }, tabButtonQuantity);
                 }
                 break;
 
@@ -258,6 +274,7 @@ function Controller() {
         }));
     }
     function addEventMenuItem(item) {
+        item = ui.processItemConfig(item, eventData);
         var button = Titanium.UI.createButton({
             title: item.label,
             width: Ti.UI.FILL,
@@ -322,6 +339,7 @@ function Controller() {
         $.eventScrollView.setTop(logoHeight + 40);
     }
     function addEventTabItem(item, tabButtonQuantity) {
+        item = ui.processItemConfig(item, eventData);
         var width = Math.floor(toDP(Ti.Platform.displayCaps.platformWidth) / tabButtonQuantity) - (tabButtonQuantity - 1);
         var button = Titanium.UI.createView({
             layout: "vertical",
@@ -455,10 +473,7 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     arguments[0] || {};
-    {
-        var data = (require("pi"), require("data"));
-        require("ui");
-    }
+    var data = (require("pi"), require("data")), ui = require("ui");
     {
         var eventData = data.get("eventData");
         data.get("event");

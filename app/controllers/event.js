@@ -365,6 +365,8 @@ var isFirstButton = true;
 generateEventWindow(eventData);
 
 function addEventMenuItem(item) {
+    item = ui.processItemConfig(item, eventData);
+    
     var button = Titanium.UI.createButton({
         title: item.label,
         width: Ti.UI.FILL,
@@ -475,6 +477,8 @@ function initEventLayout() {
 var fistButtonAdded = false;
 
 function addEventTabItem(item, tabButtonQuantity) {
+    item = ui.processItemConfig(item, eventData);
+    
 	var width = Math.floor(toDP(Ti.Platform.displayCaps.platformWidth) /  tabButtonQuantity) - (tabButtonQuantity - 1);
 	
 	var button = Titanium.UI.createView({

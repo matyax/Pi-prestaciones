@@ -1,0 +1,9 @@
+<Alloy>
+	<Window id="newsWindow">
+        <View class="container">
+            <ScrollView showHorizontalScrollIndicator="false" class="container">
+                <View id="newsContainer" class="container"></View>
+            </ScrollView>
+        </View>
+    </Window>
+</Alloy>

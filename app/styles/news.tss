@@ -1,0 +1,13 @@
+"#pageWindow" : {
+    orientationModes: [
+        Ti.UI.PORTRAIT
+    ] 
+},
+".container" : {
+    layout: 'vertical'
+},
+"#newsContainer" : {
+    top: 0,
+    left: 20,
+    height: Titanium.UI.SIZE 
+}

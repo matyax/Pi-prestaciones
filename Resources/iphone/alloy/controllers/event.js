@@ -284,6 +284,7 @@ function Controller() {
         }));
     }
     function addEventMenuItem(item) {
+        item = ui.processItemConfig(item, eventData);
         var button = Titanium.UI.createButton({
             title: item.label,
             width: Ti.UI.FILL,
@@ -352,6 +353,7 @@ function Controller() {
         $.eventScrollView.setTop(logoHeight + 40);
     }
     function addEventTabItem(item, tabButtonQuantity) {
+        item = ui.processItemConfig(item, eventData);
         var width = Math.floor(toDP(Ti.Platform.displayCaps.platformWidth) / tabButtonQuantity) - (tabButtonQuantity - 1);
         var button = Titanium.UI.createView({
             layout: "vertical",
@@ -501,10 +503,7 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     arguments[0] || {};
-    {
-        var data = (require("pi"), require("data"));
-        require("ui");
-    }
+    var data = (require("pi"), require("data")), ui = require("ui");
     {
         var eventData = data.get("eventData");
         data.get("event");
