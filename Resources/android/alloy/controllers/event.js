@@ -171,7 +171,7 @@ function Controller() {
                 }
             }
             switch (event.tabs_order[item]) {
-              case "form":
+              case "news":
                 event.news_label && addEventTabItem({
                     icon: event.news_icon,
                     label: event.news_label,

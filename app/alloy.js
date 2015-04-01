@@ -60,10 +60,7 @@ function setupIosPushNotifications() {
                 Ti.App.iOS.USER_NOTIFICATION_TYPE_BADGE
             ]
         });
-    }
-     
-    // For iOS 7 and earlier
-    else {
+    } else {
         Ti.Network.registerForPushNotifications({
      // Specifies which notifications to receive
             types: [
@@ -92,10 +89,10 @@ function setupIosPushNotifications() {
 }
 
 function subscribleToChannels() {
+    var Cloud = require("ti.cloud");
+    
     // Subscribes the device to the 'news_alerts' channel
     // Specify the push type as either 'android' for Android or 'ios' for iOS
-    console.log('subscribing');
-    
     Cloud.PushNotifications.subscribeToken({
         device_token: deviceToken,
         channel: 'news_alerts',

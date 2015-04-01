@@ -13,6 +13,7 @@
     <analytics>true</analytics>
     <guid>3f9955e3-f54a-4b20-a214-a7ff9310ecaf</guid>
     <property name="ti.ui.defaultunit" type="string">dp</property>
+    <property name="acs-api-key" type="string">O7gbA0N0qcQ0SvBdP7QUERTFGr1kul0I</property>
     <ios>
         <plist>
             <dict>
@@ -85,7 +86,7 @@
         <target device="mobileweb">false</target>
         <target device="tizen">false</target>
     </deployment-targets>
-    <sdk-version>3.5.0.GA</sdk-version>
+    <sdk-version>3.5.1.GA</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>

@@ -35,7 +35,7 @@ function Controller() {
             textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
         });
         var line = Ti.UI.createView({
-            backgroundColor: "#333333",
+            backgroundColor: "#666666",
             layout: "vertical",
             width: "100%",
             height: 1,
