@@ -246,7 +246,7 @@ function generateEventWindow(event) {
     	}
     	
         switch (event.tabs_order[item]) {
-            case "form":
+            case "news":
                 if (event.news_label) {
                     addEventTabItem({
                         icon: event.news_icon,
