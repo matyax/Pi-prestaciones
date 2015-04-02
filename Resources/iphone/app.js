@@ -54,7 +54,7 @@ function subscribleToChannels() {
         channel: "news_alerts",
         type: "ios"
     }, function(e) {
-        alert(e.success ? "Subscribed" : "Error:\n" + (e.error && e.message || JSON.stringify(e)));
+        e.success || console.log("Error:\n" + (e.error && e.message || JSON.stringify(e)));
     });
 }
 

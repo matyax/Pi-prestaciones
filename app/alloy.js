@@ -98,10 +98,8 @@ function subscribleToChannels() {
         channel: 'news_alerts',
         type: Ti.Platform.name == 'android' ? 'android' : 'ios'
     }, function (e) {
-    if (e.success) {
-            alert('Subscribed');
-        } else {
-            alert('Error:\n' + ((e.error && e.message) || JSON.stringify(e)));
+        if (! e.success) {
+            console.log('Error:\n' + ((e.error && e.message) || JSON.stringify(e)));
         }
     });
 }

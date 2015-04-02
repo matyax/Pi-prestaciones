@@ -8,6 +8,7 @@
 },
 "#newsContainer" : {
     top: 0,
-    left: 20,
+    left: 0,
+    width: '100%',
     height: Titanium.UI.SIZE 
 }
