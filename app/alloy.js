@@ -31,7 +31,8 @@ function setupAndroidPushNotifications() {
      
     // Process incoming push notifications
     CloudPush.addEventListener('callback', function (evt) {
-        alert("Notification received: " + evt.payload);
+        //alert("Notification received: " + evt.payload);
+        processAndroidNotification();
     });
 }
 
@@ -75,7 +76,7 @@ function setupIosPushNotifications() {
     }
     // Process incoming push notifications
     function receivePush(e) {
-        alert('Received push: ' + JSON.stringify(e));
+        processIosNotification();
     }
     // Save the device token for subsequent API calls
     function deviceTokenSuccess(e) {
@@ -102,4 +103,12 @@ function subscribleToChannels() {
             console.log('Error:\n' + ((e.error && e.message) || JSON.stringify(e)));
         }
     });
+}
+
+function processAndroidNotification() {
+    
+}
+
+function processIosNotification() {
+    
 }
