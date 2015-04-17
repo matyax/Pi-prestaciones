@@ -110,6 +110,7 @@ function Controller() {
     $.newsWindow.setBackgroundColor(eventData.styles.background);
     $.newsContainer.setWidth(ui.screenWidth());
     var contentFont = ANDROID ? "DroidSerif" : "Georgia", titleFont = ANDROID ? "DroidSans" : "Helvetica";
+    ui.setLastUnreadNews(news[0].id);
     for (var i in news) addNews(news[i]);
     _.extend($, exports);
 }

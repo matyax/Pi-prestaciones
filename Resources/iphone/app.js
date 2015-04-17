@@ -11,14 +11,14 @@ function setupAndroidPushNotifications() {
         success: deviceTokenSuccess,
         error: deviceTokenError
     });
-    CloudPush.addEventListener("callback", function(evt) {
-        alert("Notification received: " + evt.payload);
+    CloudPush.addEventListener("callback", function() {
+        processAndroidNotification();
     });
 }
 
 function setupIosPushNotifications() {
-    function receivePush(e) {
-        alert("Received push: " + JSON.stringify(e));
+    function receivePush() {
+        processIosNotification();
     }
     function deviceTokenSuccess(e) {
         deviceToken = e.deviceToken;
@@ -51,12 +51,16 @@ function subscribleToChannels() {
     var Cloud = require("ti.cloud");
     Cloud.PushNotifications.subscribeToken({
         device_token: deviceToken,
-        channel: "news_alerts",
+        channel: "piprestaciones",
         type: "ios"
     }, function(e) {
         e.success || console.log("Error:\n" + (e.error && e.message || JSON.stringify(e)));
     });
 }
+
+function processAndroidNotification() {}
+
+function processIosNotification() {}
 
 var Alloy = require("alloy"), _ = Alloy._, Backbone = Alloy.Backbone;
 

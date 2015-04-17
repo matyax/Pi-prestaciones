@@ -96,7 +96,7 @@ function subscribleToChannels() {
     // Specify the push type as either 'android' for Android or 'ios' for iOS
     Cloud.PushNotifications.subscribeToken({
         device_token: deviceToken,
-        channel: 'news_alerts',
+        channel: 'piprestaciones',
         type: Ti.Platform.name == 'android' ? 'android' : 'ios'
     }, function (e) {
         if (! e.success) {

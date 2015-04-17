@@ -2,6 +2,22 @@ function pxToDP(px) {
     return px / (Titanium.Platform.displayCaps.dpi / 160);
 }
 
+function getUnreadNewsQuantity(news) {
+    var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, "latest_read_news.dat");
+    var blob = file.read(), latestNewsID = "";
+    if (blob) latestNewsID = blob.text; else {
+        file.write("0");
+        latestNewsID = "0";
+    }
+    console.log(latestNewsID);
+    var unreadNews = 0;
+    for (var i in news) {
+        if (news[i].id == latestNewsID) break;
+        unreadNews++;
+    }
+    return unreadNews;
+}
+
 exports.createSectionView = function(eventData, title) {
     var sectionView = Ti.UI.createView({
         backgroundColor: eventData.styles.button_background,
@@ -37,10 +53,19 @@ exports.screenHeight = function() {
 };
 
 exports.processItemConfig = function(item, eventData) {
-    if ("news" == item.controller && 0 == eventData.news.length) {
-        item.label += " (0)";
-        null == item.controller;
-        item.onClick = function() {};
+    if ("news" == item.controller) {
+        var unreadNews = getUnreadNewsQuantity(eventData.news);
+        if (0 == eventData.news.length) {
+            item.label += " (0)";
+            null == item.controller;
+            item.onClick = function() {};
+        } else unreadNews > 0 && (item.label += " (" + unreadNews + ")");
     }
     return item;
+};
+
+exports.setLastUnreadNews = function(id) {
+    var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, "latest_read_news.dat");
+    file.write("" + id);
+    return true;
 };
