@@ -79,7 +79,7 @@ function Controller() {
                 break;
 
               case "form":
-                if (event.form) {
+                if (event.form_label) {
                     label = event.form_label || "Inscripción online";
                     addEventMenuItem({
                         icon: event.form_icon,
@@ -90,7 +90,7 @@ function Controller() {
                 break;
 
               case "certificate":
-                if (event.certificate) {
+                if (event.certificate_label) {
                     label = event.certificate_label || "Certificación web";
                     addEventMenuItem({
                         icon: event.certificate_icon,
@@ -200,7 +200,7 @@ function Controller() {
                 break;
 
               case "form":
-                if (event.form) {
+                if (event.form_label) {
                     label = event.form_label || "Inscripción online";
                     addEventTabItem({
                         icon: event.form_icon,
@@ -211,7 +211,7 @@ function Controller() {
                 break;
 
               case "certificate":
-                if (event.certificate) {
+                if (event.certificate_label) {
                     label = event.certificate_label || "Certificación web";
                     addEventTabItem({
                         icon: event.certificate_icon,

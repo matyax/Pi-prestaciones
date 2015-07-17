@@ -40,16 +40,16 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
         function addItemsToListView(items) {
             items.headerTitle ? sectionParameters = {
                 headerTitle: items.headerTitle
-            } : isFinalList = true;
+            } : isFinalList = "undefined" != typeof items[0] && items[0].startTime ? false : true;
             section = Ti.UI.createListSection(sectionParameters);
             dataSet = [];
             title = "";
-            hasChildren = true;
+            hasChildren = false;
             itemId = null;
             for (var i in items) {
                 if ("headerTitle" === i) continue;
-                title = isNaN(parseInt(i)) ? i : items[i].title;
-                "undefined" != typeof items[i][0] && (hasChildren = false);
+                title = "string" == typeof i ? i : isNaN(parseInt(i)) ? i : items[i].title;
+                "undefined" == typeof items[i].length && (hasChildren = true);
                 itemId = "undefined" != typeof items[i].id ? items[i].id : i;
                 dataSet.push({
                     info: {
@@ -57,6 +57,7 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
                     },
                     properties: {
                         id: itemId,
+                        title: title,
                         subItems: items[i],
                         backgroundColor: eventData.styles.button_background
                     }
@@ -86,6 +87,7 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
             var item = e.section.getItemAt(e.itemIndex);
             item.properties.id;
             var title = item.properties.title;
+            console.log(title);
             var subWindow = addCalendar(title, item.properties.subItems, onClick, navigationWindow);
             null == navigationWindow ? subWindow.open({
                 modal: true

@@ -23,6 +23,7 @@ exports.createParagraph = function (item) {
             fontSize: item.style_font_size
         },
         width: width,
+        height: Ti.UI.SIZE,
         top: 20,
         left: 20,
         textAlign: textAlign
@@ -62,7 +63,8 @@ exports.createTitle = function (item) {
         top: 0,
         left: 20,
         textAlign: textAlign,
-        width: labelWidth
+        width: labelWidth,
+        height: Ti.UI.SIZE
     }));
     
     view.add(Ti.UI.createView({
@@ -83,6 +85,8 @@ exports.createImage = function (item) {
     
     view.add(Ti.UI.createImageView({
         image: item.value,
+        width:  Ti.UI.SIZE,
+        height: Ti.UI.SIZE
     }));
     
     return view;
@@ -117,35 +121,37 @@ exports.createAgendaShareView = function (item, eventData) {
         left: 10
     });
     
-    var tweet = Ti.UI.createImageView({
-        image: '/icons/dark/1410146719_f099-128.png',
-        width: 19,
-        height: 25,
-        top: 5,
-        left: 70
-    });
-    
-    var tweetLabel = Titanium.UI.createLabel({
-        text: 'Twittear',
-        color: eventData.styles.share_foreground,
-        font: {
-            fontSize: 12
-        },
-        top: 9,
-        left: 10
-    });
-    
-    tweet.addEventListener('click', function (e) {
-        var social = require('social');
+    if (eventData.hashtag) {
+        var tweet = Ti.UI.createImageView({
+            image: '/icons/dark/1410146719_f099-128.png',
+            width: 19,
+            height: 25,
+            top: 5,
+            left: 70
+        });
         
-        social.tweet(eventData, item);        
-    });
-    
-    tweetLabel.addEventListener('click', function (e) {
-        var social = require('social');
+        var tweetLabel = Titanium.UI.createLabel({
+            text: 'Twittear',
+            color: eventData.styles.share_foreground,
+            font: {
+                fontSize: 12
+            },
+            top: 9,
+            left: 10
+        });
         
-        social.tweet(eventData, item);        
-    });
+        tweet.addEventListener('click', function (e) {
+            var social = require('social');
+            
+            social.tweet(eventData, item);        
+        });
+        
+        tweetLabel.addEventListener('click', function (e) {
+            var social = require('social');
+            
+            social.tweet(eventData, item);        
+        });
+    }
     
     favoriteButton.addEventListener('click', function(e) {
         var favorites = require('favorites');
@@ -161,8 +167,11 @@ exports.createAgendaShareView = function (item, eventData) {
     
     shareView.add(favoriteButton);
     shareView.add(favoriteLabel);
-    shareView.add(tweet);
-    shareView.add(tweetLabel);
+    
+    if (eventData.hashtag) {
+        shareView.add(tweet);
+        shareView.add(tweetLabel);
+    }
     
     return shareView;
 };

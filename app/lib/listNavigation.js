@@ -1,16 +1,16 @@
 var data        = require('data'),
     eventData   = data.get('eventData'),
     ui          = require('ui');
-    
+
 var listHeight = ui.screenHeight() - 110,
     listItemWidth = ui.screenWidth() - 20;
 
 exports.add = function (label, items, onClick, navigationWindow, backgroundColor, openerWindow) {
-    
+
     var listTemplate = {
         childTemplates: [
             {
-                type: 'Ti.UI.Label', 
+                type: 'Ti.UI.Label',
                 bindId: 'info',
                 properties: {
                     borderWidth: 0,
@@ -95,7 +95,7 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
             title               = '',
             hasChildren         = false,
             itemId              = null;
-            
+
         var listView = Ti.UI.createListView({
             backgroundColor: eventData.styles.button_background,
             templates: { 'template': listTemplate },
@@ -103,7 +103,7 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
             height: listHeight,
             width: '100%'
         });
-        
+
         for (var j in items) {
             if ((isNaN(parseInt(j)) === false) && (items[j].headerTitle)) {
                 sections.push(
@@ -115,57 +115,63 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
                 );
             }
         }
-        
+
         listView.setSections(sections);
 
         function addItemsToListView(items) {
             if (items.headerTitle) {
                 sectionParameters = { headerTitle: items.headerTitle };
-            } else {
+            } else if ((typeof items[0] != 'undefined') && (items[0].startTime)) {
+                isFinalList = false;
+            }
+            else {
                 isFinalList = true;
             }
-    
+
             section = Ti.UI.createListSection(sectionParameters);
             dataSet = [];
             title = '';
-            hasChildren = true;
+            hasChildren = false;
             itemId = null;
-    
+
             for (var i in items) {
                 if (i === 'headerTitle') {
                     continue;
                 }
-    
-                if (! isNaN(parseInt(i))) {
+                
+                if (typeof i == 'string') {
+                    title = i;
+                } else if (! isNaN(parseInt(i))) {
                     title = items[i].title;
                 } else {
                     title = i;
                 }
-    
-                if (typeof items[i][0] != 'undefined'){
-                    hasChildren = false;
+
+                if (typeof items[i].length == 'undefined'){
+                    hasChildren = true;
                 }
-    
+
                 if (typeof items[i].id != 'undefined') {
                     itemId = items[i].id;
                 } else {
                     itemId = i;
                 }
-    
+
                 dataSet.push({
                     info: {
                         text: title
                     },
                     properties: {
                         id: itemId,
+                        title: title,
                         subItems: items[i],
                         backgroundColor: eventData.styles.button_background
                     }
                 });
             }
-    
+
             section.setItems(dataSet);
-            
+
             return section;
         };
 
@@ -186,6 +192,8 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
                 var id      = item.properties.id;
                 var title   = item.properties.title;
                 
+                console.log(title);
+
                 var subWindow = addCalendar(title, item.properties.subItems, onClick, navigationWindow);
 
                 if (navigationWindow == null) {
@@ -202,7 +210,7 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
 
                 var id      = item.properties.id;
                 var title   = item.properties.title;
-                
+
                 var subWindow = addCalendarTime(title, item.properties.subItems, onClick, navigationWindow);
 
                 if (navigationWindow == null) {

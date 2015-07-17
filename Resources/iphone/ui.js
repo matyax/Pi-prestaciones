@@ -9,7 +9,6 @@ function getUnreadNewsQuantity(news) {
         file.write("0");
         latestNewsID = "0";
     }
-    console.log(latestNewsID);
     var unreadNews = 0;
     for (var i in news) {
         if (news[i].id == latestNewsID) break;
