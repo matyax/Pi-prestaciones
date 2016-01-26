@@ -1,0 +1,29 @@
+{
+  // Details: https://github.com/victorporof/Sublime-JSHint#using-your-own-jshintrc-options
+  // Example: https://github.com/jshint/jshint/blob/master/examples/.jshintrc
+  // Documentation: http://www.jshint.com/docs/
+  "browser": true,
+  "esnext": true,
+  "globals": {
+    "angular": true,
+    "jQuery": true,
+    "$": true,
+    "alert": true,
+    "console": true,
+    "moment": true,
+    "confirm": true,
+    "exports": true,
+    "TI": true,
+    "Ti": true
+  },
+  "globalstrict": true,
+  "quotmark": true,
+  "undef": true,
+  "unused": true,
+  "curly": true,
+  "eqeqeq": true,
+  "maxdepth": 4,
+  "maxstatements": 15,
+  //To be removed
+  "strict": false
+}
