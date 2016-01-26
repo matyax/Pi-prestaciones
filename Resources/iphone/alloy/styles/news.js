@@ -1,1 +1,0 @@
-module.exports = [{"isClass":true,"priority":10000.0025,"key":"container","style":{layout:"vertical",}},{"isId":true,"priority":100000.0024,"key":"pageWindow","style":{orientationModes:[Ti.UI.PORTRAIT,],}},{"isId":true,"priority":100000.0026,"key":"newsContainer","style":{top:0,left:0,width:"100%",height:Titanium.UI.SIZE,}}];

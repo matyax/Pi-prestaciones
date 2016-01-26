@@ -1,10 +1,11 @@
 eclipse.preferences.version=1
 iosLaunchConfigurationAttributes/ATTR_MINIFY=true
 iosLaunchConfigurationAttributes/ATTR_PROJECT_NAME=Pi Prestaciones
-iosLaunchConfigurationAttributes/appid=org.pizzapixel.pi
-iosLaunchConfigurationAttributes/certificate=Matyas Chomicki (D7HS7Z7G58)
+iosLaunchConfigurationAttributes/ATTR_UPLOAD_DEBUG_SYMBOLS=false
+iosLaunchConfigurationAttributes/appid=ar.com.piprestaciones.app
+iosLaunchConfigurationAttributes/certificate=Eduardo Valverde (VE4E2TCS75)
 iosLaunchConfigurationAttributes/distribute_path=/Users/matyax/Desktop/Pi Prestaciones app
 iosLaunchConfigurationAttributes/keychain=
 iosLaunchConfigurationAttributes/output_format=ipa
-iosLaunchConfigurationAttributes/sdk_version=8.2
-iosLaunchConfigurationAttributes/uuid=0e738874-7d5a-4621-8499-f22009dd6552
+iosLaunchConfigurationAttributes/sdk_version=9.2
+iosLaunchConfigurationAttributes/uuid=791f4113-8480-42fd-b297-ed73edf1fd4e

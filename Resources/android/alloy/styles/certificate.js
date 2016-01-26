@@ -1,1 +1,0 @@
-module.exports = [{"isId":true,"priority":100000.0006,"key":"certificateWindow","style":{layout:"vertical",orientationModes:[Ti.UI.PORTRAIT,],}}];

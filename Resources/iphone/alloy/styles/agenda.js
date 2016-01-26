@@ -1,1 +1,0 @@
-module.exports = [{"isId":true,"priority":100000.0003,"key":"agenda","style":{orientationModes:[Ti.UI.PORTRAIT,],}}];
