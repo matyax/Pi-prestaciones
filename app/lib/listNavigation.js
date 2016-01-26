@@ -138,7 +138,7 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
                 if (i === 'headerTitle') {
                     continue;
                 }
-                
+
                 if (typeof i == 'string') {
                     title = i;
                 } else if (! isNaN(parseInt(i))) {
@@ -191,8 +191,8 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
 
                 var id      = item.properties.id;
                 var title   = item.properties.title;
-                
-                console.log(title);
+
+
 
                 var subWindow = addCalendar(title, item.properties.subItems, onClick, navigationWindow);
 

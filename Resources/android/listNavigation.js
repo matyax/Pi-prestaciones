@@ -87,7 +87,7 @@ exports.add = function(label, items, onClick, navigationWindow, backgroundColor,
             var item = e.section.getItemAt(e.itemIndex);
             item.properties.id;
             var title = item.properties.title;
-            console.log(title);
+
             var subWindow = addCalendar(title, item.properties.subItems, onClick, navigationWindow);
             null == navigationWindow ? subWindow.open({
                 modal: true
