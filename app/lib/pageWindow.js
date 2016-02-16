@@ -76,7 +76,6 @@ exports.createTitle = function (item) {
 };
 
 exports.createImage = function (item) {
-    
     var view = Ti.UI.createView({
         width: '100%',
         height: Ti.UI.SIZE,
@@ -91,6 +90,46 @@ exports.createImage = function (item) {
     
     return view;
 };
+
+exports.createLine = function (item) {
+    var view = Ti.UI.createView({
+        width: '100%',
+        height: item.style_height,
+        backgroundColor: item.style_background,
+        top: 20
+    });
+    
+    return view;
+};
+
+exports.createButton = function (item) {
+    var view = Ti.UI.createView({
+        width: '100%',
+        height: Ti.UI.SIZE
+    });
+    
+    var button = Ti.UI.createButton({
+    	width: item.value.length * 9,
+    	font: {
+        	fontSize: item.style_font_size
+        },
+        title: item.value,
+        backgroundColor: item.style_background,
+        borderColor: item.style_background,
+        color: item.style_foreground,
+        borderRadius: item.style_border_radius || 0,
+        top: 20
+    });
+    
+    button.addEventListener('click', function (e) {
+		Ti.Platform.openURL(item.url);
+    });
+    
+    view.add(button);
+    
+    return view;
+};
+
 
 exports.createAgendaShareView = function (item, eventData) {
     var shareView = Ti.UI.createView({

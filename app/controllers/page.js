@@ -29,6 +29,14 @@ for (var i in page.items) {
         $.pageScrollView.add(
             pageWindow.createImage(page.items[i])
         );
+    } else if (page.items[i].type == 'line') {
+        $.pageScrollView.add(
+            pageWindow.createLine(page.items[i])
+        );
+    } else if (page.items[i].type == 'button') {
+        $.pageScrollView.add(
+            pageWindow.createButton(page.items[i])
+        );
     }
 }
 
