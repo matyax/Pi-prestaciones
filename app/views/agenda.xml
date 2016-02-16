@@ -3,8 +3,17 @@
 	    <View id="searchContainer">
 	    	<TextField id="searchField" />
 	    </View>
+	    
 	    <View id="agendaContainer">
 	    	
+	    </View>
+	    
+	    <View id="searchResultsContainer">
+	    	<ListView id="searchResults">
+	    		<ListSection>
+	    			
+	    		</ListSection>
+	    	</ListView>
 	    </View>
 	</Window>
 </Alloy>

@@ -2,7 +2,8 @@ var args = arguments[0] || {};
 
 var data            = require('data'),
     eventData       = data.get('eventData'),
-    windowReference = data.get('windowReference');
+    windowReference = data.get('windowReference'),
+    listSearch      = require('listSearch');
         
 var agendaOnclick = function (id, title) {
     var item = eventData.agenda_details[id];
@@ -30,12 +31,26 @@ $.agendaContainer.setBackgroundColor(eventData.styles.button_background);
 $.searchField.addEventListener('change', function () {
 	if ($.searchField.getValue()) {
 		$.agendaContainer.hide();
+		$.searchResultsContainer.show();
 	} else {
 		$.agendaContainer.show();
+		$.searchResultsContainer.hide();
 	}
 	
 });
 
+/* Initialize search */
+$.searchResultsContainer.hide();
+
+$.agendaContainer.addEventListener('postlayout', function () {
+	if (! $.searchResultsContainer.getHeight()) {
+		$.searchResultsContainer.setHeight($.agendaContainer.getSize().height);
+	}
+});
+
+listSearch.setListView($.searchResults);
+
+/* Initialize list */
 var listNavigation = require('listNavigation');
 
 listNavigation.add(

@@ -2,19 +2,31 @@
     orientationModes: [
         Ti.UI.PORTRAIT
     ],
-    layout: "vertical"
-},
-"#searchContainer": {
-	width: "100%",
-	height: 45
+    layout: "composite"
 },
 "#agendaContainer": {
-	height: Ti.UI.FILL,
-	layout: "vertical"
+	width: "100%",
+	height: "100%",
+	layout: "vertical",
+	top: 45,
+	left: 0
+},
+"#searchContainer": {
+	top: 0,
+	left: 0,
+	width: "100%",
+	height: 45
 },
 "#searchField": {
 	width: "90%",
 	hintText: "Buscar en el programa",
 	height: 30,
 	top: 10
+},
+"#searchResultsContainer": {
+	width: "100%",
+	height: 0,
+	top: 45,
+	left: 0,
+	layout: "vertical"
 }
