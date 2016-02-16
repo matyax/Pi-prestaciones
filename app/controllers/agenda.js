@@ -24,6 +24,18 @@ var agendaOnclick = function (id, title) {
     }
 };
 
+$.searchContainer.setBackgroundColor(eventData.styles.button_background);
+$.agendaContainer.setBackgroundColor(eventData.styles.button_background);
+
+$.searchField.addEventListener('change', function () {
+	if ($.searchField.getValue()) {
+		$.agendaContainer.hide();
+	} else {
+		$.agendaContainer.show();
+	}
+	
+});
+
 var listNavigation = require('listNavigation');
 
 listNavigation.add(
@@ -32,5 +44,5 @@ listNavigation.add(
     agendaOnclick,
     windowReference,
     eventData.styles.button_background,
-    $.agenda
+    $.agendaContainer
 );

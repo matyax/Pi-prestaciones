@@ -2,7 +2,7 @@ var data        = require('data'),
     eventData   = data.get('eventData'),
     ui          = require('ui');
 
-var listHeight = ui.screenHeight() - 110,
+var listHeight = Ti.UI.FILL,
     listItemWidth = ui.screenWidth() - 20;
 
 exports.add = function (label, items, onClick, navigationWindow, backgroundColor, openerWindow) {
@@ -97,6 +97,7 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
             itemId              = null;
 
         var listView = Ti.UI.createListView({
+        	id: "listNavigationList",
             backgroundColor: eventData.styles.button_background,
             templates: { 'template': listTemplate },
             defaultItemTemplate: 'template',

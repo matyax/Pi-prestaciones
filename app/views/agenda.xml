@@ -1,5 +1,10 @@
 <Alloy>
 	<Window id="agenda">
-	    
+	    <View id="searchContainer">
+	    	<TextField id="searchField" />
+	    </View>
+	    <View id="agendaContainer">
+	    	
+	    </View>
 	</Window>
 </Alloy>
