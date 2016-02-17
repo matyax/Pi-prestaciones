@@ -29,4 +29,8 @@
 	top: 45,
 	left: 0,
 	layout: "vertical"
+},
+"searchResults": {
+	width: "100%",
+	height: Ti.UI.FILL
 }

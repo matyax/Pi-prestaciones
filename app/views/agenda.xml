@@ -10,9 +10,7 @@
 	    
 	    <View id="searchResultsContainer">
 	    	<ListView id="searchResults">
-	    		<ListSection>
-	    			
-	    		</ListSection>
+
 	    	</ListView>
 	    </View>
 	</Window>

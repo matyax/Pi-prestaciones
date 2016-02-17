@@ -27,33 +27,90 @@ exports.setListView = function (newListView) {
 	
 	listView.setBackgroundColor(eventData.styles.button_background);
 	listView.setTemplates({ 'template': listTemplate });
-	
-	setListViewSectionTitle(listView);
+	listView.setDefaultItemTemplate('template');
 };
 
-function setListViewSectionTitle() {
-	var sections = listView.getSections();
+exports.setClickHandler = function (callback) {
+	listView.addEventListener('itemclick', function (e) {
+        var item = e.section.getItemAt(e.itemIndex);
+
+        var id      = item.properties.id;
+        var title   = item.properties.title;
+
+        callback(id, title);
+    });
+};
+
+exports.filter = function (query) {
+	var results = [];
 	
-	if (! sections.length) {
-		Titanium.API.error('Search results section not found');
+	for (var i in eventData.agenda_details) {
+		if ( matchesCriteria(eventData.agenda_details[i], query) ) {
+			results.push(eventData.agenda_details[i]);
+		}
 	}
 	
-	sections[0].setHeaderTitle('Resultados de la búsqueda');
+	displayResults(results);
+};
+
+function matchesCriteria(subject, search) {
+	search = search.toLowerCase();
 	
-	sections[0].setItems([
-		{
-            info: {
-                text: 'Test'
-            },
-            properties: {
-                backgroundColor: 'red'
-            }
-        }
-	]);
+	if (subject.title.toLowerCase().indexOf(search) >= 0) {
+		return true;
+	}
 	
-	listView.setSections(sections);
+	if (! subject.items) {
+		return false;
+	}
+	
+	for (var i = 0; i < subject.items.length; i++) {
+		if ((subject.items[i].type != 'paragraph') && (subject.items[i].type != 'paragraph')) {
+			continue;
+		}
+		
+		if (subject.items[i].value.toLowerCase().indexOf(search) >= 0) {
+			return true;
+		}
+	}
+	
+	return false;
 }
 
-exports.search = function (query) {
+function noResults() {
+	var section = Ti.UI.createListSection({ headerTitle: 'No se encontraron resultados' });
 	
-};
+	listView.setSections([ section ]);
+}
+
+function displayResults(results) {
+	if (! results.length) {
+		noResults();
+		
+		return;
+	}
+	
+	var sections = [];
+	
+	var section = Ti.UI.createListSection({ headerTitle: 'Resultados de la búsqueda' });
+
+    var dataSet = [];
+
+    results.forEach(function (result) {
+    	dataSet.push({
+            info: {
+                text: result.title
+            },
+            properties: {
+                id: result.id,
+                title: result.title,
+                backgroundColor: eventData.styles.button_background
+            }
+        });
+    });
+
+    section.setItems(dataSet);
+    sections.push(section);
+
+    listView.setSections(sections);
+}

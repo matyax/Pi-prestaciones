@@ -71,7 +71,7 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
 
         var view = Titanium.UI.createView({
            layout: 'vertical',
-           backgroundColor: 'backgroundColor',
+           backgroundColor: backgroundColor,
            width: '100%',
            left: 0,
            top: 20,

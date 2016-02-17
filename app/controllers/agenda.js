@@ -28,13 +28,25 @@ var agendaOnclick = function (id, title) {
 $.searchContainer.setBackgroundColor(eventData.styles.button_background);
 $.agendaContainer.setBackgroundColor(eventData.styles.button_background);
 
+var isSearchVisible = false;
+
 $.searchField.addEventListener('change', function () {
 	if ($.searchField.getValue()) {
-		$.agendaContainer.hide();
-		$.searchResultsContainer.show();
+		
+		if (! isSearchVisible) {
+			$.agendaContainer.hide();
+			$.searchResultsContainer.show();
+			
+			isSearchVisible = true;
+		}
+		
+		
+		listSearch.filter($.searchField.getValue());
 	} else {
 		$.agendaContainer.show();
 		$.searchResultsContainer.hide();
+		
+		isSearchVisible = false;
 	}
 	
 });
@@ -49,6 +61,7 @@ $.agendaContainer.addEventListener('postlayout', function () {
 });
 
 listSearch.setListView($.searchResults);
+listSearch.setClickHandler(agendaOnclick);
 
 /* Initialize list */
 var listNavigation = require('listNavigation');
