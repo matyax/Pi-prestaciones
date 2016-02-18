@@ -75,7 +75,7 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
            width: '100%',
            left: 0,
            top: 20,
-           height: ui.screenHeight() - 40
+           height: Ti.UI.FILL
         });
 
         view.add(viewChildren);

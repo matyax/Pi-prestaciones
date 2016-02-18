@@ -119,7 +119,7 @@ function displayResults(results) {
     			dataSet = [];
     		}
     		
-    		section = createSection(result.startTime);
+    		section = createSection(result.startTime + ' - ' + result.endTime);
     	}
     	
     	dataSet.push({

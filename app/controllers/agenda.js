@@ -54,9 +54,12 @@ $.searchField.addEventListener('change', function () {
 /* Initialize search */
 $.searchResultsContainer.hide();
 
+var heightAdjustment = IOS ? 45 : 0;
+
 $.agendaContainer.addEventListener('postlayout', function () {
 	if (! $.searchResultsContainer.getHeight()) {
-		$.searchResultsContainer.setHeight($.agendaContainer.getSize().height);
+		$.searchResultsContainer.setHeight($.agendaContainer.getSize().height - heightAdjustment);
+		$.agendaContainer.setHeight($.agendaContainer.getSize().height - heightAdjustment);
 	}
 });
 
