@@ -90,13 +90,38 @@ function displayResults(results) {
 		return;
 	}
 	
-	var sections = [];
-	
-	var section = Ti.UI.createListSection({ headerTitle: 'Resultados de la búsqueda' });
-
-    var dataSet = [];
+	var sections = [],
+		section  = null,
+		dataSet  = [],
+		currentDay = null;
 
     results.forEach(function (result) {
+    	if (currentDay != result.date) {
+    		if (section) {
+    			section.setItems(dataSet);
+    			sections.push(section);
+    			
+    			dataSet = [];
+    			
+    			section = null;
+    		}
+    		
+    		sections.push(createSection(result.date));
+    		
+    		currentDay = result.date;
+    	}
+    	
+    	if ((! section) || (section.getHeaderTitle() != result.startTime)) {
+    		if (section) {
+    			section.setItems(dataSet);
+    			sections.push(section);
+    			
+    			dataSet = [];
+    		}
+    		
+    		section = createSection(result.startTime);
+    	}
+    	
     	dataSet.push({
             info: {
                 text: result.title
@@ -108,9 +133,16 @@ function displayResults(results) {
             }
         });
     });
+    
+    if (dataSet.length) {
+    	section.setItems(dataSet);
+    }
 
-    section.setItems(dataSet);
     sections.push(section);
 
     listView.setSections(sections);
+}
+
+function createSection(title) {
+	return Ti.UI.createListSection({ headerTitle: title });
 }
