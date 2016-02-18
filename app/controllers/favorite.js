@@ -1,6 +1,7 @@
 var args = arguments[0] || {};
 
 var data            = require('data'),
+	listSearch		= require('listSearch'),
     eventData       = data.get('eventData'),
     title           = eventData.favorites_label || 'Favoritos',
     windowReference = data.get('windowReference'),
@@ -11,22 +12,21 @@ $.favoriteWindow.setBackgroundColor(eventData.styles.background);
 
 $.list.setBackgroundColor(eventData.styles.button_background);
 
+listSearch.setListView($.list);
+listSearch.setClickHandler(itemClicked);
+
 refreshList();
 
 function refreshList(clear) {
     if (clear == true) {
-        $.list.deleteSectionAt(0);
-        
-        $.list.removeEventListener('itemclick', itemClicked);
+        $.list.setSections([]);
     }
     
-    var sections    = [],
-        dataSet     = [],
-        favorites   = favorites = Alloy.createCollection('favorite');
+    var favorites = favorites = Alloy.createCollection('favorite');
         
     favorites.fetch();
     
-    section = Ti.UI.createListSection(),
+    var results = [];
     
     favorites.map(function (favorite) {
         if (! favorite.get('idAgendaItem')) {
@@ -35,30 +35,16 @@ function refreshList(clear) {
             return;
         }
         
-        //console.log(favorite.get('idAgendaItem') + ': ' + favorite.get('title'));
-        
-        dataSet.push({ 
-            properties: { 
-                title: favorite.get('title'), 
-                id: favorite.get('idAgendaItem'),
-                color: eventData.styles.button_foreground,
-                backgroundColor: eventData.styles.button_background
-            } 
-        });
+        results.push(
+        	searchItem(eventData.agenda, favorite.get('idAgendaItem'))
+        );
     }); 
         
-    section.setItems(dataSet);
-    sections.push(section);
-    
-    $.list.setSections(sections);
-    
-    $.list.addEventListener('itemclick', itemClicked);
+    listSearch.displayResults(results);
 }
 
-function itemClicked(e) {
-    var item = section.getItemAt(e.itemIndex);
-    
-    var agendaItem = searchItem(eventData.agenda, item.properties.id);
+function itemClicked(id, title) {
+    var agendaItem = searchItem(eventData.agenda, id);
     
     if (agendaItem == null) {
         var favorites = Alloy.createCollection('favorite');
@@ -66,21 +52,21 @@ function itemClicked(e) {
         favorites.fetch();
         
         favorites.map(function (favorite) {
-            if (favorite.get('idAgendaItem') == item.properties.id) {
+            if (favorite.get('idAgendaItem') == id) {
                 favorite.destroy();
                 
                 return;
             }
         });
         
-        refreshList(true); 
+        refreshList(); 
         
         return;
     }
     
-    data.set('agendaItem', agendaItem);
-    
-   var detailWindow = Alloy.createController('agendaDetail').getView();
+	data.set('agendaItem', agendaItem);
+	    
+	var detailWindow = Alloy.createController('agendaDetail').getView();
     
     if (Titanium.Platform.osname == 'android') {
         detailWindow.open({

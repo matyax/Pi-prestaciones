@@ -41,6 +41,8 @@ exports.setClickHandler = function (callback) {
     });
 };
 
+exports.displayResults = displayResults;
+
 exports.filter = function (query) {
 	var results = [];
 	
