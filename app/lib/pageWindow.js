@@ -108,8 +108,18 @@ exports.createButton = function (item) {
         height: Ti.UI.SIZE
     });
     
+    var width = Math.round(item.value.length * (item.style_font_size * 0.8));
+    
+    if (item.style_font_size == 24) {
+		width = Math.round(item.value.length * (item.style_font_size * 0.7));    	
+    }
+    
+    if (item.value.length < 8) {
+    	width += item.style_font_size * 2;
+    }
+    
     var button = Ti.UI.createButton({
-    	width: item.value.length * 9,
+    	width: width,
     	font: {
         	fontSize: item.style_font_size
         },
