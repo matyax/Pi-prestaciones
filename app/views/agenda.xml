@@ -1,7 +1,10 @@
 <Alloy>
 	<Window id="agenda">
 	    <View id="searchContainer">
-	    	<TextField id="searchField" />
+	    	<View id="searchContainerWrapper">
+	    		<ImageView id="searchIcon" image="/icons/system/search.png" />
+	    		<TextField id="searchField" />
+	    	</View>
 	    </View>
 	    
 	    <View id="agendaContainer">

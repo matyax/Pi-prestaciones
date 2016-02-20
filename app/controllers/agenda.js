@@ -27,6 +27,7 @@ var agendaOnclick = function (id, title) {
 
 $.searchContainer.setBackgroundColor(eventData.styles.button_background);
 $.agendaContainer.setBackgroundColor(eventData.styles.button_background);
+$.searchResultsContainer.setBackgroundColor(eventData.styles.button_background);
 
 var isSearchVisible = false;
 
