@@ -9,6 +9,16 @@ function transformData(exhibition) {
 		headerTitle: eventData.pavilion_label
 	};
 	
+	if (exhibition.length === 1) {
+		pavilions.headerTitle = eventData.stand_label;
+		
+		exhibition[0].children.forEach(function (stand) {
+			pavilions[stand.title] = stand;
+		});
+		
+		return [pavilions];
+	}
+	
 	exhibition.forEach(function (pavilion) {
 		pavilions[pavilion.title] = trasnformPavilion(pavilion);
 	});

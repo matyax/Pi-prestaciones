@@ -147,6 +147,10 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
                 } else {
                     title = i;
                 }
+                
+                if (items[i].items) {
+                	isFinalList = true;
+                }
 
                 if (typeof items[i].length == 'undefined'){
                     hasChildren = true;
