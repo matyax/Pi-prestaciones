@@ -13,10 +13,14 @@ function transformData(exhibition) {
 		pavilions[pavilion.title] = trasnformPavilion(pavilion);
 	});
 	
-	return pavilions;
+	return [pavilions];
 }
 
 function trasnformPavilion(pavilion) {
+	pavilion.children.forEach(function (child) {
+		child.startTime = eventData.stand_label; //hack alert
+	});
+	
 	return pavilion.children;
 }
 
