@@ -1,7 +1,8 @@
 "#pageWindow" : {
     orientationModes: [
         Ti.UI.PORTRAIT
-    ] 
+    ],
+    backgroundColor: 'white'
 },
 ".container" : {
     layout: 'vertical'

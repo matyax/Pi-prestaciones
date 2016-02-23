@@ -53,6 +53,8 @@ function generateEventWindow(event) {
     /* Menu */
     
     for (var item in event.order) {
+    	//************************************** PAGES  **************************************
+    	
     	if (event.order[item].substring(0, 5) == 'page_') {
     		pageId = event.order[item].match('[0-9]+')[0];
     		
@@ -96,6 +98,16 @@ function generateEventWindow(event) {
     	
     	//************************************** MENU ITEMS  **************************************
         switch (event.order[item]) {
+        	case "exhibitions":
+                if (event.exhibitions.length) {
+                    addEventMenuItem({
+                        icon: event.exhibition_icon,
+                        label: event.exhibition_label,
+                        controller: 'exhibition'
+                    });
+                }
+            break;
+        	
             case "news":
                 if (event.news_label) {
                     addEventMenuItem({
@@ -148,7 +160,7 @@ function generateEventWindow(event) {
                         icon: event.favorites_icon,
                         label: label,
                         controller: 'favorite'
-                    }, tabButtonQuantity);
+                    });
                 }
             break;
             
@@ -246,6 +258,16 @@ function generateEventWindow(event) {
     	}
     	
         switch (event.tabs_order[item]) {
+        	case "exhibitions":
+                if (event.exhibitions.length) {
+                    addEventTabItem({
+                        icon: event.exhibition_icon,
+                        label: event.exhibition_label,
+                        controller: 'exhibition'
+                    }, tabButtonQuantity);
+                }
+            break;
+        	
             case "news":
                 if (event.news_label) {
                     addEventTabItem({

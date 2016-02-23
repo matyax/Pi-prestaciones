@@ -11,6 +11,10 @@ if (page.background_color) {
 	$.pageView.setBackgroundColor(page.background_color);
 }
 
+if (page.style_background) {
+	$.pageView.setBackgroundColor(page.style_background);
+}
+
 for (var i in page.items) {
     
     if (page.items[i].type == 'paragraph') {
