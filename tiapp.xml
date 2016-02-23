@@ -2,7 +2,7 @@
 <ti:app xmlns:ti="http://ti.appcelerator.org">
     <id>ar.com.piprestaciones.app</id>
     <name>PI Prestaciones Informaticas</name>
-    <version>1.1.10</version>
+    <version>1.1.11</version>
     <publisher>matyax</publisher>
     <url>http://pizzapixel.org</url>
     <description>PI Prestaciones Informáticas</description>
@@ -37,7 +37,7 @@
         </plist>
     </ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <manifest android:versionCode="11010" android:versionName="1.1.9">
+        <manifest android:versionCode="11011" android:versionName="1.1.11">
             <!-- Allows the API to download data from Google Map servers -->
             <uses-permission android:name="android.permission.INTERNET"/>
             <!-- Allows the API to cache data -->
@@ -81,7 +81,7 @@
         <target device="iphone">true</target>
         <target device="mobileweb">false</target>
     </deployment-targets>
-    <sdk-version>5.1.2.GA</sdk-version>
+    <sdk-version>5.2.0.GA</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>
