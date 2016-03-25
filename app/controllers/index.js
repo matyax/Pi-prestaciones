@@ -122,6 +122,8 @@ piApi.loadEvents(function (events) {
         
     }
     else {
+    	
+    	loading.close();
         
         for (var i = 0; i < events.length; i++) {
             
@@ -130,6 +132,8 @@ piApi.loadEvents(function (events) {
             } else {
                 relativeHeight = Math.round(Ti.Platform.displayCaps.platformWidth * events[i].image_info.height / events[i].image_info.width);        
             }
+            
+            console.log(events[i].image);
             
             buttonOptions = {
                 backgroundImage: events[i].image,

@@ -1,105 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>ar.com.piprestaciones.app</id>
-    <name>PI Prestaciones Informaticas</name>
-    <version>1.1.11</version>
-    <publisher>matyax</publisher>
-    <url>http://pizzapixel.org</url>
-    <description>PI Prestaciones Informáticas</description>
-    <copyright>2014 by matyax</copyright>
-    <icon>appicon.png</icon>
-    <fullscreen>false</fullscreen>
-    <navbar-hidden>false</navbar-hidden>
-    <analytics>true</analytics>
-    <guid>43e86ecd-47ec-43b1-9444-464bb8f8d1bb</guid>
-    <property name="ti.ui.defaultunit" type="string">dp</property>
-    <property name="acs-api-key" type="string">O7gbA0N0qcQ0SvBdP7QUERTFGr1kul0I</property>
-    <ios>
-        <plist>
-            <dict>
-                <key>UISupportedInterfaceOrientations~iphone</key>
-                <array>
-                    <string>UIInterfaceOrientationPortrait</string>
-                </array>
-                <key>UISupportedInterfaceOrientations~ipad</key>
-                <array>
-                    <string>UIInterfaceOrientationPortrait</string>
-                </array>
-                <key>UIRequiresPersistentWiFi</key>
-                <false/>
-                <key>UIPrerenderedIcon</key>
-                <false/>
-                <key>UIStatusBarHidden</key>
-                <false/>
-                <key>UIStatusBarStyle</key>
-                <string>UIStatusBarStyleDefault</string>
-            </dict>
-        </plist>
-    </ios>
-    <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <manifest android:versionCode="11011" android:versionName="1.1.11">
-            <!-- Allows the API to download data from Google Map servers -->
-            <uses-permission android:name="android.permission.INTERNET"/>
-            <!-- Allows the API to cache data -->
-            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-            <!-- Use GPS for device location -->
-            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-            <!-- Use Wi-Fi or mobile connection for device location -->
-            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-            <!-- Allows the API to access Google web-based services -->
-            <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-            <!-- Specify OpenGL ES 2.0 as a requirement -->
-            <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
-            <!-- Replace com.domain.appid with your application ID -->
-            <uses-permission android:name="org.pizzapixel.pi.permission.MAPS_RECEIVE"/>
-            <permission
-                android:name="org.pizzapixel.pi.permission.MAPS_RECEIVE" android:protectionLevel="signature"/>
-            <application>
-                <!-- Replace "PASTE YOUR GOOGLE MAPS API KEY HERE" with the Google API key you obtained -->
-                <meta-data
-                    android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyBLTrtyVi81bJ5yBRaUI3HeJ-1XaeraTlk"/>
-            </application>
-        </manifest>
-    </android>
-    <mobileweb>
-        <precache/>
-        <splash>
-            <enabled>true</enabled>
-            <inline-css-images>true</inline-css-images>
-        </splash>
-        <theme>default</theme>
-    </mobileweb>
-    <modules>
-        <module platform="commonjs">ti.cloud</module>
-        <module platform="android">ti.map</module>
-        <module platform="iphone">ti.map</module>
-        <module platform="android">ti.cloudpush</module>
-    </modules>
-    <deployment-targets>
-        <target device="android">true</target>
-        <target device="ipad">false</target>
-        <target device="iphone">true</target>
-        <target device="mobileweb">false</target>
-    </deployment-targets>
-    <sdk-version>5.2.0.GA</sdk-version>
-    <plugins>
-        <plugin version="1.0">ti.alloy</plugin>
-    </plugins>
-    <property name="appc-app-id" type="string">5639029bd1837e53779367d3</property>
-    <property name="acs-authbase-url-development" type="string">https://secure-identity.cloud.appcelerator.com</property>
-    <property name="acs-base-url-development" type="string">https://api.cloud.appcelerator.com</property>
-    <property name="acs-oauth-secret-development" type="string">11HsQcqwfwIooJlHn7sU4XcaVzCaoZok</property>
-    <property name="acs-oauth-key-development" type="string">FutbbcC1wHXwXIwaXTqZT9DovXg4TvJk</property>
-    <property name="acs-api-key-development" type="string">4xhnLQp9BYWLN1dwEICEjwbowVEyDdze</property>
-    <property name="acs-username-development" type="string">appc_app_user_dev</property>
-    <property name="acs-password-development" type="string">eNjRrkcCTqrDyGRVMz</property>
-    <property name="acs-authbase-url-production" type="string">https://secure-identity.cloud.appcelerator.com</property>
-    <property name="acs-base-url-production" type="string">https://api.cloud.appcelerator.com</property>
-    <property name="acs-oauth-secret-production" type="string">QNhwpUTMQSC0iCiZMcB4YQvZsxJsUeQm</property>
-    <property name="acs-oauth-key-production" type="string">Ve95H2b8DptQN521MrkL10FjO1F60FpQ</property>
-    <property name="acs-api-key-production" type="string">xIon6DSky3IuKeGLuouf80Z5vkwxqwQS</property>
-    <property name="acs-username-production" type="string">appc_app_user</property>
-    <property name="acs-password-production" type="string">twvIljQS4q8EbW4nsL</property>
-    <property name="appc-org-id" type="string">100004740</property>
-    <property name="appc-creator-user-id" type="string">cddca54a-dc90-4a01-869e-9182f7b7e00e</property>
+<ti:app 
+  xmlns:ti="http://ti.appcelerator.org">
+  <guid>68df7b58-47a6-4cce-9777-cfd048cc9458</guid>
+  <id>ar.com.piprestaciones.app</id>
+  <name>PI Prestaciones Informaticas</name>
+  <version>1.1.11</version>
+  <publisher>matyax</publisher>
+  <url>http://pizzapixel.org</url>
+  <description>PI Prestaciones Informáticas</description>
+  <copyright>2014 by matyax</copyright>
+  <icon>appicon.png</icon>
+  <fullscreen>false</fullscreen>
+  <navbar-hidden>false</navbar-hidden>
+  <analytics>true</analytics>
+  <property name="ti.ui.defaultunit" type="string">dp</property>
+  <ios>
+    <plist>
+      <dict>
+      	<key>NSLocationWhenInUseUsageDescription</key>
+        <string>
+            Acceder a la ubicación del evento.
+        </string>
+        <key>UISupportedInterfaceOrientations~iphone</key>
+        <array>
+          <string>UIInterfaceOrientationPortrait</string>
+        </array>
+        <key>UISupportedInterfaceOrientations~ipad</key>
+        <array>
+          <string>UIInterfaceOrientationPortrait</string>
+        </array>
+        <key>UIRequiresPersistentWiFi</key>
+        <false/>
+        <key>UIPrerenderedIcon</key>
+        <false/>
+        <key>UIStatusBarHidden</key>
+        <false/>
+        <key>UIStatusBarStyle</key>
+        <string>UIStatusBarStyleDefault</string>
+      </dict>
+    </plist>
+  </ios>
+  <android 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <manifest android:versionCode="11011" android:versionName="1.1.11">
+      <!-- Allows the API to download data from Google Map servers -->
+      <uses-permission android:name="android.permission.INTERNET"/>
+      <!-- Allows the API to cache data -->
+      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+      <!-- Use GPS for device location -->
+      <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+      <!-- Use Wi-Fi or mobile connection for device location -->
+      <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+      <!-- Allows the API to access Google web-based services -->
+      <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+      <!-- Specify OpenGL ES 2.0 as a requirement -->
+      <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
+      <!-- Replace com.domain.appid with your application ID -->
+      <uses-permission android:name="ar.com.piprestaciones.app.permission.MAPS_RECEIVE"/>
+      <permission android:name="ar.com.piprestaciones.app.permission.MAPS_RECEIVE" android:protectionLevel="signature"/>
+      <application>
+        <!-- Replace "PASTE YOUR GOOGLE MAPS API KEY HERE" with the Google API key you obtained -->
+        <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyBRZAFm0j5RUCoeGaC1QFrAs-f3lCQZEHU"/>
+      </application>
+    </manifest>
+  </android>
+  <mobileweb>
+    <precache/>
+    <splash>
+      <enabled>true</enabled>
+      <inline-css-images>true</inline-css-images>
+    </splash>
+    <theme>default</theme>
+  </mobileweb>
+  <modules>
+    <module platform="commonjs">ti.cloud</module>
+    <module platform="android">ti.map</module>
+    <module platform="iphone">ti.map</module>
+    <module platform="android">ti.cloudpush</module>
+  </modules>
+  <deployment-targets>
+    <target device="android">true</target>
+    <target device="ipad">false</target>
+    <target device="iphone">true</target>
+    <target device="mobileweb">false</target>
+  </deployment-targets>
+  <sdk-version>5.2.0.GA</sdk-version>
+  <plugins>
+    <plugin version="1.0">ti.alloy</plugin>
+  </plugins>
+  <property name="appc-app-id" type="string">56ec1bb59a6a21060b3ce408</property>
+  <property name="acs-authbase-url-development" type="string">https://secure-identity.cloud.appcelerator.com</property>
+  <property name="acs-base-url-development" type="string">https://api.cloud.appcelerator.com</property>
+  <property name="acs-oauth-secret-development" type="string">M5tHgnic7Wwaef8DARgcsOnTVIQR1rYK</property>
+  <property name="acs-oauth-key-development" type="string">tsw3e1nTKkNDlpZZ2Lq0TBLIUKSGAElH</property>
+  <property name="acs-api-key-development" type="string">oo2swGiVNhM16bkpeSPkXehn94uMiuVj</property>
+  <property name="acs-username-development" type="string">appc_app_user_dev</property>
+  <property name="acs-password-development" type="string">cwymk0DrKyywp64pIV</property>
+  <property name="acs-authbase-url-production" type="string">https://secure-identity.cloud.appcelerator.com</property>
+  <property name="acs-base-url-production" type="string">https://api.cloud.appcelerator.com</property>
+  <property name="acs-oauth-secret-production" type="string">Ny53irTG910I1Zesi9zZFGTCN4IEJdHC</property>
+  <property name="acs-oauth-key-production" type="string">qGdcpTptwMxNGJ1WhVEAsz924slWsob9</property>
+  <property name="acs-api-key-production" type="string">umVxl3k2Uz2wEroI5bG6i1vE85mBUwMV</property>
+  <property name="acs-username-production" type="string">appc_app_user</property>
+  <property name="acs-password-production" type="string">4F8TLYta1sBB9InrRK</property>
+  <property name="appc-org-id" type="string">100106606</property>
+  <property name="appc-creator-user-id" type="string">b3f31338-5829-442d-b88d-ffd408be6132</property>
 </ti:app>
