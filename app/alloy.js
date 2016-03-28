@@ -3,7 +3,7 @@ var ANDROID = (Ti.Platform.osname === 'android');
 
 if (ANDROID) {
     setupAndroidPushNotifications();
-} else if (IOS) {
+} else {
     setupIosPushNotifications();
 }
 
@@ -18,6 +18,7 @@ function setupAndroidPushNotifications() {
         success: deviceTokenSuccess,
         error: deviceTokenError
     });
+    
     // Enable push notifications for this device
     // Save the device token for subsequent API calls
     function deviceTokenSuccess(e) {
@@ -26,13 +27,15 @@ function setupAndroidPushNotifications() {
         subscribleToChannels();
     }
     function deviceTokenError(e) {
+    	console.log('------------------------------------------------------------------------');
         console.log('Failed to register for push notifications! ' + e.error);
+        console.log('------------------------------------------------------------------------');
     }
      
     // Process incoming push notifications
     CloudPush.addEventListener('callback', function (evt) {
         //alert("Notification received: " + evt.payload);
-        processAndroidNotification();
+        processAndroidNotification(evt.payload);
     });
 }
 
@@ -41,17 +44,17 @@ function setupIosPushNotifications() {
     if (Ti.Platform.name == "iPhone OS" && parseInt(Ti.Platform.version.split(".")[0]) >= 8) {
      
         // Wait for user settings to be registered before registering for push notifications
-        Ti.App.iOS.addEventListener('usernotificationsettings', function registerForPush() {
-         
-        // Remove event listener once registered for push notifications
-            Ti.App.iOS.removeEventListener('usernotificationsettings', registerForPush); 
-         
-                Ti.Network.registerForPushNotifications({
-                    success: deviceTokenSuccess,
-                    error: deviceTokenError,
-                    callback: receivePush
-                });
-            });
+	    Ti.App.iOS.addEventListener('usernotificationsettings', function registerForPush() {
+	 
+	        // Remove event listener once registered for push notifications
+	        Ti.App.iOS.removeEventListener('usernotificationsettings', registerForPush); 
+	 
+	        Ti.Network.registerForPushNotifications({
+	            success: deviceTokenSuccess,
+	            error: deviceTokenError,
+	            callback: receivePush
+	        });
+	    });
          
         // Register notification types to use
         Ti.App.iOS.registerUserNotificationSettings({
@@ -76,16 +79,18 @@ function setupIosPushNotifications() {
     }
     // Process incoming push notifications
     function receivePush(e) {
-        processIosNotification();
+        processIosNotification(e);
     }
     // Save the device token for subsequent API calls
     function deviceTokenSuccess(e) {
-        deviceToken = e.deviceToken;
+    	deviceToken = e.deviceToken;
         
         subscribleToChannels();
     }
     function deviceTokenError(e) {
+    	console.log('------------------------------------------------------------------------');
         console.log('Failed to register for push notifications! ' + e.error);
+        console.log('------------------------------------------------------------------------');
     }
 }
 
@@ -96,19 +101,29 @@ function subscribleToChannels() {
     // Specify the push type as either 'android' for Android or 'ios' for iOS
     Cloud.PushNotifications.subscribeToken({
         device_token: deviceToken,
-        channel: 'piprestaciones',
+        channel: 'pi',
         type: Ti.Platform.name == 'android' ? 'android' : 'ios'
     }, function (e) {
-        if (! e.success) {
+        if (e.success) {
+        	console.log('------------------------------------------------------------------------');
+            console.log('Subscribed');
+            console.log('------------------------------------------------------------------------');
+        } else {
+        	console.log('------------------------------------------------------------------------');
             console.log('Error:\n' + ((e.error && e.message) || JSON.stringify(e)));
+            console.log('------------------------------------------------------------------------');
         }
     });
 }
 
-function processAndroidNotification() {
-    
+function processAndroidNotification(payload) {
+	console.log('------------------------------------------------------------------------');
+    console.log(payload);
+    console.log('------------------------------------------------------------------------');
 }
 
-function processIosNotification() {
-    
+function processIosNotification(payload) {
+	console.log('------------------------------------------------------------------------');
+    console.log(payload);
+    console.log('------------------------------------------------------------------------');
 }
