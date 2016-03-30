@@ -136,7 +136,10 @@ function displayResults(results) {
                 id: result.id,
                 title: result.title,
                 backgroundColor: eventData.styles.button_background,
-                color: eventData.styles.button_foreground
+                color: eventData.styles.button_foreground,
+                font: {
+                	fontSize: 20
+                }
             }
         });
     });

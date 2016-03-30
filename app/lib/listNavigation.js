@@ -173,7 +173,11 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
                         id: itemId,
                         title: title,
                         subItems: items[i],
-                        backgroundColor: eventData.styles.button_background
+                        backgroundColor: eventData.styles.button_background,
+                        color: eventData.styles.button_foreground,
+                        font: {
+                        	fontSize: 20
+                        }
                     }
                 });
             }
@@ -261,7 +265,11 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
                     },
                     properties: {
                         id: items[title][i].id,
-                        backgroundColor: eventData.styles.button_background
+                        backgroundColor: eventData.styles.button_background,
+                        color: eventData.styles.button_foreground,
+                        font: {
+                        	fontSize: 20
+                        }
                     }
                 });
             }
