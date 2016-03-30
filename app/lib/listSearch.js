@@ -135,7 +135,8 @@ function displayResults(results) {
             properties: {
                 id: result.id,
                 title: result.title,
-                backgroundColor: eventData.styles.button_background
+                backgroundColor: eventData.styles.button_background,
+                color: eventData.styles.button_foreground
             }
         });
     });

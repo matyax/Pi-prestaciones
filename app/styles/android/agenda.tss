@@ -1,0 +1,62 @@
+"#agenda": {
+    orientationModes: [
+        Ti.UI.PORTRAIT
+    ],
+    layout: "composite"
+},
+"#agendaContainer": {
+	width: "100%",
+	height: "100%",
+	layout: "vertical",
+	top: 55,
+	left: 0
+},
+
+"#searchContainer": {
+	top: 0,
+	left: 0,
+	width: "100%",
+	height: 55
+},
+"#searchContainerWrapper": {
+	width: "95%",
+	height: 40,
+	top: 10,
+	backgroundColor: 'white',
+	borderRadius: 10,
+	layout: "horizontal",
+	opacity: 0.9
+},
+"#searchField": {
+	width: Ti.UI.FILL,
+	hintText: "Buscar en el programa",
+	height: 40,
+	font: {
+		fontSize: 15
+	},
+	backgroundColor: 'white',
+	color: 'black',
+	paddingLeft: 5,
+	top: 0,
+	left: 10,
+	opacity: 0.9
+},
+"#searchIcon": {
+	width: 20,
+	height: 20,
+	left: 15,
+	top: 10
+},
+
+"#searchResultsContainer": {
+	width: "100%",
+	height: 0,
+	top: 50,
+	left: 0,
+	layout: "vertical"
+},
+"#searchResults": {
+	width: "100%",
+	top: 20,
+	height: Ti.UI.FILL
+}
