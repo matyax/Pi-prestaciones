@@ -1,6 +1,6 @@
 android/ATTR_MINIFY=true
 android/ATTR_MINIFY.type=Boolean
-android/ATTR_PROJECT_NAME=Pi Prestaciones
+android/ATTR_PROJECT_NAME=Pi-prestaciones
 android/ATTR_PROJECT_NAME.type=String
 android/abi=mips
 android/abi.type=String
