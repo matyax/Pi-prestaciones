@@ -26,7 +26,11 @@ exports.setListView = function (newListView) {
 	listView = newListView;
 	
 	listView.setBackgroundColor(eventData.styles.button_background);
-	listView.setTemplates({ 'template': listTemplate });
+	
+	if (listView.setTemplates) {
+		listView.setTemplates({ 'template': listTemplate });
+	}
+	
 	listView.setDefaultItemTemplate('template');
 };
 

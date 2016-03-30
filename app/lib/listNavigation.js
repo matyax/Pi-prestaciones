@@ -61,7 +61,10 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
             window = localOpenerWindow;
 
             window.setBackgroundColor(backgroundColor);
-            window.setTitle(title);
+            
+            if (window.setTitle) {
+            	window.setTitle(title);
+            }
         } else {
             window = Titanium.UI.createWindow({
                 backgroundColor: backgroundColor,
