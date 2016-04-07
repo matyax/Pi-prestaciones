@@ -43,7 +43,9 @@ exports.screenHeight = function () {
 	return Ti.Platform.displayCaps.platformHeight;
 };
 
-exports.processItemConfig = function(item, eventData) {
+exports.processItemConfig = processItemConfig;
+
+function processItemConfig(item, eventData) {
     if (item.controller == 'news') {
         var unreadNews = getUnreadNewsQuantity(eventData.news);
 
@@ -58,6 +60,22 @@ exports.processItemConfig = function(item, eventData) {
     }
 
     return item;
+};
+
+exports.updateUnreadedNewsCount = function () {
+	var data   = require('data'),
+   		button = data.get('newsButton'),
+   		event  = data.get('eventData'); 
+	
+	var item = {
+        icon: event.news_icon,
+        label: event.news_label,
+        controller: 'news'
+   	};
+   	
+   	item = processItemConfig(item, event);
+
+   	button.setTitle(item.label);  
 };
 
 exports.setLastUnreadNews = function(id) {
