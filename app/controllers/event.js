@@ -229,15 +229,11 @@ function generateEventWindow(event) {
                     icon: event.pages[j].icon,
                     label: event.pages[j].title,
                     onClick: function(e) {
-                        var page    = null,
-                            title   = e.source.getTitle();
-                            
-                        for (var i in eventData.pages) {
-                            if (eventData.pages[i].title == title) {
-                                page = eventData.pages[i];
-                                
-                                break;
-                            }
+                        var page = event.pages[j];
+                        
+                        if (! page) {
+                        	console.log('Page not found.');
+                        	return;
                         }
                         
                         data.set('page', page);
