@@ -45,6 +45,14 @@ for (var i in item.items) {
         scrollView.add(
             pageWindow.createImage(item.items[i])
         );
+    } else if (item.items[i].type == 'line') {
+        scrollView.add(
+            pageWindow.createLine(item.items[i])
+        );
+    } else if (item.items[i].type == 'button') {
+        scrollView.add(
+            pageWindow.createButton(item.items[i])
+        );
     }
 }
 
