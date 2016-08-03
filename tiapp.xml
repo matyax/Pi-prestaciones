@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
     <guid>1e632757-46da-4eb1-9666-cfd048cc9458</guid>
-    <id>ar.com.piprestaciones.app</id>
+    <id>org.pizzapixel.pi</id>
     <name>PI Prestaciones Informaticas</name>
     <version>1.1.13</version>
     <publisher>matyax</publisher>
     <url>http://pizzapixel.org</url>
     <description>PI Prestaciones Informáticas</description>
     <copyright>2014 by matyax</copyright>
-    <icon>appicon.png</icon>
+    <icon>DefaultIcon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
@@ -40,7 +40,7 @@
         </plist>
     </ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <manifest android:versionCode="11013" android:versionName="1.1.13">
+        <manifest android:versionCode="11014" android:versionName="1.1.14">
             <!-- Allows the API to download data from Google Map servers -->
             <uses-permission android:name="android.permission.INTERNET"/>
             <!-- Allows the API to cache data -->
@@ -60,7 +60,7 @@
             <application>
                 <!-- Replace "PASTE YOUR GOOGLE MAPS API KEY HERE" with the Google API key you obtained -->
                 <meta-data
-                    android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyBRZAFm0j5RUCoeGaC1QFrAs-f3lCQZEHU"/>
+                    android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyC40zPoMDMaoqw5UEYYkBuZysLk9StEsBg"/>
             </application>
         </manifest>
     </android>
