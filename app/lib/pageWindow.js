@@ -88,6 +88,12 @@ exports.createImage = function (item) {
         height: Ti.UI.SIZE
     }));
     
+    if (item.url) {
+    	view.addEventListener('click', function () {
+    		Ti.Platform.openURL(item.url);
+    	});
+    }
+    
     return view;
 };
 
