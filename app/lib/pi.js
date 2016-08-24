@@ -1,7 +1,8 @@
 var rest = require('rest');
 var API_DOMAIN = 'http://piprestaciones.com';
 
-var eventsResponse = null;
+var eventsResponse = null,
+	lang = Titanium.Locale.currentLanguage;
 
 exports.loadEvents = function (callback) {
     if (eventsResponse) {
@@ -10,7 +11,7 @@ exports.loadEvents = function (callback) {
         return;
     }
     
-    rest.get(API_DOMAIN + '/congressApi/events', {
+    rest.get(API_DOMAIN + '/congressApi/events?lang=' + lang, {
         success: function (response) {
             eventsResponse = response;
             
