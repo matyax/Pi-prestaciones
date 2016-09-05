@@ -462,34 +462,40 @@ function initEventLayout() {
 		height 		= toDP(Ti.Platform.displayCaps.platformHeight),
 		width 		= toDP(Ti.Platform.displayCaps.platformWidth),
 		logoHeight	= 0,
-		blob 		= null;
+		blob 		= null,
+		languagesHeight = 20;
 		
 	var headerHeight = 60;
 	
 	blob = eventData.logoImageView.toBlob();
     if (blob) {
-    	
     	logoHeight = (width - 40) * pxToDP(blob.height) / pxToDP(blob.width);
         
         eventData.logoImageView.setWidth( width - 40);
         eventData.logoImageView.setHeight( logoHeight);
     }
+    
+    if (! eventData.languages || eventData.languages.length <= 1) {
+		languagesHeight = 0;
+	} else {
+		$.flagsContainer.setTop( logoHeight + 40 );
+	}
 	
 	if (event.tabs_order.length > 0) {
 		$.eventScrollView.setHeight(
-			height - logoHeight - 120 - headerHeight
+			height - logoHeight - 120 - headerHeight - languagesHeight
 		);
 		
 		$.tabContainer.setBackgroundColor(event.styles.tab_background);
 	} else {
 		$.eventScrollView.setHeight(
-			height - logoHeight - 40 - headerHeight
+			height - logoHeight - 40 - headerHeight - languagesHeight
 		);
 		
 		$.tabContainer.hide();	
 	}
 	
-	$.eventScrollView.setTop( logoHeight + 40 );
+	$.eventScrollView.setTop( logoHeight + 40 + languagesHeight );
 }
 
 var fistButtonAdded = false;
