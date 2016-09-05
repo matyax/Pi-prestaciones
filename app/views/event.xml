@@ -4,9 +4,9 @@
         <Window id="eventWindow">
         	<View id="logoContainer"></View>
         	<View id="flagsContainer">
-        		<ImageView id="langES" class="langIcon" image="/icons/es.png"></ImageView>
-	    		<ImageView id="langEN" class="langIcon" image="/icons/en.png"></ImageView>
-	    		<ImageView id="langPT" class="langIcon" image="/icons/pt.png"></ImageView>
+        		<ImageView id="langES" class="langIcon" image="/icons/es.png" onClick="switchToES"></ImageView>
+	    		<ImageView id="langEN" class="langIcon" image="/icons/en.png" onClick="switchToEN"></ImageView>
+	    		<ImageView id="langPT" class="langIcon" image="/icons/pt.png" onClick="switchToPT"></ImageView>
         	</View>
             <ScrollView id="eventScrollView">
                 <View id="eventView"></View>
@@ -20,9 +20,9 @@
     <Window id="eventNavigationWindow" platform="android">
     	<View id="logoContainer"></View>
     	<View id="flagsContainer">
-    		<ImageView id="langES" class="langIcon" image="/icons/es.png"></ImageView>
-    		<ImageView id="langEN" class="langIcon" image="/icons/en.png"></ImageView>
-    		<ImageView id="langPT" class="langIcon" image="/icons/pt.png"></ImageView>
+    		<ImageView id="langES" class="langIcon" image="/icons/es.png" onClick="switchToES"></ImageView>
+    		<ImageView id="langEN" class="langIcon" image="/icons/en.png" onClick="switchToEN"></ImageView>
+    		<ImageView id="langPT" class="langIcon" image="/icons/pt.png" onClick="switchToPT"></ImageView>
     	</View>
         <ScrollView id="eventScrollView">
             <View id="eventView"></View>

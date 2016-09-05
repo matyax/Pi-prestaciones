@@ -53,7 +53,7 @@
 '#flagsContainer' : {
 	width: Ti.UI.SIZE,
 	height: 20,
-	right: 20,
+	right: 10,
 	layout: 'horizontal'
 },
 '.langIcon' : {

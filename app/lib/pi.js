@@ -2,9 +2,11 @@ var rest = require('rest');
 var API_DOMAIN = 'http://pi.pizzaenelhorno.com.ar';
 
 var eventsResponse = null,
-	lang = Titanium.Locale.currentLanguage;
+	defaultLang    = Titanium.Locale.currentLanguage;
 
-exports.loadEvents = function (callback) {
+exports.loadEvents = function (callback, lang) {
+	lang = lang || defaultLang;
+	
     if (eventsResponse) {
         callback(eventsResponse);
         

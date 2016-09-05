@@ -2,7 +2,8 @@ var args = arguments[0] || {};
 
 var piApi   = require('pi'),
     data    = require('data'),
-    ui      = require('ui');
+    ui      = require('ui'),
+    loading = require('loadingWindow');
 
 var eventData = data.get('eventData'), selectedEvent = data.get('event');
 
@@ -479,6 +480,8 @@ function initEventLayout() {
 		languagesHeight = 0;
 	} else {
 		$.flagsContainer.setTop( logoHeight + 40 );
+		
+		hideUnusedLanguages();
 	}
 	
 	if (event.tabs_order.length > 0) {
@@ -496,6 +499,63 @@ function initEventLayout() {
 	}
 	
 	$.eventScrollView.setTop( logoHeight + 40 + languagesHeight );
+}
+
+function hideUnusedLanguages() {
+	$.langES.hide();
+	$.langEN.hide();
+	$.langPT.hide();
+	
+	for (var i in eventData.languages) {
+		$['lang' + eventData.languages[i].lang.toUpperCase()].show();
+	}
+}
+
+function switchToES() {
+	switchLanguage('es');
+}
+
+function switchToEN() {
+	switchLanguage('en');
+}
+
+function switchToPT() {
+	switchLanguage('pt');
+}
+
+function switchLanguage(lang) {
+	var id = null;
+	
+	for (var i in eventData.languages) {
+		if (eventData.languages[i].lang == lang) {
+			id = eventData.languages[i].id;
+			
+			break;
+		}
+	}
+	
+	if (! id) {
+		return alert('Cannot switch language now.');
+	}
+	
+	ui.empty($.logoContainer);
+	ui.empty($.eventView);
+	ui.empty($.tabContainer);
+	
+	$.tabContainer.show();
+	
+	loading.open();
+	
+	piApi.getEventDetail(id, function (eventData) {
+		loading.close();
+	    
+	    data.set('eventData', eventData);
+	    
+		eventData     = eventData;
+		selectedEvent = eventData;
+
+		generateEventWindow(eventData);
+	});
 }
 
 var fistButtonAdded = false;
