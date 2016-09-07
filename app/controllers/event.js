@@ -502,13 +502,23 @@ function initEventLayout() {
 }
 
 function hideUnusedLanguages() {
-	$.langES.hide();
-	$.langEN.hide();
-	$.langPT.hide();
-	
-	for (var i in eventData.languages) {
-		$['lang' + eventData.languages[i].lang.toUpperCase()].show();
-	}
+	var found, i;
+		
+	['es', 'en', 'pt'].forEach(function (lang) {
+		found = false;
+		
+		for (i in eventData.languages) {
+			if (lang === eventData.languages[i].lang) {
+				found = true;
+				
+				break;
+			}
+		}
+		
+		if (! found) {
+			$.flagsContainer.remove($['lang' + lang.toUpperCase()]);
+		}
+	});
 }
 
 function switchToES() {

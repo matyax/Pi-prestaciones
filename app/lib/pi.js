@@ -1,5 +1,5 @@
 var rest = require('rest');
-var API_DOMAIN = 'http://pi.pizzaenelhorno.com.ar';
+var API_DOMAIN = 'http://piprestaciones.com';
 
 var eventsResponse = null,
 	defaultLang    = Titanium.Locale.currentLanguage;

@@ -19,7 +19,7 @@ loading.open();
 piApi.loadEvents(function (events) {
     
     if (events === false) {
-        alert('Error de conexión');
+        return generateErrorMessage();
     }
     
     eventList = events;
@@ -207,6 +207,33 @@ function addButton(event, buttonOptions, appendTo) {
     } else {
         $.eventsView.add(containerView);
     }
+}
+
+function generateErrorMessage() {
+	var errorTitle,
+		errorMessage,
+		lang = Titanium.Locale.currentLanguage.toLowerCase();
+		
+	$.congressTitle.hide();
+	
+	if (lang.indexOf('es') >= 0) {
+		errorTitle   = 'Error de datos';
+		errorMessage = 'No podemos contactar nuestros servidores. Por favor verifique su conexión a Internet e inténtelo nuevamente más tarde.';
+	} else {
+		errorTitle   = 'Network error';
+		errorMessage = 'We can\'t reach our servers. Please verify your Internet connection and try again later.';
+	}
+	
+	loading.close();
+	
+	$.index.setTitle(errorTitle);
+	
+	var label = Ti.UI.createLabel({
+        text: errorMessage,
+        textAlign: 'center'
+    });
+	
+	$.eventsView.add(label);
 }
 
 var eventDetailLoaded = false;
