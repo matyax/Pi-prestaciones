@@ -19,7 +19,7 @@ var accommodationOnclick = function (id, title) {
     }
 };
 
-var accommodationNavigation = require('listNavigation');
+var accommodationNavigation = require('accommodationNavigation');
 
 var accommodationWindow = accommodationNavigation.add(
     eventData.accommodations_label,
