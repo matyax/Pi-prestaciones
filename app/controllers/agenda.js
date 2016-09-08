@@ -66,6 +66,7 @@ $.agendaContainer.addEventListener('postlayout', function () {
 
 listSearch.setListView($.searchResults);
 listSearch.setClickHandler(agendaOnclick);
+listSearch.setData(eventData.agenda_details);
 
 /* Initialize list */
 var listNavigation = require('listNavigation');

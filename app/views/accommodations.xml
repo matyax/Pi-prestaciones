@@ -1,4 +1,20 @@
 <Alloy>
 	<Window id="accommodations">
+		<View id="searchContainer">
+	    	<View id="searchContainerWrapper">
+	    		<ImageView id="searchIcon" image="/icons/system/search.png" />
+	    		<TextField id="searchField" />
+	    	</View>
+	    </View>
+	    
+	    <View id="accommodationsContainer">
+	    	
+	    </View>
+	    
+	    <View id="searchResultsContainer">
+	    	<ListView id="searchResults">
+
+	    	</ListView>
+	    </View>
     </Window>
 </Alloy>

@@ -2,7 +2,8 @@ var data          = require('data'),
     eventData     = data.get('eventData'),
     ui            = require('ui'),
     listItemWidth = ui.screenWidth() - 20,
-    listView      = null;
+    listView      = null,
+    listData      = [];
 
 var listTemplate = {
     childTemplates: [
@@ -20,6 +21,10 @@ var listTemplate = {
             }
         }
     ]
+};
+
+exports.setData = function (data) {
+	listData = data;
 };
 
 exports.setListView = function (newListView) {
@@ -50,9 +55,9 @@ exports.displayResults = displayResults;
 exports.filter = function (query) {
 	var results = [];
 	
-	for (var i in eventData.agenda_details) {
-		if ( matchesCriteria(eventData.agenda_details[i], query) ) {
-			results.push(eventData.agenda_details[i]);
+	for (var i in listData) {
+		if ( matchesCriteria(listData[i], query) ) {
+			results.push(listData[i]);
 		}
 	}
 	
@@ -154,5 +159,7 @@ function displayResults(results) {
 }
 
 function createSection(title) {
-	return Ti.UI.createListSection({ headerTitle: title });
+	var props = title ? { headerTitle: title } : {};
+	
+	return Ti.UI.createListSection();
 }

@@ -2,7 +2,8 @@ var args = arguments[0] || {};
 
 var data            = require('data'),
     eventData       = data.get('eventData'),
-    windowReference = data.get('windowReference');
+    windowReference = data.get('windowReference'),
+    listSearch      = require('listSearch');
     
 var accommodationOnclick = function (id, title) {
     
@@ -19,6 +20,51 @@ var accommodationOnclick = function (id, title) {
     }
 };
 
+$.searchContainer.setBackgroundColor(eventData.styles.button_background);
+$.accommodations.setBackgroundColor(eventData.styles.button_background);
+$.accommodationsContainer.setBackgroundColor(eventData.styles.button_background);
+$.searchResultsContainer.setBackgroundColor(eventData.styles.button_background);
+
+var isSearchVisible = false;
+
+$.searchField.addEventListener('change', function () {
+	if ($.searchField.getValue()) {
+		
+		if (! isSearchVisible) {
+			$.accommodationsContainer.hide();
+			$.searchResultsContainer.show();
+			
+			isSearchVisible = true;
+		}
+		
+		
+		listSearch.filter($.searchField.getValue());
+	} else {
+		$.accommodationsContainer.show();
+		$.searchResultsContainer.hide();
+		
+		isSearchVisible = false;
+	}
+	
+});
+
+/* Initialize search */
+$.searchResultsContainer.hide();
+
+var heightAdjustment = IOS ? 45 : 0;
+
+$.accommodationsContainer.addEventListener('postlayout', function () {
+	if (! $.searchResultsContainer.getHeight()) {
+		$.searchResultsContainer.setHeight($.accommodationsContainer.getSize().height - heightAdjustment);
+		$.accommodationsContainer.setHeight($.accommodationsContainer.getSize().height - heightAdjustment);
+	}
+});
+
+listSearch.setListView($.searchResults);
+listSearch.setClickHandler(accommodationOnclick);
+listSearch.setData(eventData.accommodations);
+
+/* Initialize list */
 var accommodationNavigation = require('accommodationNavigation');
 
 var accommodationWindow = accommodationNavigation.add(
@@ -27,7 +73,7 @@ var accommodationWindow = accommodationNavigation.add(
     accommodationOnclick,
     windowReference, 
     eventData.styles.background,
-    $.accommodations
+    $.accommodationsContainer
 );
 
 function searchItem(items, id) {
