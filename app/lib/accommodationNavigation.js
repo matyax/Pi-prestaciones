@@ -7,23 +7,56 @@ var listHeight = Ti.UI.FILL,
 
 exports.add = function (label, items, onClick, navigationWindow, backgroundColor, openerWindow) {
 
-    var listTemplate = {
-        childTemplates: [
-            {
-                type: 'Ti.UI.Label',
-                bindId: 'info',
-                properties: {
-                    borderWidth: 0,
-                    backgroundColor: eventData.styles.button_background,
-                    color: eventData.styles.button_foreground,
-                    left: 10,
-                    font: { fontSize: 18 },
-                    height: Ti.UI.FILL,
-                    width: listItemWidth,
-                }
-            }
-        ]
-    };
+    var listTemplate;
+    
+    if (false) {
+		listTemplate = {
+	        childTemplates: [
+	            {
+	                type: 'Ti.UI.Label',
+	                bindId: 'info',
+	                properties: {
+	                    borderWidth: 0,
+	                    backgroundColor: eventData.styles.button_background,
+	                    color: eventData.styles.button_foreground,
+	                    left: 10,
+	                    font: { fontSize: 18 },
+	                    height: Ti.UI.FILL,
+	                    width: listItemWidth,
+	                }
+	            }
+	        ]
+	    };
+	} else {
+		listTemplate = {
+	        childTemplates: [
+		        {
+		            type: 'Ti.UI.ImageView',
+		            bindId: 'pic',
+		            properties: {
+		                width: 35,
+		                height: 35,
+		                left: 5,
+		                top: 5
+		            }
+		        },
+	            {
+	                type: 'Ti.UI.Label',
+	                bindId: 'info',
+	                properties: {
+	                    borderWidth: 0,
+	                    backgroundColor: eventData.styles.button_background,
+	                    color: eventData.styles.button_foreground,
+	                    left: 50,
+	                    height: 50,
+	                    font: { fontSize: 18 },
+	                    height: Ti.UI.FILL,
+	                    width: listItemWidth - 50
+	                }
+	            }
+	        ]
+	    };
+	}
 
     function init(label, items, onClick, navigationWindow, openerWindow) {
         createWindow(
@@ -70,14 +103,11 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
 
     function createListView(items, onClick, navigationWindow)
     {
-        var isFinalList         = false,
-            sectionParameters   = {},
-            sections            = [],
-            section             = null,
-            dataSet             = [],
-            title               = '',
-            hasChildren         = false,
-            itemId              = null;
+        var sections = [],
+            section  = null,
+            dataSet  = [],
+            title    = '',
+            itemId   = null;
 
         var listView = Ti.UI.createListView({
         	id: "listNavigationList",
@@ -95,28 +125,25 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
         listView.setSections(sections);
 
         function addItemsToListView(items) {
-            if (items.headerTitle) {
-                sectionParameters = { headerTitle: items.headerTitle };
-            } else if ((typeof items[0] != 'undefined') && (items[0].startTime)) {
-                isFinalList = false;
-            }
-            else {
-                isFinalList = true;
-            }
-
-            section = Ti.UI.createListSection(sectionParameters);
+            section = Ti.UI.createListSection();
             dataSet = [];
             title = '';
-            hasChildren = false;
             itemId = null;
+            
+            var image;
 
             for (var i in items) {
                 title = items[i].title;
                 itemId = items[i].id;
                 
+                image = items[i].image || '/icons/silhouette_light.png';
+                
                 dataSet.push({
                     info: {
                         text: title
+                    },
+                    pic: {
+						image: image
                     },
                     properties: {
                         id: itemId,
