@@ -90,7 +90,7 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
            backgroundColor: backgroundColor,
            width: '100%',
            left: 0,
-           top: 20,
+           top: 0,
            height: Ti.UI.FILL
         });
 
@@ -125,7 +125,8 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
         listView.setSections(sections);
 
         function addItemsToListView(items) {
-            section = Ti.UI.createListSection();
+            section = Ti.UI.createListSection({});
+            
             dataSet = [];
             title = '';
             itemId = null;
