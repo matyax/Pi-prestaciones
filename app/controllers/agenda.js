@@ -25,9 +25,9 @@ var agendaOnclick = function (id, title) {
     }
 };
 
-$.searchContainer.setBackgroundColor(eventData.styles.button_background);
-$.agendaContainer.setBackgroundColor(eventData.styles.button_background);
-$.searchResultsContainer.setBackgroundColor(eventData.styles.button_background);
+$.searchContainer.setBackgroundColor(eventData.agenda_background || eventData.styles.button_background);
+$.agendaContainer.setBackgroundColor(eventData.agenda_background || eventData.styles.button_background);
+$.searchResultsContainer.setBackgroundColor(eventData.agenda_background || eventData.styles.button_background);
 
 var isSearchVisible = false;
 
@@ -77,5 +77,6 @@ listNavigation.add(
     agendaOnclick,
     windowReference,
     eventData.styles.button_background,
-    $.agendaContainer
+    $.agendaContainer,
+    'agenda'
 );

@@ -5,7 +5,15 @@ var data        = require('data'),
 var listHeight = Ti.UI.FILL,
     listItemWidth = ui.screenWidth() - 20;
 
-exports.add = function (label, items, onClick, navigationWindow, backgroundColor, openerWindow) {
+exports.add = function (label, items, onClick, navigationWindow, backgroundColor, openerWindow, type) {
+	
+	var backgroundColor = eventData.styles.button_background,
+		fontColor       = eventData.styles.button_foreground;
+		
+	if (type === 'agenda') {
+		backgroundColor = eventData.agenda_background || backgroundColor;
+		fontColor       = eventData.agenda_color || fontColor;
+	}
 
     var listTemplate = {
         childTemplates: [
@@ -14,8 +22,8 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
                 bindId: 'info',
                 properties: {
                     borderWidth: 0,
-                    backgroundColor: eventData.styles.button_background,
-                    color: eventData.styles.button_foreground,
+                    backgroundColor: backgroundColor,
+                    color: fontColor,
                     left: 10,
                     font: { fontSize: 18 },
                     height: Ti.UI.FILL,
@@ -101,7 +109,7 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
 
         var listView = Ti.UI.createListView({
         	id: "listNavigationList",
-            backgroundColor: eventData.styles.button_background,
+            backgroundColor: backgroundColor,
             templates: { 'template': listTemplate },
             defaultItemTemplate: 'template',
             height: listHeight,
@@ -173,8 +181,8 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
                         id: itemId,
                         title: title,
                         subItems: items[i],
-                        backgroundColor: eventData.styles.button_background,
-                        color: eventData.styles.button_foreground,
+                        backgroundColor: backgroundColor,
+                        color: fontColor,
                         font: {
                         	fontSize: 20
                         }
@@ -243,7 +251,7 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
         var listView = Ti.UI.createListView({
             templates: { 'template': listTemplate },
             defaultItemTemplate: 'template',
-            backgroundColor: eventData.styles.button_background,
+            backgroundColor: backgroundColor,
             height: listHeight,
             width: '100%'
         });
@@ -265,8 +273,8 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
                     },
                     properties: {
                         id: items[title][i].id,
-                        backgroundColor: eventData.styles.button_background,
-                        color: eventData.styles.button_foreground,
+                        backgroundColor: backgroundColor,
+                        color: fontColor,
                         font: {
                         	fontSize: 20
                         }
