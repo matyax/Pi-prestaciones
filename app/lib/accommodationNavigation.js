@@ -9,7 +9,7 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
 
     var listTemplate;
     
-    if (false) {
+    if (eventData.accommodations_style == 'list') {
 		listTemplate = {
 	        childTemplates: [
 	            {
