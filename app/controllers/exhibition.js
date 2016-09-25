@@ -25,7 +25,7 @@ var agendaOnclick = function (id, title) {
     }
 };
 
-$.exhibitions.setBackgroundColor(eventData.styles.button_background);
+$.exhibitions.setBackgroundColor(eventData.exhibition_background || eventData.styles.button_background);
 
 /* Initialize list */
 var listNavigation = require('listNavigation');
@@ -36,5 +36,6 @@ listNavigation.add(
     agendaOnclick,
     windowReference,
     eventData.styles.button_background,
-    $.exhibitions
+    $.exhibitions,
+    'exhibition'
 );

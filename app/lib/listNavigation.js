@@ -13,6 +13,9 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
 	if (type === 'agenda') {
 		backgroundColor = eventData.agenda_background || backgroundColor;
 		fontColor       = eventData.agenda_color || fontColor;
+	} else if (type === 'exhibition') {
+		backgroundColor = eventData.exhibition_background || backgroundColor;
+		fontColor       = eventData.exhibition_color || fontColor;
 	}
 
     var listTemplate = {
