@@ -9,6 +9,9 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
 
     var listTemplate;
     
+    var backgroundColor = eventData.accommodations_background || eventData.styles.button_background,
+		fontColor       = eventData.accommodations_color || eventData.styles.button_foreground;
+    
     if (eventData.accommodations_style == 'list') {
 		listTemplate = {
 	        childTemplates: [
@@ -17,8 +20,8 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
 	                bindId: 'info',
 	                properties: {
 	                    borderWidth: 0,
-	                    backgroundColor: eventData.styles.button_background,
-	                    color: eventData.styles.button_foreground,
+	                    backgroundColor: backgroundColor,
+	                    color: fontColor,
 	                    left: 10,
 	                    font: { fontSize: 18 },
 	                    height: Ti.UI.FILL,
@@ -45,8 +48,8 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
 	                bindId: 'info',
 	                properties: {
 	                    borderWidth: 0,
-	                    backgroundColor: eventData.styles.button_background,
-	                    color: eventData.styles.button_foreground,
+	                    backgroundColor: backgroundColor,
+	                    color: fontColor,
 	                    left: 50,
 	                    height: 50,
 	                    font: { fontSize: 18 },
@@ -111,7 +114,7 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
 
         var listView = Ti.UI.createListView({
         	id: "listNavigationList",
-            backgroundColor: eventData.styles.button_background,
+            backgroundColor: backgroundColor,
             templates: { 'template': listTemplate },
             defaultItemTemplate: 'template',
             height: listHeight,
@@ -150,8 +153,8 @@ exports.add = function (label, items, onClick, navigationWindow, backgroundColor
                         id: itemId,
                         title: title,
                         subItems: items[i],
-                        backgroundColor: eventData.styles.button_background,
-                        color: eventData.styles.button_foreground,
+                        backgroundColor: backgroundColor,
+                        color: fontColor,
                         font: {
                         	fontSize: 20
                         }

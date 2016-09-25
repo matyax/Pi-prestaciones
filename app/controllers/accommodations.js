@@ -20,10 +20,11 @@ var accommodationOnclick = function (id, title) {
     }
 };
 
-$.searchContainer.setBackgroundColor(eventData.styles.button_background);
-$.accommodations.setBackgroundColor(eventData.styles.button_background);
-$.accommodationsContainer.setBackgroundColor(eventData.styles.button_background);
-$.searchResultsContainer.setBackgroundColor(eventData.styles.button_background);
+$.searchContainer.setBackgroundColor(eventData.accommodations_background || eventData.styles.button_background);
+$.accommodations.setBackgroundColor(eventData.accommodations_background || eventData.styles.button_background);
+$.accommodationsContainer.setBackgroundColor(eventData.accommodations_background || eventData.styles.button_background);
+$.searchResultsContainer.setBackgroundColor(eventData.accommodations_background || eventData.styles.button_background);
+
 
 var isSearchVisible = false;
 
