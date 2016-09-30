@@ -3,24 +3,43 @@ var data          = require('data'),
     ui            = require('ui'),
     listItemWidth = ui.screenWidth() - 20,
     listView      = null,
-    listData      = [];
+    listData      = [],
+    backgroundColor = eventData.styles.button_background,
+    color         = eventData.styles.button_foreground,
+    listTemplate  = null;
 
-var listTemplate = {
-    childTemplates: [
-        {
-            type: 'Ti.UI.Label',
-            bindId: 'info',
-            properties: {
-                borderWidth: 0,
-                backgroundColor: eventData.styles.button_background,
-                color: eventData.styles.button_foreground,
-                left: 10,
-                font: { fontSize: 18 },
-                height: Ti.UI.FILL,
-                width: listItemWidth
-            }
-        }
-    ]
+function getTemplate() {
+	return {
+	    childTemplates: [
+	        {
+	            type: 'Ti.UI.Label',
+	            bindId: 'info',
+	            properties: {
+	                borderWidth: 0,
+	                backgroundColor: backgroundColor,
+	                color: color,
+	                left: 10,
+	                font: { fontSize: 18 },
+	                height: Ti.UI.FILL,
+	                width: listItemWidth
+	            }
+	        }
+	    ]
+	};
+}
+
+listTemplate = getTemplate();
+
+exports.setBackgroundColor = function (newColor) {
+	backgroundColor = newColor;
+	
+	listTemplate = getTemplate();
+};
+
+exports.setColor = function (newColor) {
+	color = newColor;
+	
+	listTemplate = getTemplate();
 };
 
 exports.setData = function (data) {
@@ -30,7 +49,7 @@ exports.setData = function (data) {
 exports.setListView = function (newListView) {
 	listView = newListView;
 	
-	listView.setBackgroundColor(eventData.styles.button_background);
+	listView.setBackgroundColor(backgroundColor);
 	
 	if (listView.setTemplates) {
 		listView.setTemplates({ 'template': listTemplate });
@@ -140,8 +159,8 @@ function displayResults(results) {
             properties: {
                 id: result.id,
                 title: result.title,
-                backgroundColor: eventData.styles.button_background,
-                color: eventData.styles.button_foreground,
+                backgroundColor: backgroundColor,
+                color: color,
                 font: {
                 	fontSize: 20
                 }

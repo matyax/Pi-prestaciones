@@ -64,6 +64,9 @@ $.agendaContainer.addEventListener('postlayout', function () {
 	}
 });
 
+listSearch.setBackgroundColor(eventData.agenda_background || eventData.styles.button_background);
+listSearch.setColor(eventData.agenda_color || eventData.styles.button_foreground);
+
 listSearch.setListView($.searchResults);
 listSearch.setClickHandler(agendaOnclick);
 listSearch.setData(eventData.agenda_details);

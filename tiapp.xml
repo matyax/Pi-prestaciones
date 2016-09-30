@@ -3,7 +3,7 @@
     <guid>1e632757-46da-4eb1-9666-cfd048cc9458</guid>
     <id>ar.com.piprestaciones.app</id>
     <name>PI Prestaciones Informaticas</name>
-    <version>1.2.4</version>
+    <version>1.2.6</version>
     <publisher>matyax</publisher>
     <url>http://piprestaciones.com</url>
     <description>PI Prestaciones Informáticas</description>
@@ -40,7 +40,7 @@
         </plist>
     </ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <manifest android:versionCode="12004" android:versionName="1.2.4">
+        <manifest android:versionCode="12005" android:versionName="1.2.5">
             <!-- Allows the API to download data from Google Map servers -->
             <uses-permission android:name="android.permission.INTERNET"/>
             <!-- Allows the API to cache data -->

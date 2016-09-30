@@ -61,9 +61,13 @@ $.accommodationsContainer.addEventListener('postlayout', function () {
 	}
 });
 
+listSearch.setBackgroundColor(eventData.accommodations_background || eventData.styles.button_background);
+listSearch.setColor(eventData.accommodations_color || eventData.styles.button_foreground);
+
 listSearch.setListView($.searchResults);
 listSearch.setClickHandler(accommodationOnclick);
 listSearch.setData(eventData.accommodations);
+
 
 /* Initialize list */
 var accommodationNavigation = require('accommodationNavigation');
